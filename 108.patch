@@ -1,0 +1,372 @@
+From 9d13887c7615a7600b7466438b0edce084059fb8 Mon Sep 17 00:00:00 2001
+From: lobedank <klobedank@gmx.de>
+Date: Sat, 29 May 2021 07:31:08 +0200
+Subject: [PATCH] Add changes for hdf5-logging
+
+---
+ lib/hdf5-db/jhdf5-db-attr.c    |   6 ++
+ lib/hdf5-db/jhdf5-db-dataset.c |   6 ++
+ lib/hdf5-db/jhdf5-db-file.c    |   4 +
+ lib/hdf5-db/jhdf5-db-group.c   |   5 +-
+ lib/hdf5-db/jhdf5-db.c         | 163 +++++++++++++++++++++++++++++++++
+ lib/hdf5-db/jhdf5-db.h         |   2 +
+ 6 files changed, 185 insertions(+), 1 deletion(-)
+
+diff --git a/lib/hdf5-db/jhdf5-db-attr.c b/lib/hdf5-db/jhdf5-db-attr.c
+index f030faa3..4056e272 100644
+--- a/lib/hdf5-db/jhdf5-db-attr.c
++++ b/lib/hdf5-db/jhdf5-db-attr.c
+@@ -354,6 +354,7 @@ H5VL_julea_db_attr_create(void* obj, const H5VL_loc_params_t* loc_params, const
+ 		j_goto_error();
+ 	}
+ 
++	j_hdf5_log(file->file.name, "a", 'C', NULL, object, parent);
+ 	return object;
+ 
+ _error:
+@@ -478,6 +479,7 @@ H5VL_julea_db_attr_open(void* obj, const H5VL_loc_params_t* loc_params, const ch
+ 
+ 	g_assert(!j_db_iterator_next(iterator, NULL));
+ 
++	j_hdf5_log(file->file.name, "a", 'O', NULL, object, parent);
+ 	return object;
+ 
+ _error:
+@@ -543,6 +545,7 @@ H5VL_julea_db_attr_read(void* obj, hid_t mem_type_id, void* buf, hid_t dxpl_id,
+ 
+ 	memcpy(buf, tmp, bytes_read);
+ 
++	j_hdf5_log(object->attr.file->file.name, "a", 'R', NULL, object, NULL);
+ 	return 0;
+ 
+ _error:
+@@ -617,6 +620,7 @@ H5VL_julea_db_attr_write(void* obj, hid_t mem_type_id, const void* buf, hid_t dx
+ 		j_goto_error();
+ 	}
+ 
++	j_hdf5_log(object->attr.file->file.name, "a", 'W', NULL, object, NULL);
+ 	return 0;
+ 
+ _error:
+@@ -651,6 +655,7 @@ H5VL_julea_db_attr_get(void* obj, H5VL_attr_get_t get_type, hid_t dxpl_id, void*
+ 			g_assert_not_reached();
+ 	}
+ 
++	j_hdf5_log(object->attr.file->file.name, "a", 'G', NULL, object, NULL);
+ 	return 0;
+ }
+ 
+@@ -703,6 +708,7 @@ H5VL_julea_db_attr_close(void* obj, hid_t dxpl_id, void** req)
+ 
+ 	g_return_val_if_fail(object->type == J_HDF5_OBJECT_TYPE_ATTR, 1);
+ 
++	j_hdf5_log(object->attr.file->file.name, "a", 'S', NULL, object, NULL);
+ 	H5VL_julea_db_object_unref(object);
+ 
+ 	return 0;
+diff --git a/lib/hdf5-db/jhdf5-db-dataset.c b/lib/hdf5-db/jhdf5-db-dataset.c
+index 8fc341ec..4ea46e8a 100644
+--- a/lib/hdf5-db/jhdf5-db-dataset.c
++++ b/lib/hdf5-db/jhdf5-db-dataset.c
+@@ -394,6 +394,7 @@ H5VL_julea_db_dataset_create(void* obj, const H5VL_loc_params_t* loc_params, con
+ 		j_goto_error();
+ 	}
+ 
++	j_hdf5_log(file->file.name, "a", 'C', NULL, object, parent);
+ 	return object;
+ 
+ _error:
+@@ -569,6 +570,7 @@ H5VL_julea_db_dataset_open(void* obj, const H5VL_loc_params_t* loc_params, const
+ 		j_goto_error();
+ 	}
+ 
++	j_hdf5_log(file->file.name, "a", 'O', NULL, object, NULL);
+ 	return object;
+ 
+ _error:
+@@ -988,6 +990,7 @@ H5VL_julea_db_dataset_write(void* obj, hid_t mem_type_id, hid_t mem_space_id, hi
+ 		j_goto_error();
+ 	}
+ 
++	j_hdf5_log(object->dataset.file->file.name, "a", 'W', NULL, object, NULL);
+ 	return 0;
+ 
+ _error:
+@@ -1092,6 +1095,7 @@ H5VL_julea_db_dataset_read(void* obj, hid_t mem_type_id, hid_t mem_space_id, hid
+ 		memcpy(buf, local_buf, data_size * data_count);
+ 	}
+ 
++	j_hdf5_log(object->dataset.file->file.name, "a", 'R', NULL, object, NULL);
+ 	return 0;
+ 
+ _error:
+@@ -1126,6 +1130,7 @@ H5VL_julea_db_dataset_get(void* obj, H5VL_dataset_get_t get_type, hid_t dxpl_id,
+ 			g_assert_not_reached();
+ 	}
+ 
++	j_hdf5_log(object->dataset.file->file.name, "a", 'G', NULL, object, NULL);
+ 	return 0;
+ }
+ 
+@@ -1231,6 +1236,7 @@ H5VL_julea_db_dataset_close(void* obj, hid_t dxpl_id, void** req)
+ 		j_goto_error();
+ 	}
+ 
++	j_hdf5_log(object->dataset.file->file.name, "a", 'S', NULL, object, NULL);
+ 	H5VL_julea_db_object_unref(object);
+ 
+ 	return 0;
+diff --git a/lib/hdf5-db/jhdf5-db-file.c b/lib/hdf5-db/jhdf5-db-file.c
+index f851c276..bc05b9f3 100644
+--- a/lib/hdf5-db/jhdf5-db-file.c
++++ b/lib/hdf5-db/jhdf5-db-file.c
+@@ -281,6 +281,7 @@ H5VL_julea_db_file_create(const char* name, unsigned flags, hid_t fcpl_id, hid_t
+ 		}
+ 	}
+ 
++	j_hdf5_log(object->file.name, "w", 'C', exist ? "truncated" : NULL, object, NULL);
+ 	return object;
+ 
+ _error:
+@@ -351,6 +352,7 @@ H5VL_julea_db_file_open(const char* name, unsigned flags, hid_t fapl_id, hid_t d
+ 
+ 	g_assert(!j_db_iterator_next(iterator, NULL));
+ 
++        j_hdf5_log(object->file.name, "a", 'O', NULL, object, NULL);
+ 	return object;
+ 
+ _error:
+@@ -374,6 +376,7 @@ H5VL_julea_db_file_get(void* obj, H5VL_file_get_t get_type, hid_t dxpl_id, void*
+ 
+ 	g_return_val_if_fail(object->type == J_HDF5_OBJECT_TYPE_FILE, 1);
+ 
++	j_hdf5_log(object->file.name, "a", 'G', NULL, object, NULL);
+ 	g_critical("%s NOT implemented !!", G_STRLOC);
+ 	g_assert_not_reached();
+ }
+@@ -426,6 +429,7 @@ H5VL_julea_db_file_close(void* obj, hid_t dxpl_id, void** req)
+ 
+ 	g_return_val_if_fail(object->type == J_HDF5_OBJECT_TYPE_FILE, 1);
+ 
++	j_hdf5_log(object->file.name, "a", 'S', "file closed", object, NULL);
+ 	H5VL_julea_db_object_unref(object);
+ 
+ 	return 0;
+diff --git a/lib/hdf5-db/jhdf5-db-group.c b/lib/hdf5-db/jhdf5-db-group.c
+index b7d4d0b2..61ba6b4e 100644
+--- a/lib/hdf5-db/jhdf5-db-group.c
++++ b/lib/hdf5-db/jhdf5-db-group.c
+@@ -313,7 +313,7 @@ H5VL_julea_db_group_create(void* obj, const H5VL_loc_params_t* loc_params, const
+ 	{
+ 		j_goto_error();
+ 	}
+-
++	j_hdf5_log(file->file.name, "a", 'C', NULL, object, parent);
+ 	return object;
+ 
+ _error:
+@@ -388,6 +388,7 @@ H5VL_julea_db_group_open(void* obj, const H5VL_loc_params_t* loc_params, const c
+ 		j_goto_error();
+ 	}
+ 
++	j_hdf5_log(file->file.name, "a", 'O', NULL, object, NULL);
+ 	return object;
+ 
+ _error:
+@@ -410,6 +411,7 @@ H5VL_julea_db_group_get(void* obj, H5VL_group_get_t get_type, hid_t dxpl_id, voi
+ 
+ 	g_return_val_if_fail(object->type == J_HDF5_OBJECT_TYPE_GROUP, 1);
+ 
++	j_hdf5_log(object->group.file->file.name, "a", 'G', NULL, object, NULL);
+ 	g_critical("%s NOT implemented !!", G_STRLOC);
+ 	g_assert_not_reached();
+ }
+@@ -462,6 +464,7 @@ H5VL_julea_db_group_close(void* obj, hid_t dxpl_id, void** req)
+ 
+ 	g_return_val_if_fail(object->type == J_HDF5_OBJECT_TYPE_GROUP, 1);
+ 
++	j_hdf5_log(object->group.file->file.name, "a", 'S', NULL, object, NULL); 
+ 	H5VL_julea_db_object_unref(object);
+ 
+ 	return 0;
+diff --git a/lib/hdf5-db/jhdf5-db.c b/lib/hdf5-db/jhdf5-db.c
+index 14d80a16..e6970a57 100644
+--- a/lib/hdf5-db/jhdf5-db.c
++++ b/lib/hdf5-db/jhdf5-db.c
+@@ -369,3 +369,166 @@ j_hdf5_set_semantics(JSemantics* semantics)
+ 
+ 	//FIXME implement this
+ }
++
++
++#define JULEA_LOGFILE_ENDING "_JULEA_LOG.log"
++char* j_get_logname(const char *filename){
++	//filename = replacestring(replacestring(filename, "\\", "/"), "//", "/");
++	filename = j_helper_str_replace(j_helper_str_replace(filename, "\\", "/"), "//", "/");
++	char *name = malloc(strlen(filename)*sizeof(char));
++	if(strcmp(filename+strlen(filename)-1, "/") == 0){
++		sprintf(name, "%d%s", rand(), JULEA_LOGFILE_ENDING);
++		strcat(filename, name);
++	} else {
++		char *oldname = strrchr(filename, '/');
++		//printf("%s\n", oldname == NULL ? "filename" : "oldname");
++		char *last = strrchr(oldname == NULL ? filename : oldname+1, '.');
++		if(last){
++			//filename = replacestring(filename, last, JULEA_LOGFILE_ENDING);
++			filename = j_helper_str_replace(filename, last, JULEA_LOGFILE_ENDING);
++		} else {
++			strcat(filename, JULEA_LOGFILE_ENDING);
++		}
++	}
++	free(name);
++	return filename;
++}
++
++static void j_hdf5_log(char* _filename, char *mode, char operation, const char *message, JHDF5Object_t *object, JHDF5Object_t *parent){
++	const char *logtypes = getenv("JULEA_HDF5_LOG_TYPES");
++	const char *logoperations = getenv("JULEA_HDF5_LOG_OPERATIONS");
++	const char *logvariant = getenv("JULEA_HDF5_LOG_VARIANT");
++
++	//printf("logtypes: %s, logoperations: %s, logvariant: %s\n", logtypes, logoperations, logvariant);
++	if(logtypes == NULL || logoperations == NULL || logvariant == NULL){
++		//printf("environment variables not set\n");
++		return;
++	}
++
++	char *filename = strdup(_filename);
++
++	//printf("oldname: %s\n", filename);
++	filename = j_get_logname(filename);
++	//printf("newname: %s\n", filename);
++	if(!object)
++		return;
++
++	char objecttype = ' ';
++	char *name = NULL;
++	char *parentname = NULL;
++	if(parent != NULL){
++		switch(parent->type)
++		{
++			case J_HDF5_OBJECT_TYPE_FILE:
++				parentname = strdup(parent->file.name);
++				break;
++			case J_HDF5_OBJECT_TYPE_DATASET:
++				parentname = strdup(parent->dataset.name);
++				break;
++			case J_HDF5_OBJECT_TYPE_ATTR:
++				parentname = strdup(parent->attr.name);
++				break;
++			case J_HDF5_OBJECT_TYPE_GROUP:
++				parentname = strdup(parent->group.name);
++				break;
++		}
++	}
++
++	switch(object->type)
++	{
++		case J_HDF5_OBJECT_TYPE_FILE:
++			objecttype = 'F';
++			name = strdup(object->file.name);
++			break;
++		case J_HDF5_OBJECT_TYPE_DATASET:
++			objecttype = 'D';
++			name = strdup(object->dataset.name);
++			break;
++		case J_HDF5_OBJECT_TYPE_ATTR:
++			objecttype = 'A';
++			name = strdup(object->attr.name);
++			break;
++		case J_HDF5_OBJECT_TYPE_GROUP:
++			objecttype = 'G';
++			name = strdup(object->group.name);
++			break;
++		case J_HDF5_OBJECT_TYPE_DATATYPE:
++			objecttype = 'T';
++			name = "A datatype has no name";
++			break;
++		case J_HDF5_OBJECT_TYPE_SPACE:
++			objecttype = 'S';
++			name = "A space has no name";
++			break;
++		case _J_HDF5_OBJECT_TYPE_COUNT:
++			objecttype = 'C';
++			name = "A count has no name";
++			break;
++		default:
++			printf("J_HDF5_OBJECT_TYPE '%i' not definded\n", object->type);
++			g_assert_not_reached();
++			j_goto_error();
++	}
++
++	if(((strcmp(logtypes, "All") == 0 || strchr(logtypes, objecttype)) && (strcmp(logoperations, "All") == 0 || strchr(logoperations, operation))) || (strcmp(logvariant, "G") == 0 && objecttype == 'F' && operation == 'C' || operation == 'S')){
++		if(strcmp(logvariant, "F") == 0){
++			FILE *fp = fopen(filename, mode);
++			if(fp == NULL){
++				g_debug("JULEA logfile \"%s\" could not be opened\n", filename);
++			} else{
++				 if(operation == 'C' && objecttype != 'F')
++					fprintf(fp, "[%c]\t[%c - %s(%i) -> %s(%i)]\t%s\n", operation, objecttype, parentname, *(const gint32*) parent->backend_id, name, *(const gint32*) object->backend_id, message ? message : "");
++				else
++					fprintf(fp, "[%c]\t[%c - %s(%i)]\t%s\n", operation, objecttype, name,*(const gint32*) object->backend_id, message ? message : "");
++				fclose(fp);
++			}
++		}
++		if(strcmp(logvariant, "G") == 0){
++			FILE *fp = fopen(filename, mode);
++			if(fp == NULL){
++				g_debug("JULEA logfile \"%s\" could not be opened\n", filename);
++			} else {
++				switch(operation)
++				{
++					case 'C':
++						if(objecttype == 'F'){
++							fprintf(fp, "digraph g { \"%s%i\" [label=\"/\"];\n", name, *(const gint32*) object->backend_id);
++						} else{
++							const char *linkformat =  "\"%s%i\" -> \"%s%i\" [label=\"%s\"%s];\n";
++							const char *labelformat = "\"%s%i\" [label=\"%s\"%s];\n";
++							char *linkstyle = NULL;
++							char *labelstyle = NULL;
++							if(objecttype == 'A'){
++								linkstyle = ", style=dotted";
++							} else if(objecttype == 'D'){
++								labelstyle = ", shape=box";
++							}
++							fprintf(fp, labelformat, name, *(const gint32*) object->backend_id, "", labelstyle ? labelstyle : ""); 
++							fprintf(fp, linkformat, parentname,*(const gint32*) parent->backend_id, name, *(const gint32*) object->backend_id, name, linkstyle ? linkstyle : "");
++						}
++						break;
++					case 'W':
++						fprintf(fp, "\"%s%i\" [style=filled];\n", name, *(const gint32*) object->backend_id);
++						break;
++					case 'S':
++						if(objecttype == 'F')
++							fprintf(fp, "}");
++						break;
++				}
++				fclose(fp);
++			}
++		}
++		if(strcmp(logvariant, "D") == 0){
++			g_debug("[%c]\t[%c - %s]\t%s\n", operation, objecttype, name, message ? message : "");
++		}
++	}
++
++	free(name);
++	free(filename);
++	if(parentname)
++		free(parentname);
++	return;
++_error:
++	g_debug("j_hdf5_log HDF5_OBJECTTYPE '%i' not defined", object->type);
++	return;
++}
+diff --git a/lib/hdf5-db/jhdf5-db.h b/lib/hdf5-db/jhdf5-db.h
+index da37f642..fb040764 100644
+--- a/lib/hdf5-db/jhdf5-db.h
++++ b/lib/hdf5-db/jhdf5-db.h
+@@ -124,3 +124,5 @@ H5VL_julea_db_object_unref(JHDF5Object_t* object);
+ 	} while (0)
+ 
+ #endif
++
++static void j_hdf5_log(char *_filename, char *mode, char operation, const char *message, JHDF5Object_t *object, JHDF5Object_t *parent);

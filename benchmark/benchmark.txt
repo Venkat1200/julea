@@ -194,26 +194,24 @@ j_benchmark_run_one(BenchmarkRun* run)
 			g_print(" (%.0f/s)", (gdouble)run->operations / elapsed_time);
 		}
 
+		if (run->bytes != 0)
+		{
+			g_autofree gchar* size = NULL;
+
+			size = g_format_size((gdouble)run->bytes / elapsed_time);
+			g_print(" (%s/s)", size);
+		}
 
 		g_print(" [%.3f seconds]", elapsed_total);
 
 		if (run->operations != 0)
 		{
-			g_print(" (%.3f ms)", (gdouble) elapsed_time*1000000/run->operations );
-		 }
-                 if (run->bytes != 0)
-                 {
-                         g_autofree gchar* size = NULL;
- 
-                         size = g_format_size((gdouble)run->bytes / elapsed_time);
-                         g_print(" (%s/s)\n", size);
-                 }else   g_print("\n");
-	       	
+			g_print(" (%.3f microseconds)\n", (gdouble) elapsed_time*1000000/run->operations );
+		 } 
 	}
 	else
 	{
 		g_print("%s%f", opt_machine_separator, elapsed_time);
-
 
 		if (run->operations != 0)
 		{
@@ -259,7 +257,7 @@ j_benchmark_run_all(void)
 		gsize pad;
 
 		left = "Name";
-		right = "Duration (Operations/s) (Throughput/s) [Total Duration] [Latency] [Transfer]  ";
+		right = "Duration (Operations/s) (Throughput/s) [Total Duration] [Latency]  ";
 		pad = j_benchmark_name_max + 2 - strlen(left);
 
 		g_print("Name");

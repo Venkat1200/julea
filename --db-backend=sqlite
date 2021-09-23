@@ -1,0 +1,27 @@
+Usage:
+  julea-config [OPTION…]
+
+Help Options:
+  -h, --help                            Show help options
+
+Application Options:
+  --user                                Write user configuration
+  --system                              Write system configuration
+  --read                                Read configuration
+  --name=julea                          Configuration name
+  --object-servers=host1,host2:port     Object servers to use
+  --kv-servers=host1,host2:port         Key-value servers to use
+  --db-servers=host1,host2:port         Database servers to use
+  --object-backend=posix|null|gio|…     Object backend to use
+  --object-component=client|server      Object component to use
+  --object-path=/path/to/storage        Object path to use
+  --kv-backend=posix|null|gio|…         Key-value backend to use
+  --kv-component=client|server          Key-value component to use
+  --kv-path=/path/to/storage            Key-value path to use
+  --db-backend=sqlite|null|…            Database backend to use
+  --db-component=client|server          Database component to use
+  --db-path=/path/to/storage            Database path to use
+  --max-operation-size=0                Maximum size of an operation
+  --max-connections=0                   Maximum number of connections
+  --stripe-size=0                       Default stripe size
+
