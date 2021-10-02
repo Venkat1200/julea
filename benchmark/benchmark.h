@@ -30,6 +30,8 @@ struct BenchmarkRun
 	guint iterations;
 	guint64 operations;
 	guint64 bytes;
+	gdouble min_latency;
+        gdouble max_latency;
 };
 
 typedef struct BenchmarkRun BenchmarkRun;

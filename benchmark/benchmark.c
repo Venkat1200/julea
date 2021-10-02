@@ -115,6 +115,8 @@ j_benchmark_add(gchar const* name, BenchmarkFunc benchmark_func)
 	run->iterations = 0;
 	run->operations = 0;
 	run->bytes = 0;
+	run->min_latency=-1;
+        run->max_latency=-1;
 
 	j_benchmarks = g_list_prepend(j_benchmarks, run);
 }
@@ -201,7 +203,17 @@ j_benchmark_run_one(BenchmarkRun* run)
 		{
 			g_print(" (%.3f ms)", (gdouble) elapsed_time*1000000/run->operations );
 		 }
-                 if (run->bytes != 0)
+
+                 
+		if (!(run->min_latency < 0))
+                 {
+                         g_print(" (%.2f ms(-))", ((gdouble)run->min_latency));
+                 }else   g_print(" ");
+				 if (!(run->max_latency < 0))
+                 {
+		         g_print(" (%.2f ms(+))", ((gdouble)run->max_latency));
+                 }else   g_print(" ");		
+		if (run->bytes != 0)
                  {
                          g_autofree gchar* size = NULL;
  
@@ -233,6 +245,26 @@ j_benchmark_run_one(BenchmarkRun* run)
 			g_print("%s-", opt_machine_separator);
 		}
 
+		if (run->min_latency < 0)
+                {
+                g_print("%s-", opt_machine_separator);
+
+                } 
+                else
+                {
+                g_print("%s%f", opt_machine_separator, run->min_latency);
+                }
+
+                if (run->max_latency < 0)
+                { 
+                g_print("%s-", opt_machine_separator);
+
+                }
+                else
+                {
+                g_print("%s%f", opt_machine_separator, run->max_latency);
+                }
+
 		g_print("%s%f\n", opt_machine_separator, elapsed_total);
 	}
 
@@ -259,7 +291,7 @@ j_benchmark_run_all(void)
 		gsize pad;
 
 		left = "Name";
-		right = "Duration (Operations/s) (Throughput/s) [Total Duration] [Latency] [Transfer]  ";
+		right = "Duration (Operations/s) (Throughput/s) [Total Duration] [Latency] [Min Latency] [Max Latency] [Transfer]  ";
 		pad = j_benchmark_name_max + 2 - strlen(left);
 
 		g_print("Name");
