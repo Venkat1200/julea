@@ -18,8 +18,10 @@
 
 #ifndef JULEA_BENCHMARK_H
 #define JULEA_BENCHMARK_H
-
+ 
 #include <glib.h>
+
+    
 
 struct BenchmarkRun
 {
@@ -31,7 +33,8 @@ struct BenchmarkRun
 	guint64 operations;
 	guint64 bytes;
 	gdouble min_latency;
-        gdouble max_latency;
+    gdouble max_latency;
+	Node* latency;
 };
 
 typedef struct BenchmarkRun BenchmarkRun;

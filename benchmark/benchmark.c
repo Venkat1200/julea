@@ -26,6 +26,8 @@
 #include <julea.h>
 
 #include "benchmark.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 static gint opt_duration = 1;
 static gboolean opt_list = FALSE;
@@ -117,6 +119,7 @@ j_benchmark_add(gchar const* name, BenchmarkFunc benchmark_func)
 	run->bytes = 0;
 	run->min_latency=-1;
         run->max_latency=-1;
+	run->latency=NULL;
 
 	j_benchmarks = g_list_prepend(j_benchmarks, run);
 }
