@@ -212,7 +212,7 @@ j_benchmark_run_one(BenchmarkRun* run)
 		 if (run->operations != 0)
 		for(guint64 ti=0;ti<run->operations;ti++)
 		{
-			88printf(" (%.3f ms)\n",run->latencies[ti]);
+			//printf(" (%.3f ms)\n",run->latencies[ti]);
 		}
 		
                  
