@@ -82,7 +82,9 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 		qsort(latencies, n, sizeof(double), compare);
 		for(int a=0;a<n;a++)
 		printf("%.3f\n",latencies[a]);
-		 
+		int perc=(int)((gdouble)0.90*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy=latencies[perc];
 		/* FIXME overhead? */
 		while ((guint64)g_atomic_int_get(&benchmark_background_operation_counter) != n)
 		{
