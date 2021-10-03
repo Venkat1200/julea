@@ -207,8 +207,13 @@ j_benchmark_run_one(BenchmarkRun* run)
 		if (run->operations != 0)
 		{
 			g_print(" (%.3f ms)", (gdouble) elapsed_time*1000000/run->operations );
+			
 		 }
-
+		for(int ti=0;ti<run->operations;ti++)
+		{
+			printf(" (%.3f ms)\n",run->latencies[ti]);
+		}
+		
                  
 		if (!(run->min_latency < 0))
                  {
