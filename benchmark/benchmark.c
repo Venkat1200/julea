@@ -296,7 +296,7 @@ j_benchmark_run_all(void)
 		gsize pad;
 
 		left = "Name";
-		right = "Duration (Operations/s) (Throughput/s) [Total Duration] [Latency] [Min Latency] [Max Latency] [90 Latency] [Transfer]  ";
+		right = "Duration (Operations/s) (Throughput/s) [Total Duration] [Latency] [Min Latency] [Max Latency] [95 Latency] [Transfer]  ";
 		pad = j_benchmark_name_max + 2 - strlen(left);
 
 		g_print("Name");
