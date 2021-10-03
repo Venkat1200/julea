@@ -216,7 +216,7 @@ j_benchmark_run_one(BenchmarkRun* run)
                  }else   g_print(" ");		
 		if (!(run->percLatnecy < 0))
                  {
-                         g_print(" (%.2f ms(-))", ((gdouble)run->percLatnecy));
+                         g_print(" (%.2f ms(*))", ((gdouble)run->percLatnecy));
                  }else   g_print(" ");
 		if (run->bytes != 0)
                  {
