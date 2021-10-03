@@ -26,10 +26,25 @@
 
 #include "benchmark.h"
 
+/**********************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+static int compare (const void * a, const void * b)
+{
+    if (*(const double*)a > *(const double*)b) return 1;
+    else if (*(const double*)a < *(const double*)b) return -1;
+    else return 0;
+}
+/**********************************/
 static void
 benchmark_cache_get_release(BenchmarkRun* run)
 {
 	guint const n = 100000;
+/**********************************/
+	int perc;
+	double latencies[n];
+/**********************************/
 
 	JCache* cache;
 
@@ -45,14 +60,42 @@ benchmark_cache_get_release(BenchmarkRun* run)
 
 			buf = j_cache_get(cache, 1);
 			j_cache_release(cache, buf);
-		}
-	}
+			
+			
+			/**********************************/
+			latency =1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i]=latency;
+                        if(run->min_latency < 0){
+                            run->min_latency=latency;
+                            run->max_latency=latency;
 
+                       }else{
+                            if(latency>run->max_latency)run->max_latency=latency;
+                            if(latency<run->min_latency)run->min_latency=latency;
+                        }
+			/**********************************/
+			
+			
+		}
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc=(int)((gdouble)0.95*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy95=latencies[perc];
+		perc=(int)((gdouble)0.90*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy90=latencies[perc];
+		/**********************************/
+
+
+	}
 	j_benchmark_timer_stop(run);
 
 	j_cache_free(cache);
 
 	run->operations = n * 2;
+	
+	
 }
 
 void
