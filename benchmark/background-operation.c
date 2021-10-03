@@ -25,9 +25,21 @@
 #include <jbackground-operation.h>
 
 #include "benchmark.h"
+
+
+/**********************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+static int compare (const void * a, const void * b)
+{
+    if (*(const double*)a > *(const double*)b) return 1;
+    else if (*(const double*)a < *(const double*)b) return -1;
+    else return 0;
+}
+/**********************************/
+
+
 gint benchmark_background_operation_counter;
 
 static gpointer
@@ -39,21 +51,22 @@ on_background_operation_completed(gpointer data)
 
 	return NULL;
 }
-static int compare (const void * a, const void * b)
-{
-    if (*(const double*)a > *(const double*)b) return 1;
-    else if (*(const double*)a < *(const double*)b) return -1;
-    else return 0;
-}
 static void
 benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 {
 	guint const n = 100000;
 	
     gdouble latency;
-	int perc;
+
 	JBackgroundOperation* background_operation;
+
+
+/**********************************/
+	int perc;
 	double latencies[n];
+/**********************************/
+
+
 	j_benchmark_timer_start(run);
 
 	while (j_benchmark_iterate(run))
@@ -68,7 +81,9 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 			background_operation = j_background_operation_new(on_background_operation_completed, NULL);
 			j_background_operation_unref(background_operation);
 			g_timer_stop(func_timer);
-//			g_print("%s (%.0f/s)\n", run->name ,1000000* g_timer_elapsed(func_timer, NULL));
+			
+			
+			/**********************************/
 			latency =1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i]=latency;
                         if(run->min_latency < 0){
@@ -79,16 +94,23 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
                             if(latency>run->max_latency)run->max_latency=latency;
                             if(latency<run->min_latency)run->min_latency=latency;
                         }
+			/**********************************/
+			
+			
 		}
+		
+		
+		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
-		//for(int a=0;a<n;a++)
-		//printf("%.3f\n",latencies[a]);
 		perc=(int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy95=latencies[perc];
 		perc=(int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90=latencies[perc];
+		/**********************************/
+
+		
 		/* FIXME overhead? */
 		while ((guint64)g_atomic_int_get(&benchmark_background_operation_counter) != n)
 		{
