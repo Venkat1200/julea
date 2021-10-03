@@ -209,7 +209,7 @@ j_benchmark_run_one(BenchmarkRun* run)
 			g_print(" (%.3f ms)", (gdouble) elapsed_time*1000000/run->operations );
 			
 		 }
-		for(int ti=0;ti<run->operations;ti++)
+		for(guint64 ti=0;ti<run->operations;ti++)
 		{
 			printf(" (%.3f ms)\n",run->latencies[ti]);
 		}
