@@ -34,7 +34,7 @@ struct BenchmarkRun
 	guint64 bytes;
 	gdouble min_latency;
     gdouble max_latency;
-	gdouble* latencies;
+	double* latencies;
 };
 
 typedef struct BenchmarkRun BenchmarkRun;
