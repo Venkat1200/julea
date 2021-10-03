@@ -44,10 +44,10 @@ static void
 benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 {
 	guint const n = 100000;
-	run->latencies=(double*)malloc(run->operations*sizeof(double));
+	
     gdouble latency;
 	JBackgroundOperation* background_operation;
-
+	run->latencies=(double*)malloc(run->operations*sizeof(double));
 	j_benchmark_timer_start(run);
 
 	while (j_benchmark_iterate(run))
