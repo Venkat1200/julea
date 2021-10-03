@@ -47,7 +47,7 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 	
     gdouble latency;
 	JBackgroundOperation* background_operation;
-	run->latencies=(double*)malloc(run->operations*sizeof(double));
+	run->latencies=(double*)malloc(n*sizeof(double));
 	j_benchmark_timer_start(run);
 
 	while (j_benchmark_iterate(run))
