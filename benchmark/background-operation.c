@@ -39,7 +39,7 @@ on_background_operation_completed(gpointer data)
 
 	return NULL;
 }
-static int compare (const void * a, const void * b)
+static int compare ( void * a,  void * b)
 {
     if (*(double*)a > *(double*)b) return 1;
     else if (*(double*)a < *(double*)b) return -1;
