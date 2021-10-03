@@ -62,7 +62,7 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 
 /**********************************/
     gdouble latency;
-	int perc;
+	guint perc;
 	double latencies[n];
 /**********************************/
 

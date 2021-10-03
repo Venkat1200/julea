@@ -42,7 +42,7 @@ benchmark_cache_get_release(BenchmarkRun* run)
 {
 	guint const n = 100000;
 /**********************************/
-	int perc;
+	guint perc;
 	double latencies[n];
     gdouble latency;
 	
