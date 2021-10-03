@@ -25,11 +25,28 @@
 #include <jmessage.h>
 
 #include "benchmark.h"
+/**********************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+static int compare (const void * a, const void * b)
+{
+    if (*(const double*)a > *(const double*)b) return 1;
+    else if (*(const double*)a < *(const double*)b) return -1;
+    else return 0;
+}
+/**********************************/
 
 static void
 _benchmark_message_new(BenchmarkRun* run, gboolean append)
 {
 	guint const n = 100000;
+/**********************************/
+	guint perc;
+	double latencies[n];
+    gdouble latency;
+	
+/**********************************/
 	guint const m = 100;
 	guint64 const dummy = 42;
 	gsize const size = m * sizeof(guint64);
@@ -40,6 +57,12 @@ _benchmark_message_new(BenchmarkRun* run, gboolean append)
 	{
 		for (guint i = 0; i < n; i++)
 		{
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
+			
 			g_autoptr(JMessage) message = NULL;
 
 			message = j_message_new(J_MESSAGE_NONE, (append) ? size : 0);
@@ -51,7 +74,31 @@ _benchmark_message_new(BenchmarkRun* run, gboolean append)
 					j_message_append_8(message, &dummy);
 				}
 			}
+			/**********************************/
+			
+			latency =1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i]=latency;
+                        if(run->min_latency < 0){
+                            run->min_latency=latency;
+                            run->max_latency=latency;
+
+                       }else{
+                            if(latency>run->max_latency)run->max_latency=latency;
+                            if(latency<run->min_latency)run->min_latency=latency;
+                        }
+			/**********************************/
+			
 		}
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc=(int)((gdouble)0.95*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy95=latencies[perc];
+		perc=(int)((gdouble)0.90*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy90=latencies[perc];
+		/**********************************/
+
 	}
 
 	j_benchmark_timer_stop(run);
@@ -75,6 +122,13 @@ static void
 _benchmark_message_add_operation(BenchmarkRun* run, gboolean large)
 {
 	guint const n = (large) ? 100 : 10000;
+/**********************************/
+	guint perc;
+	double latencies[n];
+    gdouble latency;
+	
+/**********************************/
+	
 	guint const m = (large) ? 10000 : 100;
 	guint64 const dummy = 42;
 
@@ -84,6 +138,12 @@ _benchmark_message_add_operation(BenchmarkRun* run, gboolean large)
 	{
 		for (guint i = 0; i < n; i++)
 		{
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
+			
 			g_autoptr(JMessage) message = NULL;
 
 			message = j_message_new(J_MESSAGE_NONE, 0);
@@ -93,7 +153,31 @@ _benchmark_message_add_operation(BenchmarkRun* run, gboolean large)
 				j_message_add_operation(message, sizeof(guint64));
 				j_message_append_8(message, &dummy);
 			}
+			/**********************************/
+			
+			latency =1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i]=latency;
+                        if(run->min_latency < 0){
+                            run->min_latency=latency;
+                            run->max_latency=latency;
+
+                       }else{
+                            if(latency>run->max_latency)run->max_latency=latency;
+                            if(latency<run->min_latency)run->min_latency=latency;
+                        }
+			/**********************************/
+			
 		}
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc=(int)((gdouble)0.95*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy95=latencies[perc];
+		perc=(int)((gdouble)0.90*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy90=latencies[perc];
+		/**********************************/
+
 	}
 
 	j_benchmark_timer_stop(run);
