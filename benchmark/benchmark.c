@@ -119,7 +119,7 @@ j_benchmark_add(gchar const* name, BenchmarkFunc benchmark_func)
 	run->bytes = 0;
 	run->min_latency=-1;
     run->max_latency=-1;
-	run->latencies=(int*)malloc(1*sizeof(int));
+	run->latencies=(gdouble*)malloc(1*sizeof(gdouble));
 	run->latencies[0]=0;
 
 	j_benchmarks = g_list_prepend(j_benchmarks, run);
@@ -189,7 +189,7 @@ j_benchmark_run_one(BenchmarkRun* run)
 	{
 		run->operations *= run->iterations;
 		run->bytes *= run->iterations;
-		run->latencies=(int*)malloc(run->operations*sizeof(int));
+		run->latencies=(gdouble*)malloc(run->operations*sizeof(gdouble));
 	}
 
 	if (!opt_machine_readable)
