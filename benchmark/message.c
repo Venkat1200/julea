@@ -205,5 +205,4 @@ benchmark_message(void)
 	j_benchmark_add("/message/new-append", benchmark_message_new_append);
 	j_benchmark_add("/message/add-operation-small", benchmark_message_add_operation_small);
 	j_benchmark_add("/message/add-operation-large", benchmark_message_add_operation_large);
-	j_benchmark_add("/message/workload1", benchmark_message_new);
 }
