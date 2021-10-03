@@ -189,6 +189,7 @@ j_benchmark_run_one(BenchmarkRun* run)
 	{
 		run->operations *= run->iterations;
 		run->bytes *= run->iterations;
+		run->latencies=(int*)malloc(run->operations*sizeof(int));
 	}
 
 	if (!opt_machine_readable)
