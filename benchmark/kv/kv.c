@@ -194,13 +194,7 @@ _benchmark_kv_get(BenchmarkRun* run, gboolean use_batch)
 
 			name = g_strdup_printf("benchmark-%d", i);
 			object = j_kv_new("benchmark", name);
-			j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
 
-			if (!use_batch)
-			{
-				ret = j_batch_execute(batch);
-				g_assert_true(ret);
-			}
 			/**********************************/
 			
 			latency =1000000* g_timer_elapsed(func_timer, NULL);
@@ -214,6 +208,13 @@ _benchmark_kv_get(BenchmarkRun* run, gboolean use_batch)
                             if(latency<run->min_latency)run->min_latency=latency;
                         }
 			/**********************************/
+
+			j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
+			if (!use_batch)
+			{
+				ret = j_batch_execute(batch);
+				g_assert_true(ret);
+			}
 		}
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
