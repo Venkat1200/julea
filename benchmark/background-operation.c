@@ -27,7 +27,7 @@
 #include "benchmark.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <math.h>
 gint benchmark_background_operation_counter;
 
 static gpointer
@@ -39,7 +39,12 @@ on_background_operation_completed(gpointer data)
 
 	return NULL;
 }
-
+int compare (const void * a, const void * b)
+{
+    if (*(double*)a > *(double*)b) return 1;
+    else if (*(double*)a < *(double*)b) return -1;
+    else return 0;
+}
 static void
 benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 {
@@ -76,6 +81,7 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 		}
 		for(int a=0;a<n;a++)
 		printf("%.3f\n",latencies[a]);
+		 qsort(latencies, n, sizeof(double), compare);
 		/* FIXME overhead? */
 		while ((guint64)g_atomic_int_get(&benchmark_background_operation_counter) != n)
 		{
