@@ -79,9 +79,10 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
                             if(latency<run->min_latency)run->min_latency=latency;
                         }
 		}
+		qsort(latencies, n, sizeof(double), compare);
 		for(int a=0;a<n;a++)
 		printf("%.3f\n",latencies[a]);
-		 qsort(latencies, n, sizeof(double), compare);
+		 
 		/* FIXME overhead? */
 		while ((guint64)g_atomic_int_get(&benchmark_background_operation_counter) != n)
 		{
