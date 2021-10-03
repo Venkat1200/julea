@@ -118,8 +118,8 @@ j_benchmark_add(gchar const* name, BenchmarkFunc benchmark_func)
 	run->operations = 0;
 	run->bytes = 0;
 	run->min_latency=-1;
-        run->max_latency=-1;
-	run->latency=NULL;
+    run->max_latency=-1;
+	run->latencies=(int*)malloc(sizeof(int));
 
 	j_benchmarks = g_list_prepend(j_benchmarks, run);
 }
