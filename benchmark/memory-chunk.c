@@ -25,28 +25,11 @@
 #include <jmemory-chunk.h>
 
 #include "benchmark.h"
-/**********************************/
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-static int compare (const void * a, const void * b)
-{
-    if (*(const double*)a > *(const double*)b) return 1;
-    else if (*(const double*)a < *(const double*)b) return -1;
-    else return 0;
-}
-/**********************************/
 
 static void
 benchmark_memory_chunk_get(BenchmarkRun* run)
 {
 	guint const n = 10000000;
-/**********************************/
-	guint perc;
-	double latencies[n];
-    gdouble latency;
-	
-/**********************************/
 
 	JMemoryChunk* memory_chunk;
 
@@ -58,38 +41,8 @@ benchmark_memory_chunk_get(BenchmarkRun* run)
 	{
 		for (guint i = 0; i < n; i++)
 		{
-			/**********************************/
-			g_autoptr(GTimer) func_timer = NULL;
-			func_timer = g_timer_new();
-                        g_timer_start(func_timer);
-			/**********************************/
-			
 			j_memory_chunk_get(memory_chunk, 1);
-			/**********************************/
-			
-			latency =1000000* g_timer_elapsed(func_timer, NULL);
-			latencies[i]=latency;
-                        if(run->min_latency < 0){
-                            run->min_latency=latency;
-                            run->max_latency=latency;
-
-                       }else{
-                            if(latency>run->max_latency)run->max_latency=latency;
-                            if(latency<run->min_latency)run->min_latency=latency;
-                        }
-			/**********************************/
-			
 		}
-		/**********************************/
-		qsort(latencies, n, sizeof(double), compare);
-		perc=(int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy95=latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy90=latencies[perc];
-		/**********************************/
-
 
 		j_memory_chunk_reset(memory_chunk);
 	}
