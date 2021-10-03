@@ -57,12 +57,18 @@ benchmark_cache_get_release(BenchmarkRun* run)
 		for (guint i = 0; i < n; i++)
 		{
 			gpointer buf;
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
 
 			buf = j_cache_get(cache, 1);
 			j_cache_release(cache, buf);
 			
 			
 			/**********************************/
+			g_timer_stop(func_timer);
 			latency =1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i]=latency;
                         if(run->min_latency < 0){
