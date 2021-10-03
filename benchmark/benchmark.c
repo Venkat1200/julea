@@ -26,8 +26,6 @@
 #include <julea.h>
 
 #include "benchmark.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 static gint opt_duration = 1;
 static gboolean opt_list = FALSE;
@@ -118,9 +116,7 @@ j_benchmark_add(gchar const* name, BenchmarkFunc benchmark_func)
 	run->operations = 0;
 	run->bytes = 0;
 	run->min_latency=-1;
-    run->max_latency=-1;
-	
-	run->latencies[0]=0;
+        run->max_latency=-1;
 
 	j_benchmarks = g_list_prepend(j_benchmarks, run);
 }
@@ -189,7 +185,6 @@ j_benchmark_run_one(BenchmarkRun* run)
 	{
 		run->operations *= run->iterations;
 		run->bytes *= run->iterations;
-		
 	}
 
 	if (!opt_machine_readable)
@@ -207,14 +202,8 @@ j_benchmark_run_one(BenchmarkRun* run)
 		if (run->operations != 0)
 		{
 			g_print(" (%.3f ms)", (gdouble) elapsed_time*1000000/run->operations );
-			
 		 }
-		 if (run->operations != 0)
-		for(guint64 ti=0;ti<run->operations;ti++)
-		{
-			//printf(" (%.3f ms)\n",run->latencies[ti]);
-		}
-		
+
                  
 		if (!(run->min_latency < 0))
                  {

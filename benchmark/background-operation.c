@@ -25,8 +25,6 @@
 #include <jbackground-operation.h>
 
 #include "benchmark.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 gint benchmark_background_operation_counter;
 
@@ -44,10 +42,9 @@ static void
 benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 {
 	guint const n = 100000;
-	
-    gdouble latency;
+        gdouble latency;
 	JBackgroundOperation* background_operation;
-	run->latencies=(double*)malloc(n*sizeof(double));
+
 	j_benchmark_timer_start(run);
 
 	while (j_benchmark_iterate(run))
@@ -64,7 +61,7 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 			g_timer_stop(func_timer);
 //			g_print("%s (%.0f/s)\n", run->name ,1000000* g_timer_elapsed(func_timer, NULL));
 			latency =1000000* g_timer_elapsed(func_timer, NULL);
-			//run->latencies[i]=latency;
+			
                         if(run->min_latency < 0){
                             run->min_latency=latency;
                             run->max_latency=latency;
