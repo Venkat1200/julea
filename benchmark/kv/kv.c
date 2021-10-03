@@ -26,28 +26,11 @@
 #include <julea-kv.h>
 
 #include "benchmark.h"
-/**********************************/
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-static int compare (const void * a, const void * b)
-{
-    if (*(const double*)a > *(const double*)b) return 1;
-    else if (*(const double*)a < *(const double*)b) return -1;
-    else return 0;
-}
-/**********************************/
 
 static void
 _benchmark_kv_put(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = 1000;
-/**********************************/
-	guint perc;
-	double latencies[n];
-    gdouble latency;
-	
-/**********************************/
 
 	g_autoptr(JBatch) delete_batch = NULL;
 	g_autoptr(JBatch) batch = NULL;
@@ -64,11 +47,6 @@ _benchmark_kv_put(BenchmarkRun* run, gboolean use_batch)
 
 		for (guint i = 0; i < n; i++)
 		{
-			/**********************************/
-			g_autoptr(GTimer) func_timer = NULL;
-			func_timer = g_timer_new();
-                        g_timer_start(func_timer);
-			/**********************************/
 			g_autoptr(JKV) object = NULL;
 			g_autofree gchar* name = NULL;
 
@@ -83,29 +61,7 @@ _benchmark_kv_put(BenchmarkRun* run, gboolean use_batch)
 				ret = j_batch_execute(batch);
 				g_assert_true(ret);
 			}
-			/**********************************/
-			
-			latency =1000000* g_timer_elapsed(func_timer, NULL);
-			latencies[i]=latency;
-                        if(run->min_latency < 0){
-                            run->min_latency=latency;
-                            run->max_latency=latency;
-
-                       }else{
-                            if(latency>run->max_latency)run->max_latency=latency;
-                            if(latency<run->min_latency)run->min_latency=latency;
-                        }
-			/**********************************/
 		}
-		/**********************************/
-		qsort(latencies, n, sizeof(double), compare);
-		perc=(int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy95=latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy90=latencies[perc];
-		/**********************************/
 
 		if (use_batch)
 		{
@@ -183,9 +139,8 @@ _benchmark_kv_get(BenchmarkRun* run, gboolean use_batch)
 
 			name = g_strdup_printf("benchmark-%d", i);
 			object = j_kv_new("benchmark", name);
-
-
 			j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
+
 			if (!use_batch)
 			{
 				ret = j_batch_execute(batch);
@@ -224,12 +179,6 @@ static void
 _benchmark_kv_delete(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = 1000;
-/**********************************/
-	guint perc;
-	double latencies[n];
-    gdouble latency;
-	
-/**********************************/
 
 	g_autoptr(JBatch) batch = NULL;
 	g_autoptr(JSemantics) semantics = NULL;
@@ -257,11 +206,6 @@ _benchmark_kv_delete(BenchmarkRun* run, gboolean use_batch)
 
 		for (guint i = 0; i < n; i++)
 		{
-			/**********************************/
-			g_autoptr(GTimer) func_timer = NULL;
-			func_timer = g_timer_new();
-                        g_timer_start(func_timer);
-			/**********************************/
 			g_autoptr(JKV) object = NULL;
 			g_autofree gchar* name = NULL;
 
@@ -275,29 +219,7 @@ _benchmark_kv_delete(BenchmarkRun* run, gboolean use_batch)
 				ret = j_batch_execute(batch);
 				g_assert_true(ret);
 			}
-			/**********************************/
-			
-			latency =1000000* g_timer_elapsed(func_timer, NULL);
-			latencies[i]=latency;
-                        if(run->min_latency < 0){
-                            run->min_latency=latency;
-                            run->max_latency=latency;
-
-                       }else{
-                            if(latency>run->max_latency)run->max_latency=latency;
-                            if(latency<run->min_latency)run->min_latency=latency;
-                        }
-			/**********************************/
 		}
-		/**********************************/
-		qsort(latencies, n, sizeof(double), compare);
-		perc=(int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy95=latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy90=latencies[perc];
-		/**********************************/
 
 		if (use_batch)
 		{
@@ -327,12 +249,6 @@ static void
 _benchmark_kv_unordered_put_delete(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = 1000;
-/**********************************/
-	guint perc;
-	double latencies[n];
-    gdouble latency;
-	
-/**********************************/
 
 	g_autoptr(JBatch) batch = NULL;
 	g_autoptr(JSemantics) semantics = NULL;
@@ -347,11 +263,6 @@ _benchmark_kv_unordered_put_delete(BenchmarkRun* run, gboolean use_batch)
 	{
 		for (guint i = 0; i < n; i++)
 		{
-			/**********************************/
-			g_autoptr(GTimer) func_timer = NULL;
-			func_timer = g_timer_new();
-                        g_timer_start(func_timer);
-			/**********************************/
 			g_autoptr(JKV) object = NULL;
 			g_autofree gchar* name = NULL;
 
@@ -365,29 +276,7 @@ _benchmark_kv_unordered_put_delete(BenchmarkRun* run, gboolean use_batch)
 				ret = j_batch_execute(batch);
 				g_assert_true(ret);
 			}
-			/**********************************/
-			
-			latency =1000000* g_timer_elapsed(func_timer, NULL);
-			latencies[i]=latency;
-                        if(run->min_latency < 0){
-                            run->min_latency=latency;
-                            run->max_latency=latency;
-
-                       }else{
-                            if(latency>run->max_latency)run->max_latency=latency;
-                            if(latency<run->min_latency)run->min_latency=latency;
-                        }
-			/**********************************/
 		}
-		/**********************************/
-		qsort(latencies, n, sizeof(double), compare);
-		perc=(int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy95=latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy90=latencies[perc];
-		/**********************************/
 
 		if (use_batch)
 		{
