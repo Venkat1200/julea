@@ -64,7 +64,7 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 			g_timer_stop(func_timer);
 //			g_print("%s (%.0f/s)\n", run->name ,1000000* g_timer_elapsed(func_timer, NULL));
 			latency =1000000* g_timer_elapsed(func_timer, NULL);
-			run->latencies[n]=latency;
+			run->latencies[i]=latency;
                         if(run->min_latency < 0){
                             run->min_latency=latency;
                             run->max_latency=latency;
