@@ -85,7 +85,10 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 		//printf("%.3f\n",latencies[a]);
 		perc=(int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc=n-1;
-		run->percLatnecy=latencies[perc];
+		run->percLatnecy95=latencies[perc];
+		perc=(int)((gdouble)0.90*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy90=latencies[perc];
 		/* FIXME overhead? */
 		while ((guint64)g_atomic_int_get(&benchmark_background_operation_counter) != n)
 		{

@@ -34,7 +34,8 @@ struct BenchmarkRun
 	guint64 bytes;
 	gdouble min_latency;
     gdouble max_latency;
-	gdouble percLatnecy;
+	gdouble percLatnecy95;
+	gdouble percLatnecy90;
 	double* latencies;
 };
 

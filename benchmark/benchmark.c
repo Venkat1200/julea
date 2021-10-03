@@ -114,7 +114,8 @@ j_benchmark_add(gchar const* name, BenchmarkFunc benchmark_func)
 	run->timer_started = FALSE;
 	run->iterations = 0;
 	run->operations = 0;
-	run->percLatnecy = -1;
+	run->percLatnecy95 = -1;
+	run->percLatnecy90 = -1;
 	run->bytes = 0;
 	run->min_latency=-1;
         run->max_latency=-1;
@@ -214,9 +215,13 @@ j_benchmark_run_one(BenchmarkRun* run)
                  {
 		         g_print(" (%.2f ms(+))", ((gdouble)run->max_latency));
                  }else   g_print(" ");		
-		if (!(run->percLatnecy < 0))
+		if (!(run->percLatnecy90 < 0))
                  {
-                         g_print(" (%.2f ms(*))", ((gdouble)run->percLatnecy));
+                         g_print(" (%.2f ms(p90))", ((gdouble)run->percLatnecy90));
+                 }else   g_print(" ");
+		if (!(run->percLatnecy95 < 0))
+                 {
+                         g_print(" (%.2f ms(p95))", ((gdouble)run->percLatnecy95));
                  }else   g_print(" ");
 		if (run->bytes != 0)
                  {
@@ -296,7 +301,7 @@ j_benchmark_run_all(void)
 		gsize pad;
 
 		left = "Name";
-		right = "Duration (Operations/s) (Throughput/s) [Total Duration] [Latency] [Min Latency] [Max Latency] [95 Latency] [Transfer]  ";
+		right = "Duration (Operations/s) (Throughput/s) [Total Duration] [Latency] [Min Latency] [Max Latency] [90 Latency] [95 Latency] [Transfer]  ";
 		pad = j_benchmark_name_max + 2 - strlen(left);
 
 		g_print("Name");
