@@ -44,6 +44,8 @@ benchmark_cache_get_release(BenchmarkRun* run)
 /**********************************/
 	int perc;
 	double latencies[n];
+    gdouble latency;
+	
 /**********************************/
 
 	JCache* cache;

@@ -56,12 +56,12 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 {
 	guint const n = 100000;
 	
-    gdouble latency;
 
 	JBackgroundOperation* background_operation;
 
 
 /**********************************/
+    gdouble latency;
 	int perc;
 	double latencies[n];
 /**********************************/
@@ -75,15 +75,19 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 
 		for (guint i = 0; i < n; i++)
 		{
+			/**********************************/
 			g_autoptr(GTimer) func_timer = NULL;
 			func_timer = g_timer_new();
                         g_timer_start(func_timer);
+			/**********************************/
+
+
 			background_operation = j_background_operation_new(on_background_operation_completed, NULL);
 			j_background_operation_unref(background_operation);
-			g_timer_stop(func_timer);
-			
+
 			
 			/**********************************/
+			
 			latency =1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i]=latency;
                         if(run->min_latency < 0){
