@@ -29,6 +29,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+static int compare (const void * a, const void * b)
+{
+    if (*(const double*)a > *(const double*)b) return 1;
+    else if (*(const double*)a < *(const double*)b) return -1;
+    else return 0;
+}
 /**********************************/
 
 static void
