@@ -29,6 +29,18 @@
 
 #include "common.c"
 
+/**********************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+static int compare (const void * a, const void * b)
+{
+    if (*(const double*)a > *(const double*)b) return 1;
+    else if (*(const double*)a < *(const double*)b) return -1;
+    else return 0;
+}
+/**********************************/
+
 static void
 _benchmark_db_delete(BenchmarkRun* run, gchar const* namespace, gboolean use_batch, gboolean use_index_all, gboolean use_index_single)
 {
@@ -48,6 +60,12 @@ _benchmark_db_delete(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 	g_assert_nonnull(b_scheme);
 	g_assert_nonnull(run);
 
+/**********************************/
+	gint n=((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+    gdouble latency;
+	guint perc;
+	double latencies[n];
+/**********************************/
 	while (j_benchmark_iterate(run))
 	{
 		_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
@@ -56,6 +74,12 @@ _benchmark_db_delete(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 
 		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)); i++)
 		{
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
+			
 			g_autoptr(JDBEntry) entry = j_db_entry_new(b_scheme, &b_s_error);
 			g_autofree gchar* string = _benchmark_db_get_identifier(i);
 			g_autoptr(JDBSelector) selector = j_db_selector_new(b_scheme, J_DB_SELECTOR_MODE_AND, &b_s_error);
@@ -73,7 +97,31 @@ _benchmark_db_delete(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 				ret = j_batch_execute(batch);
 				g_assert_true(ret);
 			}
+			/**********************************/
+			
+			latency =1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i]=latency;
+                        if(run->min_latency < 0){
+                            run->min_latency=latency;
+                            run->max_latency=latency;
+
+                       }else{
+                            if(latency>run->max_latency)run->max_latency=latency;
+                            if(latency<run->min_latency)run->min_latency=latency;
+                        }
+			/**********************************/
+			
 		}
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc=(int)((gdouble)0.95*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy95=latencies[perc];
+		perc=(int)((gdouble)0.90*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy90=latencies[perc];
+		/**********************************/
+
 
 		if (use_batch)
 		{
@@ -111,12 +159,25 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
+/**********************************/
+	gint n=((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+    gdouble latency;
+	guint perc;
+	double latencies[n];
+/**********************************/
+
 	j_benchmark_timer_start(run);
 
 	while (j_benchmark_iterate(run))
 	{
 		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)); i++)
 		{
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
+			
 			gint64 i_signed = (((i + N_PRIME) * SIGNED_FACTOR) % CLASS_MODULUS) - CLASS_LIMIT;
 			g_autoptr(JDBSelector) selector = j_db_selector_new(b_scheme, J_DB_SELECTOR_MODE_AND, &b_s_error);
 			g_autoptr(JDBEntry) entry = j_db_entry_new(b_scheme, &b_s_error);
@@ -141,7 +202,31 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 				ret = j_batch_execute(batch);
 				g_assert_true(ret);
 			}
+			/**********************************/
+			
+			latency =1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i]=latency;
+                        if(run->min_latency < 0){
+                            run->min_latency=latency;
+                            run->max_latency=latency;
+
+                       }else{
+                            if(latency>run->max_latency)run->max_latency=latency;
+                            if(latency<run->min_latency)run->min_latency=latency;
+                        }
+			/**********************************/
+			
 		}
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc=(int)((gdouble)0.95*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy95=latencies[perc];
+		perc=(int)((gdouble)0.90*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy90=latencies[perc];
+		/**********************************/
+
 
 		if (use_batch)
 		{

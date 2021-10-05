@@ -29,6 +29,18 @@
 
 #include "common.c"
 
+/**********************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+static int compare (const void * a, const void * b)
+{
+    if (*(const double*)a > *(const double*)b) return 1;
+    else if (*(const double*)a < *(const double*)b) return -1;
+    else return 0;
+}
+/**********************************/
+
 static void
 _benchmark_db_get_simple(BenchmarkRun* run, gchar const* namespace, gboolean use_index_all, gboolean use_index_single)
 {
@@ -50,12 +62,25 @@ _benchmark_db_get_simple(BenchmarkRun* run, gchar const* namespace, gboolean use
 
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
+/**********************************/
+	gint n=((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+    gdouble latency;
+	guint perc;
+	double latencies[n];
+/**********************************/
+
 	j_benchmark_timer_start(run);
 
 	while (j_benchmark_iterate(run))
 	{
 		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)); i++)
 		{
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
+			
 			JDBType field_type;
 			g_autofree gpointer field_value;
 			gsize field_length;
@@ -78,7 +103,32 @@ _benchmark_db_get_simple(BenchmarkRun* run, gchar const* namespace, gboolean use
 			ret = j_db_iterator_get_field(iterator, "string", &field_type, &field_value, &field_length, &b_s_error);
 			g_assert_true(ret);
 			g_assert_null(b_s_error);
+			/**********************************/
+			
+			latency =1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i]=latency;
+                        if(run->min_latency < 0){
+                            run->min_latency=latency;
+                            run->max_latency=latency;
+
+                       }else{
+                            if(latency>run->max_latency)run->max_latency=latency;
+                            if(latency<run->min_latency)run->min_latency=latency;
+                        }
+			/**********************************/
+			
 		}
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc=(int)((gdouble)0.95*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy95=latencies[perc];
+		perc=(int)((gdouble)0.90*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy90=latencies[perc];
+		/**********************************/
+
+		
 	}
 
 	j_benchmark_timer_stop(run);
@@ -110,12 +160,25 @@ _benchmark_db_get_range(BenchmarkRun* run, gchar const* namespace, gboolean use_
 
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
+/**********************************/
+	gint n=N_GET_DIVIDER;
+    gdouble latency;
+	guint perc;
+	double latencies[n];
+/**********************************/
+
 	j_benchmark_timer_start(run);
 
 	while (j_benchmark_iterate(run))
 	{
 		for (gint i = 0; i < N_GET_DIVIDER; i++)
 		{
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
+			
 			JDBType field_type;
 			g_autofree gpointer field_value;
 			gsize field_length;
@@ -145,7 +208,32 @@ _benchmark_db_get_range(BenchmarkRun* run, gchar const* namespace, gboolean use_
 			ret = j_db_iterator_get_field(iterator, "string", &field_type, &field_value, &field_length, &b_s_error);
 			g_assert_true(ret);
 			g_assert_null(b_s_error);
+			/**********************************/
+			
+			latency =1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i]=latency;
+                        if(run->min_latency < 0){
+                            run->min_latency=latency;
+                            run->max_latency=latency;
+
+                       }else{
+                            if(latency>run->max_latency)run->max_latency=latency;
+                            if(latency<run->min_latency)run->min_latency=latency;
+                        }
+			/**********************************/
+			
 		}
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc=(int)((gdouble)0.95*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy95=latencies[perc];
+		perc=(int)((gdouble)0.90*(gdouble)n);
+		if(perc>=n)perc=n-1;
+		run->percLatnecy90=latencies[perc];
+		/**********************************/
+
+		
 	}
 
 	j_benchmark_timer_stop(run);
