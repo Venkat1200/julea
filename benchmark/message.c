@@ -90,13 +90,19 @@ _benchmark_message_new(BenchmarkRun* run, gboolean append)
 			
 		}
 		/**********************************/
-		qsort(latencies, n, sizeof(double), compare);
+		 qsort(latencies, n, sizeof(double), compare);
 		perc=(int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy95=latencies[perc];
 		perc=(int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90=latencies[perc];
+		
+		//-/
+		run->latency=0;
+		for (guint iin = 0; iin< n; iin++)
+		run->latency=run->latency+latencies[iin];
+		run->latency=run->latency/n;
 		/**********************************/
 
 	}
@@ -169,13 +175,19 @@ _benchmark_message_add_operation(BenchmarkRun* run, gboolean large)
 			
 		}
 		/**********************************/
-		qsort(latencies, n, sizeof(double), compare);
+		 qsort(latencies, n, sizeof(double), compare);
 		perc=(int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy95=latencies[perc];
 		perc=(int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90=latencies[perc];
+		
+		//-/
+		run->latency=0;
+		for (guint iin = 0; iin< n; iin++)
+		run->latency=run->latency+latencies[iin];
+		run->latency=run->latency/n;
 		/**********************************/
 
 	}
