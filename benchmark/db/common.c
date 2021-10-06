@@ -243,7 +243,7 @@ _benchmark_db_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const* namespac
 		}
 		/**********************************/
 		
-		qsort(latencies, n, sizeof(double), compare);
+		qsort(latencies, n, sizeof(double), compare1);
 		perc=(int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy95=latencies[perc];
