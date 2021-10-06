@@ -120,6 +120,12 @@ _benchmark_db_delete(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 		perc=(int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90=latencies[perc];
+		
+		//-/
+		run->latency=0;
+		for (guint iin = 0; iin< n; iin++)
+		run->latency=run->latency+latencies[iin];
+		run->latency=run->latency/n;
 		/**********************************/
 
 
@@ -225,6 +231,12 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 		perc=(int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90=latencies[perc];
+		
+		//-/
+		run->latency=0;
+		for (guint iin = 0; iin< n; iin++)
+		run->latency=run->latency+latencies[iin];
+		run->latency=run->latency/n;
 		/**********************************/
 
 
