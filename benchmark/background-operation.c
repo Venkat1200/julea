@@ -112,6 +112,12 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 		perc=(int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90=latencies[perc];
+		
+		//-/
+		run->latency=0;
+		for (guint iin = 0; iin< n; iin++)
+		run->latency=run->latency+latencies[iin];
+		run->latency=run->latency/n;
 		/**********************************/
 
 		
