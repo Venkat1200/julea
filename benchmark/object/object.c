@@ -111,6 +111,11 @@ _benchmark_object_create(BenchmarkRun* run, gboolean use_batch)
 		perc=(int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90=latencies[perc];
+		//-/
+		run->latency=0;
+		for (guint iin = 0; iin < n; iin++)
+		run->latency=run->latency+latencies[iin];
+		run->latency=run->latency/n;
 		/**********************************/
 
 
@@ -224,6 +229,11 @@ _benchmark_object_delete(BenchmarkRun* run, gboolean use_batch)
 		perc=(int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90=latencies[perc];
+		//-/
+		run->latency=0;
+		for (guint iin = 0; iin < n; iin++)
+		run->latency=run->latency+latencies[iin];
+		run->latency=run->latency/n;
 		/**********************************/
 
 
@@ -328,6 +338,11 @@ _benchmark_object_status(BenchmarkRun* run, gboolean use_batch)
 		perc=(int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90=latencies[perc];
+		//-/
+		run->latency=0;
+		for (guint iin = 0; iin < n; iin++)
+		run->latency=run->latency+latencies[iin];
+		run->latency=run->latency/n;
 		/**********************************/
 
 
@@ -441,6 +456,11 @@ _benchmark_object_read(BenchmarkRun* run, gboolean use_batch, guint block_size)
 		perc=(int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90=latencies[perc];
+		//-/
+		run->latency=0;
+		for (guint iin = 0; iin < n; iin++)
+		run->latency=run->latency+latencies[iin];
+		run->latency=run->latency/n;
 		/**********************************/
 
 
@@ -549,6 +569,11 @@ _benchmark_object_write(BenchmarkRun* run, gboolean use_batch, guint block_size)
 		perc=(int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90=latencies[perc];
+		//-/
+		run->latency=0;
+		for (guint iin = 0; iin < n; iin++)
+		run->latency=run->latency+latencies[iin];
+		run->latency=run->latency/n;
 		/**********************************/
 
 
@@ -652,6 +677,11 @@ _benchmark_object_unordered_create_delete(BenchmarkRun* run, gboolean use_batch)
 		perc=(int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90=latencies[perc];
+		//-/
+		run->latency=0;
+		for (guint iin = 0; iin < n; iin++)
+		run->latency=run->latency+latencies[iin];
+		run->latency=run->latency/n;
 		/**********************************/
 
 

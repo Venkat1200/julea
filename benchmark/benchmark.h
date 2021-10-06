@@ -32,6 +32,7 @@ struct BenchmarkRun
 	guint iterations;
 	guint64 operations;
 	guint64 bytes;
+	gdouble latency;
 	gdouble min_latency;
     gdouble max_latency;
 	gdouble percLatnecy95;
