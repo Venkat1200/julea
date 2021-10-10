@@ -115,7 +115,7 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 		
 		//-/
 		run->latency=0;
-		for (guint iin = 0; iin< n; iin++)
+		for (guint iin = 0; iin< n; iin++);
 		printf("%0.2f\n",latencies[iin])
 		for (guint iin = 0; iin< n; iin++)
 		run->latency=run->latency+latencies[iin];
