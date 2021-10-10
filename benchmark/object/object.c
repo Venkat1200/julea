@@ -628,6 +628,10 @@ _benchmark_object_workloadStreaming(BenchmarkRun* run, gboolean use_batch, guint
 
 	object = j_object_new("benchmark", "benchmark");
 	j_object_create(object, batch);
+	for (guint i = 0; i < n; i++)
+	{
+		j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
+	}
 
 
 	ret = j_batch_execute(batch);
@@ -635,12 +639,12 @@ _benchmark_object_workloadStreaming(BenchmarkRun* run, gboolean use_batch, guint
 	
 
 	j_benchmark_timer_start(run);
-
+	
 	while (j_benchmark_iterate(run))
 	{
 		for (guint i = 0; i < n; i++)
 		{
-			j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
+			
 			/**********************************/
 			g_autoptr(GTimer) func_timer = NULL;
 			func_timer = g_timer_new();
