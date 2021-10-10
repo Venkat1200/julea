@@ -482,7 +482,7 @@ _benchmark_object_read(BenchmarkRun* run, gboolean use_batch, guint block_size)
 	run->bytes = n * block_size;
 }
 static void
-_benchmark_object_workloadD(BenchmarkRun* run, gboolean use_batch, guint block_size)
+_benchmark_object_workloadML(BenchmarkRun* run, gboolean use_batch, guint block_size)
 {
 	guint const n = (use_batch) ? 10000 : 1000;
 /**********************************/
@@ -598,14 +598,14 @@ _benchmark_object_workloadD(BenchmarkRun* run, gboolean use_batch, guint block_s
 	run->bytes = n * block_size;
 }
 static void
-benchmark_object_workloadD(BenchmarkRun* run)
+benchmark_object_workloadML(BenchmarkRun* run)
 {
-	_benchmark_object_workloadD(run, FALSE, 4 * 1024);
+	_benchmark_object_workloadML(run, FALSE, 4 * 1024);
 }
 
 
 static void
-_benchmark_object_workloadC(BenchmarkRun* run, gboolean use_batch, guint block_size)
+_benchmark_object_workloadStreaming(BenchmarkRun* run, gboolean use_batch, guint block_size)
 {
 	guint const n = (use_batch) ? 10000 : 1000;
 /**********************************/
@@ -640,6 +640,7 @@ _benchmark_object_workloadC(BenchmarkRun* run, gboolean use_batch, guint block_s
 	{
 		for (guint i = 0; i < n; i++)
 		{
+			j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
 			/**********************************/
 			g_autoptr(GTimer) func_timer = NULL;
 			func_timer = g_timer_new();
@@ -707,13 +708,13 @@ _benchmark_object_workloadC(BenchmarkRun* run, gboolean use_batch, guint block_s
 	run->bytes = n * block_size;
 }
 static void
-benchmark_object_workloadC(BenchmarkRun* run)
+benchmark_object_workloadStreaming(BenchmarkRun* run)
 {
-	_benchmark_object_workloadC(run, FALSE, 4 * 1024);
+	_benchmark_object_workloadStreaming(run, FALSE, 4 * 1024);
 }
 
 static void
-_benchmark_object_workloadF(BenchmarkRun* run, gboolean use_batch, guint block_size)
+_benchmark_object_workloadAutoSys(BenchmarkRun* run, gboolean use_batch, guint block_size)
 {
 	guint const n = (use_batch) ? 10000 : 1000;
 /**********************************/
@@ -819,14 +820,14 @@ _benchmark_object_workloadF(BenchmarkRun* run, gboolean use_batch, guint block_s
 	run->bytes = n * block_size;
 }
 static void
-benchmark_object_workloadF(BenchmarkRun* run)
+benchmark_object_workloadAutoSys(BenchmarkRun* run)
 {
-	_benchmark_object_workloadF(run, FALSE, 4 * 1024);
+	_benchmark_object_workloadAutoSys(run, FALSE, 4 * 1024);
 }
 
 
 static void
-_benchmark_object_workloadA(BenchmarkRun* run, gboolean use_batch, guint block_size)
+_benchmark_object_workloadScientific(BenchmarkRun* run, gboolean use_batch, guint block_size)
 {
 	guint const n = (use_batch) ? 10000 : 1000;
 /**********************************/
@@ -929,9 +930,9 @@ _benchmark_object_workloadA(BenchmarkRun* run, gboolean use_batch, guint block_s
 	run->bytes = n * block_size;
 }
 static void
-benchmark_object_workloadA(BenchmarkRun* run)
+benchmark_object_workloadScientific(BenchmarkRun* run)
 {
-	_benchmark_object_workloadA(run, FALSE, 4 * 1024);
+	_benchmark_object_workloadScientific(run, FALSE, 4 * 1024);
 }
 
 
@@ -1179,10 +1180,10 @@ benchmark_object(void)
 	j_benchmark_add("/object/object/read-batch", benchmark_object_read_batch);
 	j_benchmark_add("/object/object/write", benchmark_object_write);
 	j_benchmark_add("/object/object/write-batch", benchmark_object_write_batch);
-	j_benchmark_add("/object/object/workload A(Scientific app)", benchmark_object_workloadA);
-	j_benchmark_add("/object/object/workload C(Streaming)", benchmark_object_workloadC);
-	j_benchmark_add("/object/object/workload D(Machine Learning)", benchmark_object_workloadD);
-	j_benchmark_add("/object/object/workload F(Autonomous Sys)", benchmark_object_workloadF);
+	j_benchmark_add("/object/object/workload 1(Scientific app)", benchmark_object_workloadScientific);
+	j_benchmark_add("/object/object/workload 2(Streaming)", benchmark_object_workloadStreaming);
+	j_benchmark_add("/object/object/workload 3(Machine Learning)", benchmark_object_workloadML);
+	j_benchmark_add("/object/object/workload 4(Autonomous Sys)", benchmark_object_workloadAutoSys);
 
 	j_benchmark_add("/object/object/unordered-create-delete", benchmark_object_unordered_create_delete);
 	j_benchmark_add("/object/object/unordered-create-delete-batch", benchmark_object_unordered_create_delete_batch);
