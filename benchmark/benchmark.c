@@ -204,7 +204,7 @@ j_benchmark_run_one(BenchmarkRun* run)
 
 		if (!(run->latency < 0))
                  {
-                         g_print(" (%.2f ms) ", ((gdouble)run->min_latency));
+                         g_print(" (%.2f ms) ", ((gdouble)run->latency));
                  }else   g_print(" ");
 
                  
