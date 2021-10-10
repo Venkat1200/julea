@@ -615,7 +615,7 @@ benchmark_object_read(BenchmarkRun* run)
 
 
 static void
-benchmark_object_workloadA<(BenchmarkRun* run)
+benchmark_object_workloadA(BenchmarkRun* run)
 {
 	_benchmark_object_workloadA(run, FALSE, 4 * 1024);
 }
