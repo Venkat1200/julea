@@ -227,7 +227,7 @@ _benchmark_db_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const* namespac
 				g_assert_true(ret);
 			}
 			/**********************************/
-			
+			if(use_timer){
 			latency =1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i]=latency;
                         if(run->min_latency < 0){
@@ -238,9 +238,11 @@ _benchmark_db_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const* namespac
                             if(latency>run->max_latency)run->max_latency=latency;
                             if(latency<run->min_latency)run->min_latency=latency;
                         }
+			}
 			/**********************************/
 			
 		}
+		if(use_timer){
 		/**********************************/
 		
 		qsort(latencies, n, sizeof(double), compare1);
@@ -257,7 +259,7 @@ _benchmark_db_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const* namespac
 		run->latency=run->latency+latencies[iin];
 		run->latency=run->latency/n;
 		/**********************************/
-
+		}
 		if (use_batch || !use_timer)
 		{
 			ret = j_batch_execute(batch);
