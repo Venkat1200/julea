@@ -256,7 +256,7 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 }
 
 static void
-_benchmark_db_get_simple(BenchmarkRun* run, gchar const* namespace, gboolean use_index_all, gboolean use_index_single)
+_benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboolean use_index_all, gboolean use_index_single)
 {
 	gboolean ret;
 	g_autoptr(JBatch) delete_batch = NULL;
@@ -287,13 +287,17 @@ _benchmark_db_get_simple(BenchmarkRun* run, gchar const* namespace, gboolean use
 
 	while (j_benchmark_iterate(run))
 	{
+		_benchmark_db_insert(run, NULL, "benchmark_insert", false, false, false, false);
 		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)); i++)
 		{
+			
 			/**********************************/
 			g_autoptr(GTimer) func_timer = NULL;
 			func_timer = g_timer_new();
                         g_timer_start(func_timer);
 			/**********************************/
+			for(int ii=0;ii<50;ii++){
+			_benchmark_db_insert(run, NULL, "benchmark_insert", false, false, false, false);
 			
 			JDBType field_type;
 			g_autofree gpointer field_value;
@@ -317,6 +321,7 @@ _benchmark_db_get_simple(BenchmarkRun* run, gchar const* namespace, gboolean use
 			ret = j_db_iterator_get_field(iterator, "string", &field_type, &field_value, &field_length, &b_s_error);
 			g_assert_true(ret);
 			g_assert_null(b_s_error);
+			}
 			/**********************************/
 			
 			latency =1000000* g_timer_elapsed(func_timer, NULL);
@@ -358,6 +363,29 @@ _benchmark_db_get_simple(BenchmarkRun* run, gchar const* namespace, gboolean use
 
 	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
 }
+static void
+benchmark_db_workloadScientific(BenchmarkRun* run)
+{
+	_benchmark_db_workloadScientific(run, "benchmark_get_simple", false, false);
+}
+/*
+static void
+benchmark_db_workloadStreaming(BenchmarkRun* run)
+{
+	_benchmark_db_get_simple(run, "benchmark_get_simple", false, false);
+}
+
+static void
+benchmark_db_workloadML(BenchmarkRun* run)
+{
+	_benchmark_db_get_simple(run, "benchmark_get_simple", false, false);
+}
+
+static void
+benchmark_db_workloadAutoSys(BenchmarkRun* run)
+{
+	_benchmark_db_get_simple(run, "benchmark_get_simple", false, false);
+}*/
 
 static void
 benchmark_db_insert(BenchmarkRun* run)
@@ -530,4 +558,8 @@ benchmark_db_entry(void)
 	j_benchmark_add("/db/entry/update-batch-index-all", benchmark_db_update_batch_index_all);
 	j_benchmark_add("/db/entry/update-index-mixed", benchmark_db_update_index_mixed);
 	j_benchmark_add("/db/entry/update-batch-index-mixed", benchmark_db_update_batch_index_mixed);
-}
+	j_benchmark_add("/db/entry/workload 1(Scientific app)", benchmark_db_workloadScientific);
+/*	j_benchmark_add("/db/entry/workload 2(Streaming)", benchmark_db_workloadStreaming);
+	j_benchmark_add("/db/entry/workload 3(Machine Learning)", benchmark_db_workloadML);
+	j_benchmark_add("/db/entry/workload 4(Autonomous Sys)", benchmark_db_workloadAutoSys);
+*/}
