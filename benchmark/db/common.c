@@ -137,7 +137,7 @@ _benchmark_db_prepare_scheme(gchar const* namespace, gboolean use_batch, gboolea
 	if (!use_batch)
 	{
 		ret = j_batch_execute(batch);
-		g_assert_true(ret);
+//		g_assert_true(ret);
 	}
 
 	return j_db_schema_ref(b_scheme);
