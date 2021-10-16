@@ -175,7 +175,7 @@ _benchmark_db_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const* namespac
 	}
 	else
 	{
-		g_assert_true(use_batch);
+//		g_assert_true(use_batch);
 		g_assert_null(run);
 		g_assert_nonnull(scheme);
 
