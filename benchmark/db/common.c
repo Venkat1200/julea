@@ -39,11 +39,11 @@ static int compare1 (const void * a, const void * b)
 }
 /**********************************/
 
-#define N (1 << 12)
-#define N_GET_DIVIDER (N >> 8)
+#define N (1 << 6)
+#define N_GET_DIVIDER (N >> 4)
 #define N_PRIME 11971
 #define N_MODULUS 256
-#define CLASS_MODULUS (N >> 3)
+#define CLASS_MODULUS (N >> 2)
 #define CLASS_LIMIT (CLASS_MODULUS >> 1)
 #define SIGNED_FACTOR N_PRIME
 #define USIGNED_FACTOR N_PRIME

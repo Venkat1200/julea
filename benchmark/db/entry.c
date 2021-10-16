@@ -258,6 +258,7 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 static void
 _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboolean use_index_all, gboolean use_index_single)
 {
+	
 	gboolean ret;
 	g_autoptr(JBatch) delete_batch = NULL;
 	g_autoptr(JBatch) batch = NULL;
