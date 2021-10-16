@@ -254,10 +254,21 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 
 	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
 }
+#define APP_N (1 << 8)
+#define APP_N_GET_DIVIDER (N >> 4)
+#define APP_N_PRIME 11971
+#define APP_N_MODULUS 256
+#define APP_CLASS_MODULUS (N >> 2)
+#define APP_CLASS_LIMIT (CLASS_MODULUS >> 1)
+#define APP_SIGNED_FACTOR N_PRIME
+#define APP_USIGNED_FACTOR N_PRIME
+#define APP_FLOAT_FACTOR (3.1415926)
 
 static void
 _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboolean use_index_all, gboolean use_index_single)
 {
+	
+
 	
 	gboolean ret;
 	g_autoptr(JBatch) delete_batch = NULL;
@@ -278,7 +289,7 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
 /**********************************/
-	gint n=((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	gint n=((use_index_all || use_index_single) ? APP_N : (APP_N / APP_N_GET_DIVIDER));
     gdouble latency;
 	guint perc;
 	double latencies[n];
@@ -289,7 +300,7 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 	while (j_benchmark_iterate(run))
 	{
 		_benchmark_db_insert(run, NULL, "benchmark_insert", false, false, false, false);
-		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)); i++)
+		for (gint i = 0; i < ((use_index_all || use_index_single) ? APP_N : (APP_N / APP_N_GET_DIVIDER)); i++)
 		{
 			
 			/**********************************/
@@ -362,7 +373,7 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
 
-	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	run->operations = ((use_index_all || use_index_single) ? APP_N : (APP_N / APP_N_GET_DIVIDER));
 }
 static void
 benchmark_db_workloadScientific(BenchmarkRun* run)
