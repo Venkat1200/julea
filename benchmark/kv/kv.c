@@ -301,7 +301,7 @@ _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
 			/**********************************/
 			g_autoptr(JKV) object = NULL;
 			g_autofree gchar* name = NULL;
-			for (guint ii = 0; ii < 100; ii++)
+			for (guint ii = 0; ii < 1000; ii++)
 			{
 				{
 					g_autoptr(JKV) object = NULL;
