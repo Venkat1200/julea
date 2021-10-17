@@ -299,22 +299,24 @@ _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
 			func_timer = g_timer_new();
                         g_timer_start(func_timer);
 			/**********************************/
+			for (guint ii = 0; ii < 100; ii++)
 			{
+				{
+					g_autoptr(JKV) object = NULL;
+					g_autofree gchar* name = NULL;
+
+					name = g_strdup_printf("benchmark-%d", i);
+					object = j_kv_new("benchmark", name);
+					j_kv_put(object, g_strdup(name), strlen(name), g_free, batch);
+
+					j_kv_delete(object, delete_batch);
+				}
 				g_autoptr(JKV) object = NULL;
 				g_autofree gchar* name = NULL;
 
 				name = g_strdup_printf("benchmark-%d", i);
 				object = j_kv_new("benchmark", name);
-				j_kv_put(object, g_strdup(name), strlen(name), g_free, batch);
-
-				j_kv_delete(object, delete_batch);
 			}
-			g_autoptr(JKV) object = NULL;
-			g_autofree gchar* name = NULL;
-
-			name = g_strdup_printf("benchmark-%d", i);
-			object = j_kv_new("benchmark", name);
-
 			/**********************************/
 			
 			latency =1000000* g_timer_elapsed(func_timer, NULL);
