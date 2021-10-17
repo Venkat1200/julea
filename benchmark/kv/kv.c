@@ -316,6 +316,7 @@ _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
 
 				name = g_strdup_printf("benchmark-%d", i);
 				object = j_kv_new("benchmark", name);
+				j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
 			}
 			/**********************************/
 			
@@ -331,7 +332,7 @@ _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
                         }
 			/**********************************/
 
-			j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
+			
 			if (!use_batch)
 			{
 				ret = j_batch_execute(batch);
@@ -395,18 +396,6 @@ _benchmark_kv_streamingWorkload(BenchmarkRun* run, gboolean use_batch)
 	batch = j_batch_new(semantics);
 
 
-	for (guint i = 0; i < n; i++)
-	{
-		g_autoptr(JKV) object = NULL;
-		g_autofree gchar* name = NULL;
-
-		name = g_strdup_printf("benchmark-%d", i);
-		object = j_kv_new("benchmark", name);
-		j_kv_put(object, g_strdup(name), strlen(name), g_free, batch);
-
-		j_kv_delete(object, delete_batch);
-	}
-
 	ret = j_batch_execute(batch);
 	//g_assert_true(ret);
 
@@ -423,10 +412,22 @@ _benchmark_kv_streamingWorkload(BenchmarkRun* run, gboolean use_batch)
 			/**********************************/
 			g_autoptr(JKV) object = NULL;
 			g_autofree gchar* name = NULL;
+				{
+					g_autoptr(JKV) object = NULL;
+					g_autofree gchar* name = NULL;
+
+					name = g_strdup_printf("benchmark-%d", i);
+					object = j_kv_new("benchmark", name);
+					j_kv_put(object, g_strdup(name), strlen(name), g_free, batch);
+
+					j_kv_delete(object, delete_batch);
+				}
 			for (guint ii = 0; ii < 1000; ii++)
 			{
+
 				name = g_strdup_printf("benchmark-%d", i);
 				object = j_kv_new("benchmark", name);
+				j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
 			}
 			/**********************************/
 			
@@ -442,7 +443,7 @@ _benchmark_kv_streamingWorkload(BenchmarkRun* run, gboolean use_batch)
                         }
 			/**********************************/
 
-			j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
+			
 			if (!use_batch)
 			{
 				ret = j_batch_execute(batch);
