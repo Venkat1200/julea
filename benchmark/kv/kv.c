@@ -299,6 +299,8 @@ _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
 			func_timer = g_timer_new();
                         g_timer_start(func_timer);
 			/**********************************/
+			g_autoptr(JKV) object = NULL;
+			g_autofree gchar* name = NULL;
 			for (guint ii = 0; ii < 100; ii++)
 			{
 				{
@@ -311,8 +313,6 @@ _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
 
 					j_kv_delete(object, delete_batch);
 				}
-				g_autoptr(JKV) object = NULL;
-				g_autofree gchar* name = NULL;
 
 				name = g_strdup_printf("benchmark-%d", i);
 				object = j_kv_new("benchmark", name);
