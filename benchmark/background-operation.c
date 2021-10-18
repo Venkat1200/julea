@@ -117,8 +117,8 @@ benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 		run->latency=0;
 	
 		for (guint iin = 0; iin< n; iin++)
-		run->latency = run->latency+latencies[iin];
-		run->latency = run->latency/n;
+		run->latency = run->latency + latencies[iin];
+		run->latency = run->latency / n;
 		/**********************************/
 
 		
