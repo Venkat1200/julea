@@ -61,7 +61,7 @@ _benchmark_db_delete(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 	g_assert_nonnull(run);
 
 /**********************************/
-	gint n=((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
     gdouble latency;
 	guint perc;
 	double latencies[n];
@@ -99,33 +99,33 @@ _benchmark_db_delete(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 			}
 			/**********************************/
 			
-			latency =1000000* g_timer_elapsed(func_timer, NULL);
-			latencies[i]=latency;
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i] = latency;
                         if(run->min_latency < 0){
-                            run->min_latency=latency;
-                            run->max_latency=latency;
+                            run->min_latency = latency;
+                            run->max_latency = latency;
 
                        }else{
-                            if(latency>run->max_latency)run->max_latency=latency;
-                            if(latency<run->min_latency)run->min_latency=latency;
+                            if(latency>run->max_latency)run->max_latency = latency;
+                            if(latency<run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
 		}
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
-		perc=(int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy95=latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy90=latencies[perc];
+		perc = (int)((gdouble)0.95*(gdouble)n);
+		if(perc>=n)perc = n - 1;
+		run->percLatnecy95 = latencies[perc];
+		perc=(int)((gdouble)0.90 *(gdouble)n);
+		if(perc>=n)perc = n - 1;
+		run->percLatnecy90 = latencies[perc];
 		
 		//-/
 		run->latency=0;
 		for (guint iin = 0; iin< n; iin++)
-		run->latency=run->latency+latencies[iin];
-		run->latency=run->latency/n;
+		run->latency = run->latency+latencies[iin];
+		run->latency = run->latency/n;
 		/**********************************/
 
 
@@ -210,15 +210,15 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 			}
 			/**********************************/
 			
-			latency =1000000* g_timer_elapsed(func_timer, NULL);
-			latencies[i]=latency;
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i] = latency;
                         if(run->min_latency < 0){
-                            run->min_latency=latency;
-                            run->max_latency=latency;
+                            run->min_latency = latency;
+                            run->max_latency = latency;
 
                        }else{
-                            if(latency>run->max_latency)run->max_latency=latency;
-                            if(latency<run->min_latency)run->min_latency=latency;
+                            if(latency>run->max_latency)run->max_latency = latency;
+                            if(latency<run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -226,17 +226,17 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc=(int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc=n-1;
+		if(perc>=n)perc = n - 1;
 		run->percLatnecy95=latencies[perc];
 		perc=(int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy90=latencies[perc];
+		if(perc>=n)perc = n - 1;
+		run->percLatnecy90 = latencies[perc];
 		
 		//-/
-		run->latency=0;
+		run->latency = 0;
 		for (guint iin = 0; iin< n; iin++)
-		run->latency=run->latency+latencies[iin];
-		run->latency=run->latency/n;
+		run->latency = run->latency + latencies[iin];
+		run->latency = run->latency/n;
 		/**********************************/
 
 
@@ -278,7 +278,7 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
 /**********************************/
-	gint n=((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
     gdouble latency;
 	guint perc;
 	double latencies[n];
@@ -325,15 +325,15 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 			}
 			/**********************************/
 			
-			latency =1000000* g_timer_elapsed(func_timer, NULL);
-			latencies[i]=latency;
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i] = latency;
                         if(run->min_latency < 0){
-                            run->min_latency=latency;
-                            run->max_latency=latency;
+                            run->min_latency = latency;
+                            run->max_latency = latency;
 
                        }else{
-                            if(latency>run->max_latency)run->max_latency=latency;
-                            if(latency<run->min_latency)run->min_latency=latency;
+                            if(latency>run->max_latency)run->max_latency = latency;
+                            if(latency<run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -341,17 +341,17 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc=(int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy95=latencies[perc];
+		if(perc>=n)perc = n - 1;
+		run->percLatnecy95 = latencies[perc];
 		perc=(int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy90=latencies[perc];
+		if(perc>=n)perc = n - 1;
+		run->percLatnecy90 = latencies[perc];
 		
 		//-/
 		run->latency=0;
 		for (guint iin = 0; iin< n; iin++)
-		run->latency=run->latency+latencies[iin];
-		run->latency=run->latency/n;
+		run->latency = run->latency + latencies[iin];
+		run->latency = run->latency/n;
 		/**********************************/
 
 		
