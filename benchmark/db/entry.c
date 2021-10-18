@@ -117,7 +117,7 @@ _benchmark_db_delete(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n - 1;
 		run->percLatnecy95 = latencies[perc];
-		perc=(int)((gdouble)0.90 *(gdouble)n);
+		perc = (int)((gdouble)0.90 *(gdouble)n);
 		if(perc>=n)perc = n - 1;
 		run->percLatnecy90 = latencies[perc];
 		
@@ -225,10 +225,10 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 		}
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
-		perc=(int)((gdouble)0.95*(gdouble)n);
+		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n - 1;
-		run->percLatnecy95=latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
+		run->percLatnecy95 = latencies[perc];
+		perc = (int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc = n - 1;
 		run->percLatnecy90 = latencies[perc];
 		
@@ -340,10 +340,10 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 		}
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
-		perc=(int)((gdouble)0.95*(gdouble)n);
+		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n - 1;
 		run->percLatnecy95 = latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
+		perc = (int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc = n - 1;
 		run->percLatnecy90 = latencies[perc];
 		
