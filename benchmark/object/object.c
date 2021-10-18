@@ -226,7 +226,7 @@ _benchmark_object_delete(BenchmarkRun* run, gboolean use_batch)
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy95 = latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
+		perc = (int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy90 = latencies[perc];
 		//-/
@@ -453,7 +453,7 @@ _benchmark_object_read(BenchmarkRun* run, gboolean use_batch, guint block_size)
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy95 = latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
+		perc = (int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy90 = latencies[perc];
 		//-/
@@ -569,7 +569,7 @@ _benchmark_object_workloadML(BenchmarkRun* run, gboolean use_batch, guint block_
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy95 = latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
+		perc = (int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy90 = latencies[perc];
 		//-/
@@ -651,7 +651,7 @@ _benchmark_object_workloadStreaming(BenchmarkRun* run, gboolean use_batch, guint
                         g_timer_start(func_timer);
 			/**********************************/
 
-			for(int t=0;t<100;t++)
+			for(int t=0; t<100; t++)
 			j_object_read(object, dummy, block_size, i * block_size, &nb, batch);
 
 			if (!use_batch)
@@ -683,7 +683,7 @@ _benchmark_object_workloadStreaming(BenchmarkRun* run, gboolean use_batch, guint
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy95 = latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
+		perc = (int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc=n-1;
 		run->percLatnecy90 = latencies[perc];
 		//-/
@@ -905,7 +905,7 @@ _benchmark_object_workloadScientific(BenchmarkRun* run, gboolean use_batch, guin
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy95 = latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
+		perc = (int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy90 = latencies[perc];
 		//-/
@@ -1135,7 +1135,7 @@ _benchmark_object_unordered_create_delete(BenchmarkRun* run, gboolean use_batch)
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy95 = latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
+		perc = (int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy90 = latencies[perc];
 		//-/
