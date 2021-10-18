@@ -341,13 +341,13 @@ _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
 			}
 		}
 		/**********************************/
-		 qsort(latencies, n, sizeof(double), compare);
-		perc=(int)((gdouble)0.95*(gdouble)n);
+		qsort(latencies, n, sizeof(double), compare);
+		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n - 1;
 		run->percLatnecy95 = latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
+		perc = (int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc = n - 1;
-		run->percLatnecy90=latencies[perc];
+		run->percLatnecy90 = latencies[perc];
 		
 		//-/
 		run->latency=0;
@@ -530,7 +530,7 @@ _benchmark_kv_MLWorkload(BenchmarkRun* run, gboolean use_batch)
 			}
 		}
 		/**********************************/
-		 qsort(latencies, n, sizeof(double), compare);
+		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy95 = latencies[perc];
@@ -653,7 +653,7 @@ _benchmark_kv_AutoSysWorkload(BenchmarkRun* run, gboolean use_batch)
 			}
 		}
 		/**********************************/
-		 qsort(latencies, n, sizeof(double), compare);
+		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy95 = latencies[perc];
@@ -777,7 +777,7 @@ _benchmark_kv_streamingWorkload(BenchmarkRun* run, gboolean use_batch)
 		//-/
 		run->latency=0;
 		for (guint iin = 0; iin< n; iin++)
-		run->latency = run->latency+latencies[iin];
+		run->latency = run->latency + latencies[iin];
 		run->latency = run->latency/n;
 		/**********************************/
 
@@ -968,7 +968,7 @@ _benchmark_kv_unordered_put_delete(BenchmarkRun* run, gboolean use_batch)
 			/**********************************/
 		}
 		/**********************************/
-		 qsort(latencies, n, sizeof(double), compare);
+		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy95 = latencies[perc];
