@@ -239,7 +239,7 @@ _benchmark_db_schema_delete(BenchmarkRun* run, gboolean use_batch)
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy95 = latencies[perc];
-		perc=(int)((gdouble)0.90*(gdouble)n);
+		perc = (int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc = n-1;
 		run->percLatnecy90 = latencies[perc];
 		
