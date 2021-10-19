@@ -689,10 +689,10 @@ _benchmark_distributed_object_unordered_create_delete(BenchmarkRun* run, gboolea
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if (perc>=n)perc = n-1;
-		run->percLatnecy95 = latencies[perc];
+		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
 		if (perc>=n)perc = n-1;
-		run->percLatnecy90 = latencies[perc];
+		run->percLatency90 = latencies[perc];
 		
 		//-/
 		run->latency=0;
