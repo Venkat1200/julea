@@ -97,13 +97,13 @@ _benchmark_db_schema_create(BenchmarkRun* run, gboolean use_batch)
 			
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
-                        if(run->min_latency < 0){
+                        if (run->min_latency < 0){
                             run->min_latency = latency;
                             run->max_latency = latency;
 
-                       }else{
-                            if(latency > run->max_latency)run->max_latency = latency;
-                            if(latency < run->min_latency)run->min_latency = latency;
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -111,10 +111,10 @@ _benchmark_db_schema_create(BenchmarkRun* run, gboolean use_batch)
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc = n-1;
+		if (perc>=n)perc = n-1;
 		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc = n-1;
+		if (perc>=n)perc = n-1;
 		run->percLatency90 = latencies[perc];
 		
 		//-/
@@ -223,13 +223,13 @@ _benchmark_db_schema_delete(BenchmarkRun* run, gboolean use_batch)
 			
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
-                        if(run->min_latency < 0){
+                        if (run->min_latency < 0){
                             run->min_latency = latency;
                             run->max_latency = latency;
 
-                       }else{
-                            if(latency > run->max_latency)run->max_latency = latency;
-                            if(latency < run->min_latency)run->min_latency = latency;
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -237,10 +237,10 @@ _benchmark_db_schema_delete(BenchmarkRun* run, gboolean use_batch)
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc = n-1;
+		if (perc>=n)perc = n-1;
 		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc = n-1;
+		if (perc>=n)perc = n-1;
 		run->percLatency90 = latencies[perc];
 		
 		//-/
