@@ -124,7 +124,7 @@ _benchmark_db_delete(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 		//-/
 		run->latency=0;
 		for (guint iin = 0; iin< n; iin++)
-		run->latency = run->latency+latencies[iin];
+		run->latency = run->latency + latencies[iin];
 		run->latency = run->latency/n;
 		/**********************************/
 
@@ -297,7 +297,7 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 			func_timer = g_timer_new();
                         g_timer_start(func_timer);
 			/**********************************/
-			for(int ii=0;ii<100;ii++){
+			for(int ii=0; ii<100; ii++){
 			_benchmark_db_workload_insert(run, NULL, "benchmark_insert", false, false, false, true);
 			
 			JDBType field_type;
