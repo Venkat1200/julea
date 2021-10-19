@@ -525,24 +525,20 @@ _benchmark_object_workloadML(BenchmarkRun* run, gboolean use_batch, guint block_
 
 
 			j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
-			for(int t=0; t<20; t++)
-				
+			for (int t=0; t<20; t++)	
 			j_object_read(object, dummy, block_size, i * block_size, &nb, batch);
 			j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
-			for(int t=0; t<20; t++)
-				
+			for (int t=0; t<20; t++)
 			j_object_read(object, dummy, block_size, i * block_size, &nb, batch);
 			j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
-			for(int t=0; t<20; t++)
-				
+			for (int t=0; t<20; t++)	
 			j_object_read(object, dummy, block_size, i * block_size, &nb, batch);
 			j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
-			for(int t=0; t<20; t++)
-				
+			for (int t=0; t<20; t++)	
 			j_object_read(object, dummy, block_size, i * block_size, &nb, batch);
 			j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
-			for(int t=0; t<15; t++)
-				
+			for (int t=0; t<15; t++)
+	
 			j_object_read(object, dummy, block_size, i * block_size, &nb, batch);
 
 			if (!use_batch)
