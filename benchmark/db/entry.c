@@ -106,8 +106,8 @@ _benchmark_db_delete(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
                             run->max_latency = latency;
 
                        }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                            if(latency > run->max_latency)run->max_latency = latency;
+                            if(latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -217,8 +217,8 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
                             run->max_latency = latency;
 
                        }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                            if(latency > run->max_latency)run->max_latency = latency;
+                            if(latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -332,8 +332,8 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
                             run->max_latency = latency;
 
                        }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                            if(latency > run->max_latency)run->max_latency = latency;
+                            if(latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
