@@ -216,13 +216,13 @@ j_benchmark_run_one(BenchmarkRun* run)
                  {
 		         g_print(" (%.2f ms(+))", ((gdouble)run->max_latency));
                  }else   g_print(" ");		
-		if (!(run->percLatnecy90 < 0))
+		if (!(run->percLatency90 < 0))
                  {
-                         g_print(" (%.2f ms(p90))", ((gdouble)run->percLatnecy90));
+                         g_print(" (%.2f ms(p90))", ((gdouble)run->percLatency90));
                  }else   g_print(" ");
-		if (!(run->percLatnecy95 < 0))
+		if (!(run->percLatency95 < 0))
                  {
-                         g_print(" (%.2f ms(p95))", ((gdouble)run->percLatnecy95));
+                         g_print(" (%.2f ms(p95))", ((gdouble)run->percLatency95));
                  }else   g_print(" ");
 		if (run->bytes != 0)
                  {
