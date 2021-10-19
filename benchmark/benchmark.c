@@ -114,8 +114,8 @@ j_benchmark_add(gchar const* name, BenchmarkFunc benchmark_func)
 	run->timer_started = FALSE;
 	run->iterations = 0;
 	run->operations = 0;
-	run->percLatnecy95 = -1;
-	run->percLatnecy90 = -1;
+	run->percLatency95 = -1;
+	run->percLatency90 = -1;
 	run->bytes = 0;
 	run->min_latency=-1;
 	run->latency=-1;
