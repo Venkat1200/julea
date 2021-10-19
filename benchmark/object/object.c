@@ -89,13 +89,13 @@ _benchmark_object_create(BenchmarkRun* run, gboolean use_batch)
 			
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
-                        if(run->min_latency < 0){
+                        if (run->min_latency < 0){
                             run->min_latency = latency;
                             run->max_latency = latency;
 
-                       }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -106,11 +106,11 @@ _benchmark_object_create(BenchmarkRun* run, gboolean use_batch)
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy95 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy90 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency90 = latencies[perc];
 		//-/
 		run->latency = 0;
 		for (guint iin = 0; iin < n; iin++)
@@ -207,13 +207,13 @@ _benchmark_object_delete(BenchmarkRun* run, gboolean use_batch)
 			
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
-                        if(run->min_latency < 0){
+                        if (run->min_latency < 0){
                             run->min_latency = latency;
                             run->max_latency = latency;
 
                        }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                            if (latency>run->max_latency)run->max_latency = latency;
+                            if (latency<run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -224,11 +224,11 @@ _benchmark_object_delete(BenchmarkRun* run, gboolean use_batch)
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy95 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy90 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency90 = latencies[perc];
 		//-/
 		run->latency = 0;
 		for (guint iin = 0; iin < n; iin++)
@@ -316,13 +316,13 @@ _benchmark_object_status(BenchmarkRun* run, gboolean use_batch)
 			
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
-                        if(run->min_latency < 0){
+                        if (run->min_latency < 0){
                             run->min_latency = latency;
                             run->max_latency = latency;
 
-                       }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -333,11 +333,11 @@ _benchmark_object_status(BenchmarkRun* run, gboolean use_batch)
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy95 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy90 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency90 = latencies[perc];
 		//-/
 		run->latency = 0;
 		for (guint iin = 0; iin < n; iin++)
@@ -434,13 +434,13 @@ _benchmark_object_read(BenchmarkRun* run, gboolean use_batch, guint block_size)
 			
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
-                        if(run->min_latency < 0){
+                        if (run->min_latency < 0){
                             run->min_latency = latency;
                             run->max_latency = latency;
 
-                       }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -451,11 +451,11 @@ _benchmark_object_read(BenchmarkRun* run, gboolean use_batch, guint block_size)
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy95 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy90 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency90 = latencies[perc];
 		//-/
 		run->latency = 0;
 		for (guint iin = 0; iin < n; iin++)
@@ -526,18 +526,23 @@ _benchmark_object_workloadML(BenchmarkRun* run, gboolean use_batch, guint block_
 
 			j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
 			for(int t=0; t<20; t++)
+				
 			j_object_read(object, dummy, block_size, i * block_size, &nb, batch);
 			j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
 			for(int t=0; t<20; t++)
+				
 			j_object_read(object, dummy, block_size, i * block_size, &nb, batch);
 			j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
 			for(int t=0; t<20; t++)
+				
 			j_object_read(object, dummy, block_size, i * block_size, &nb, batch);
 			j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
 			for(int t=0; t<20; t++)
+				
 			j_object_read(object, dummy, block_size, i * block_size, &nb, batch);
 			j_object_write(object, dummy, block_size, i * block_size, &nb, batch);
 			for(int t=0; t<15; t++)
+				
 			j_object_read(object, dummy, block_size, i * block_size, &nb, batch);
 
 			if (!use_batch)
@@ -550,13 +555,13 @@ _benchmark_object_workloadML(BenchmarkRun* run, gboolean use_batch, guint block_
 			
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
-                        if(run->min_latency < 0){
+                        if (run->min_latency < 0){
                             run->min_latency = latency;
                             run->max_latency = latency;
 
-                       }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -567,11 +572,11 @@ _benchmark_object_workloadML(BenchmarkRun* run, gboolean use_batch, guint block_
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy95 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy90 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency90 = latencies[perc];
 		//-/
 		run->latency = 0;
 		for (guint iin = 0; iin < n; iin++)
@@ -664,13 +669,13 @@ _benchmark_object_workloadStreaming(BenchmarkRun* run, gboolean use_batch, guint
 			
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
-                        if(run->min_latency < 0){
+                        if (run->min_latency < 0){
                             run->min_latency = latency;
                             run->max_latency = latency;
 
                        }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -681,11 +686,11 @@ _benchmark_object_workloadStreaming(BenchmarkRun* run, gboolean use_batch, guint
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy95 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc=n-1;
-		run->percLatnecy90 = latencies[perc];
+		if (perc>=n)perc=n-1;
+		run->percLatency90 = latencies[perc];
 		//-/
 		run->latency = 0;
 		for (guint iin = 0; iin < n; iin++)
@@ -776,13 +781,13 @@ _benchmark_object_workloadAutoSys(BenchmarkRun* run, gboolean use_batch, guint b
 			
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
-                        if(run->min_latency < 0){
+                        if (run->min_latency < 0){
                             run->min_latency = latency;
                             run->max_latency = latency;
 
                        }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -793,11 +798,11 @@ _benchmark_object_workloadAutoSys(BenchmarkRun* run, gboolean use_batch, guint b
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy95 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy90 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency90 = latencies[perc];
 		//-/
 		run->latency = 0;
 		for (guint iin = 0; iin < n; iin++)
@@ -886,13 +891,13 @@ _benchmark_object_workloadScientific(BenchmarkRun* run, gboolean use_batch, guin
 			
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
-                        if(run->min_latency < 0){
+                        if (run->min_latency < 0){
                             run->min_latency = latency;
                             run->max_latency = latency;
 
                        }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -903,11 +908,11 @@ _benchmark_object_workloadScientific(BenchmarkRun* run, gboolean use_batch, guin
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy95 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy90 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency90 = latencies[perc];
 		//-/
 		run->latency = 0;
 		for (guint iin = 0; iin < n; iin++)
@@ -1008,13 +1013,13 @@ _benchmark_object_write(BenchmarkRun* run, gboolean use_batch, guint block_size)
 			
 			latency =1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
-                        if(run->min_latency < 0){
+                        if (run->min_latency < 0){
                             run->min_latency = latency;
                             run->max_latency = latency;
 
-                       }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -1025,11 +1030,11 @@ _benchmark_object_write(BenchmarkRun* run, gboolean use_batch, guint block_size)
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy95 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy90 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency90 = latencies[perc];
 		//-/
 		run->latency = 0;
 		for (guint iin = 0; iin < n; iin++)
@@ -1120,9 +1125,9 @@ _benchmark_object_unordered_create_delete(BenchmarkRun* run, gboolean use_batch)
                             run->min_latency = latency;
                             run->max_latency = latency;
 
-                       }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -1133,11 +1138,11 @@ _benchmark_object_unordered_create_delete(BenchmarkRun* run, gboolean use_batch)
 		/**********************************/
 		qsort(latencies, n, sizeof(double), compare);
 		perc = (int)((gdouble)0.95*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy95 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
-		if(perc>=n)perc = n-1;
-		run->percLatnecy90 = latencies[perc];
+		if (perc>=n)perc = n-1;
+		run->percLatency90 = latencies[perc];
 		//-/
 		run->latency = 0;
 		for (guint iin = 0; iin < n; iin++)
