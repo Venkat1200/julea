@@ -286,3 +286,107 @@ _benchmark_db_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const* namespac
 		run->operations = N;
 	}
 }
+
+
+
+static void
+_benchmark_db_workload_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const* namespace, gboolean use_batch, gboolean use_index_all, gboolean use_index_single, gboolean use_timer)
+{
+	gboolean ret;
+	g_autoptr(JBatch) delete_batch = NULL;
+	g_autoptr(JBatch) batch = NULL;
+	g_autoptr(JSemantics) semantics = NULL;
+	g_autoptr(GError) b_s_error = NULL;
+	g_autoptr(JDBSchema) b_scheme = NULL;
+
+	semantics = j_benchmark_get_semantics();
+	delete_batch = j_batch_new(semantics);
+	batch = j_batch_new(semantics);
+	if (use_timer)
+	{
+		g_assert_null(scheme);
+		g_assert_nonnull(run);
+
+		b_scheme = _benchmark_db_prepare_scheme(namespace, use_batch, use_index_all, use_index_single, batch, delete_batch);
+		g_assert_nonnull(b_scheme);
+
+		j_benchmark_timer_start(run);
+	}
+	else
+	{
+		g_assert_true(use_batch);
+		g_assert_null(run);
+		g_assert_nonnull(scheme);
+
+		j_db_schema_ref(scheme);
+		b_scheme = scheme;
+	}
+	
+
+	while (true)
+	{
+		for (gint i = 0; i < N; i++)
+		{
+
+			gint64 i_signed = ((i * SIGNED_FACTOR) % CLASS_MODULUS) - CLASS_LIMIT;
+			guint64 i_usigned = ((i * USIGNED_FACTOR) % CLASS_MODULUS);
+			gdouble i_float = i_signed * FLOAT_FACTOR;
+			g_autofree gchar* string = _benchmark_db_get_identifier(i);
+			g_autoptr(JDBEntry) entry = j_db_entry_new(b_scheme, &b_s_error);
+			g_assert_null(b_s_error);
+
+			ret = j_db_entry_set_field(entry, "string", string, 0, &b_s_error);
+			g_assert_true(ret);
+			g_assert_null(b_s_error);
+
+			ret = j_db_entry_set_field(entry, "float", &i_float, 0, &b_s_error);
+			g_assert_true(ret);
+			g_assert_null(b_s_error);
+
+			ret = j_db_entry_set_field(entry, "sint", &i_signed, 0, &b_s_error);
+			g_assert_true(ret);
+			g_assert_null(b_s_error);
+
+			ret = j_db_entry_set_field(entry, "uint", &i_usigned, 0, &b_s_error);
+			g_assert_true(ret);
+			g_assert_null(b_s_error);
+
+			ret = j_db_entry_insert(entry, batch, &b_s_error);
+			g_assert_true(ret);
+			g_assert_null(b_s_error);
+
+			if (!use_batch)
+			{
+				ret = j_batch_execute(batch);
+				g_assert_true(ret);
+			}
+			
+		}
+		
+		
+		if (use_batch || !use_timer)
+		{
+			ret = j_batch_execute(batch);
+			g_assert_true(ret);
+		}
+
+		if (use_timer && j_benchmark_iterate(run))
+		{
+			continue;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	// Reuse Insert function for other Benchmarks with use_timer flag
+	if (use_timer)
+	{
+		j_benchmark_timer_stop(run);
+		ret = j_batch_execute(delete_batch);
+		g_assert_true(ret);
+
+		run->operations = N;
+	}
+}
