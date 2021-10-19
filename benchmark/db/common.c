@@ -235,8 +235,8 @@ _benchmark_db_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const* namespac
                             run->max_latency = latency;
 
                        }else{
-                            if(latency>run->max_latency)run->max_latency = latency;
-                            if(latency<run->min_latency)run->min_latency = latency;
+                            if(latency > run->max_latency)run->max_latency = latency;
+                            if(latency < run->min_latency)run->min_latency = latency;
                         }
 			}
 			/**********************************/
@@ -248,10 +248,10 @@ _benchmark_db_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const* namespac
 		qsort(latencies, n, sizeof(double), compare1);
 		perc = (int)((gdouble)0.95*(gdouble)n);
 		if(perc>=n)perc = n - 1;
-		run->percLatnecy95 = latencies[perc];
+		run->percLatency95 = latencies[perc];
 		perc = (int)((gdouble)0.90*(gdouble)n);
 		if(perc>=n)perc = n - 1;
-		run->percLatnecy90 = latencies[perc];
+		run->percLatency90 = latencies[perc];
 		
 		//-/
 		run->latency = 0;
