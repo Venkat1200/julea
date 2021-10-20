@@ -26,14 +26,10 @@
 
 #include "benchmark.h"
 
-
-
 static void
 benchmark_memory_chunk_get(BenchmarkRun* run)
 {
 	guint const n = 10000000;
-	
-	
 
 	JMemoryChunk* memory_chunk;
 
@@ -45,16 +41,11 @@ benchmark_memory_chunk_get(BenchmarkRun* run)
 	{
 		for (guint i = 0; i < n; i++)
 		{
-			
 			j_memory_chunk_get(memory_chunk, 1);
 		}
 
 		j_memory_chunk_reset(memory_chunk);
 	}
-			
-			
-		}
-		
 
 	j_benchmark_timer_stop(run);
 
