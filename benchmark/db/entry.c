@@ -98,8 +98,9 @@ _benchmark_db_delete(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 				g_assert_true(ret);
 			}
 			/**********************************/
-			
+			g_timer_stop(func_timer);
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
+			
 			latencies[i] = latency;
                         if (run->min_latency < 0){
                             run->min_latency = latency;
