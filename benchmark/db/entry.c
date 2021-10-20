@@ -285,7 +285,7 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 	double latencies[n];
 /**********************************/
 
-	j_benchmark_timer_start(run);
+	
 
 	while (j_benchmark_iterate(run))
 	{
