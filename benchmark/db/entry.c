@@ -173,8 +173,8 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 	double latencies[n];
 /**********************************/
 
-	/*j_benchmark_timer_start(run);*/
-
+	j_benchmark_timer_start(run);
+	
 	while (j_benchmark_iterate(run))
 	{
 		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)); i++)
