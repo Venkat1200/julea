@@ -17,7 +17,7 @@
  */
 
 #include <julea-config.h>
-
+#include <chrono>
 #include <glib.h>
 
 #include <string.h>
