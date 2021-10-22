@@ -212,8 +212,8 @@ _benchmark_object_delete(BenchmarkRun* run, gboolean use_batch)
                             run->max_latency = latency;
 
                        }else{
-                            if (latency>run->max_latency)run->max_latency = latency;
-                            if (latency<run->min_latency)run->min_latency = latency;
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
                         }
 			/**********************************/
 			
@@ -434,7 +434,7 @@ _benchmark_object_read(BenchmarkRun* run, gboolean use_batch, guint block_size)
 			
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
-                        if (run->min_latency < 0){
+                        if  (run->min_latency < 0){
                             run->min_latency = latency;
                             run->max_latency = latency;
 
