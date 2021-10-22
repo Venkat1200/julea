@@ -279,7 +279,7 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 
 /**********************************/
 	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
-    gdouble latency;
+   	gdouble latency;
 	guint perc;
 	double latencies[n];
 /**********************************/
