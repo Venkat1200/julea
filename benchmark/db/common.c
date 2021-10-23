@@ -299,8 +299,8 @@ _benchmark_db_workload_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const*
 	g_autoptr(GError) b_s_error = NULL;
 	g_autoptr(JDBSchema) b_scheme = NULL;
 
-	semantics = j_benchmark_get_semantics();
-	//delete_batch = j_batch_new(semantics);
+/*	semantics = j_benchmark_get_semantics();
+	delete_batch = j_batch_new(semantics);
 	batch = j_batch_new(semantics);
 		g_assert_true(use_batch);
 		g_assert_null(run);
@@ -308,7 +308,7 @@ _benchmark_db_workload_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const*
 
 		j_db_schema_ref(scheme);
 		b_scheme = scheme;
-	
+*/
 
 	/*while (true)
 	{
