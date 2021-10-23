@@ -537,6 +537,9 @@ void
 benchmark_db_entry(void)
 {
 
+	j_benchmark_add("/db/entry/workload 1(Scientific app)", benchmark_db_workloadScientific);
+	return;
+
 	j_benchmark_add("/db/entry/insert", benchmark_db_insert);
 	j_benchmark_add("/db/entry/insert-batch", benchmark_db_insert_batch);
 	j_benchmark_add("/db/entry/insert-index-single", benchmark_db_insert_index_single);
@@ -560,7 +563,6 @@ benchmark_db_entry(void)
 	j_benchmark_add("/db/entry/update-index-all", benchmark_db_update_index_all);
 	j_benchmark_add("/db/entry/update-batch-index-all", benchmark_db_update_batch_index_all);
 	j_benchmark_add("/db/entry/update-index-mixed", benchmark_db_update_index_mixed);
-	j_benchmark_add("/db/entry/workload 1(Scientific app)", benchmark_db_workloadScientific);
 	j_benchmark_add("/db/entry/update-batch-index-mixed", benchmark_db_update_batch_index_mixed);
 /*	j_benchmark_add("/db/entry/workload 2(Streaming)", benchmark_db_workloadStreaming);
 	j_benchmark_add("/db/entry/workload 3(Machine Learning)", benchmark_db_workloadML);
