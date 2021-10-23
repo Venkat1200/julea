@@ -275,7 +275,6 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 	g_assert_nonnull(b_scheme);
 	g_assert_nonnull(run);
 
-	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
 /**********************************/
 	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
@@ -299,7 +298,7 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
                         g_timer_start(func_timer);
 			/**********************************/
 			for(int ii=0; ii<10; ii++){
-				_benchmark_db_insert(run, NULL, "benchmark_insert", true, false, false, false);
+				_benchmark_db_workload_insert(NULL, b_scheme, NULL, false, false, false, true);
 			
 			JDBType field_type;
 			g_autofree gpointer field_value;
