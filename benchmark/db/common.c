@@ -302,25 +302,12 @@ _benchmark_db_workload_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const*
 	semantics = j_benchmark_get_semantics();
 	delete_batch = j_batch_new(semantics);
 	batch = j_batch_new(semantics);
-	if (use_timer)
-	{
-		g_assert_null(scheme);
-		g_assert_nonnull(run);
-
-		b_scheme = _benchmark_db_prepare_scheme(namespace, use_batch, use_index_all, use_index_single, batch, delete_batch);
-		g_assert_nonnull(b_scheme);
-
-		j_benchmark_timer_start(run);
-	}
-	else
-	{
 		g_assert_true(use_batch);
 		g_assert_null(run);
 		g_assert_nonnull(scheme);
 
 		j_db_schema_ref(scheme);
 		b_scheme = scheme;
-	}
 	
 
 	while (true)
@@ -355,38 +342,14 @@ _benchmark_db_workload_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const*
 			g_assert_true(ret);
 			g_assert_null(b_s_error);
 
-			if (!use_batch)
-			{
-				ret = j_batch_execute(batch);
-				g_assert_true(ret);
-			}
 			
 		}
 		
 		
-		if (use_batch || !use_timer)
-		{
 			ret = j_batch_execute(batch);
 			g_assert_true(ret);
-		}
 
-		if (use_timer && j_benchmark_iterate(run))
-		{
-			continue;
-		}
-		else
-		{
 			break;
-		}
 	}
 
-	// Reuse Insert function for other Benchmarks with use_timer flag
-	if (use_timer)
-	{
-		j_benchmark_timer_stop(run);
-		ret = j_batch_execute(delete_batch);
-		g_assert_true(ret);
-
-		run->operations = N;
-	}
 }
