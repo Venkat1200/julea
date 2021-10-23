@@ -298,8 +298,8 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 			func_timer = g_timer_new();
                         g_timer_start(func_timer);
 			/**********************************/
-			for(int ii=0; ii<100; ii++){
-			_benchmark_db_workload_insert(run, NULL, "benchmark_insert", false, false, false, true);
+			for(int ii=0; ii<10; ii++){
+			//_benchmark_db_workload_insert(run, NULL, "benchmark_insert", false, false, false, true);
 			
 			JDBType field_type;
 			g_autofree gpointer field_value;
