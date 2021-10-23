@@ -377,6 +377,7 @@ _benchmark_db_workload_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const*
 		{
 			break;
 		}
+		break;
 	}
 
 	// Reuse Insert function for other Benchmarks with use_timer flag
