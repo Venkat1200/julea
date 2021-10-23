@@ -310,6 +310,7 @@ _benchmark_db_workload_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const*
 		b_scheme = _benchmark_db_prepare_scheme(namespace, use_batch, use_index_all, use_index_single, batch, delete_batch);
 		g_assert_nonnull(b_scheme);
 
+		j_benchmark_timer_start(run);
 	}
 	else
 	{
@@ -377,12 +378,12 @@ _benchmark_db_workload_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const*
 		{
 			break;
 		}
-		break;
 	}
 
 	// Reuse Insert function for other Benchmarks with use_timer flag
 	if (use_timer)
 	{
+		j_benchmark_timer_stop(run);
 		ret = j_batch_execute(delete_batch);
 		g_assert_true(ret);
 
