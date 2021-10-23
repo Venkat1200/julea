@@ -310,7 +310,7 @@ _benchmark_db_workload_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const*
 		b_scheme = scheme;
 	
 
-	while (true)
+	/*while (true)
 	{
 		for (gint i = 0; i < N; i++)
 		{
@@ -350,6 +350,6 @@ _benchmark_db_workload_insert(BenchmarkRun* run, JDBSchema* scheme, gchar const*
 			g_assert_true(ret);
 
 			break;
-	}
+	}*/
 
 }
