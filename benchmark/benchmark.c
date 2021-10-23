@@ -389,6 +389,9 @@ main(int argc, char** argv)
 
 	j_benchmark_semantics = j_semantics_new_from_string(opt_template, opt_semantics);
 
+	// Delete this
+	benchmark_db_entry();
+	return 0;
 	// Core
 	benchmark_background_operation();
 	benchmark_cache();
