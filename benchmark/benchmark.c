@@ -391,7 +391,7 @@ main(int argc, char** argv)
 
 	// Delete this
 	benchmark_db_entry();
-	return 0;
+/*
 	// Core
 	benchmark_background_operation();
 	benchmark_cache();
@@ -417,7 +417,7 @@ main(int argc, char** argv)
 	// HDF5 client
 	benchmark_hdf();
 	benchmark_hdf_dai();
-
+*/
 	j_benchmark_run_all();
 
 	j_semantics_unref(j_benchmark_semantics);
