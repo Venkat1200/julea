@@ -390,8 +390,8 @@ static void _benchmark_db_workloadStreaming(BenchmarkRun *run, gchar const *name
 
 	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
 }
-static void benchmark_db_workloadScientific(BenchmarkRun *run) {
-	_benchmark_db_workloadScientific(run, "benchmark_update", false, false, false);
+static void benchmark_db_workloadStreaming(BenchmarkRun *run) {
+	_benchmark_db_workloadStreaming(run, "benchmark_update", false, false, false);
 }
 
 static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *namespace,
@@ -499,8 +499,8 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 
 	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
 }
-static void benchmark_db_workloadStreaming(BenchmarkRun *run) {
-	_benchmark_db_workloadStreaming(run, "benchmark_update", false, false, false);
+static void benchmark_db_workloadScientific(BenchmarkRun *run) {
+	_benchmark_db_workloadScientific(run, "benchmark_update", false, false, false);
 }
 
 
