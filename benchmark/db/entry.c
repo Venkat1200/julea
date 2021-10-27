@@ -504,7 +504,7 @@ static void benchmark_db_workloadScientific(BenchmarkRun *run) {
 	_benchmark_db_workloadScientific(run, "benchmark_update", false, false, false);
 }
 
-static void benchmark_db_workloadML(BenchmarkRun *run, gchar const *namespace,
+static void _benchmark_db_workloadML(BenchmarkRun *run, gchar const *namespace,
 		gboolean use_batch, gboolean use_index_all, gboolean use_index_single) {
 	gboolean ret;
 	g_autoptr(JBatch) delete_batch = NULL;
