@@ -87,7 +87,9 @@ _benchmark_collection_create(BenchmarkRun* run, gboolean use_batch)
 		}
 
 		/**********************************/
-			
+			for (guint i = 0; i < n; i++)
+			j_benchmark_timer_start(run);	
+		
 			latency =1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
                         if(run->min_latency < 0) {
