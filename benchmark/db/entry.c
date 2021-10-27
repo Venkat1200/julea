@@ -367,7 +367,7 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 static void
 benchmark_db_workloadScientific(BenchmarkRun* run)
 {
-	_benchmark_db_workloadScientific(run, "benchmark_get_simple", false, false);
+	_benchmark_db_insert(run, NULL, "benchmark_insert", false, false, false, true);
 }
 /*
 static void
