@@ -368,8 +368,10 @@ _benchmark_db_workloadScientific(BenchmarkRun* run, gchar const* namespace, gboo
 static void
 benchmark_db_workloadScientific(BenchmarkRun* run)
 {
+	for(int i=0;i<100;i++){
 	_benchmark_db_insert(run, NULL, "benchmark_insert", false, false, false, true);
 	_benchmark_db_get_simple(run, "benchmark_get_simple", false, false);
+	}
 }
 /*
 static void
