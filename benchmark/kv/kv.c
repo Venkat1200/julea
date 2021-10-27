@@ -377,6 +377,123 @@ benchmark_kv_scientificAppWorkload(BenchmarkRun* run)
 	_benchmark_kv_scientificAppWorkload(run, FALSE);
 }
 static void
+_benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
+{
+	guint const n = 1000;
+
+/**********************************/
+	guint perc;
+	double latencies[n];
+    gdouble latency;
+
+/**********************************/
+	g_autoptr(JBatch) delete_batch = NULL;
+	g_autoptr(JBatch) batch = NULL;
+	g_autoptr(JSemantics) semantics = NULL;
+	gboolean ret;
+
+	semantics = j_benchmark_get_semantics();
+	delete_batch = j_batch_new(semantics);
+	batch = j_batch_new(semantics);
+
+
+	ret = j_batch_execute(batch);
+	//g_assert_true(ret);
+
+	j_benchmark_timer_start(run);
+
+	while (j_benchmark_iterate(run))
+	{
+		for (guint i = 0; i < n; i++)
+		{
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
+			g_autoptr(JKV) object = NULL;
+			g_autofree gchar* name = NULL;
+			for (guint ii = 0; ii < 450; ii++)
+			{
+				{
+					g_autoptr(JKV) object = NULL;
+					g_autofree gchar* name = NULL;
+
+					name = g_strdup_printf("benchmark-%d", i);
+					object = j_kv_new("benchmark", name);
+					j_kv_put(object, g_strdup(name), strlen(name), g_free, batch);
+
+					j_kv_delete(object, delete_batch);
+				}
+
+
+			}
+			for (guint ii = 0; ii < 50; ii++)
+			{
+
+				name = g_strdup_printf("benchmark-%d", i);
+				object = j_kv_new("benchmark", name);
+				j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
+
+			}
+			/**********************************/
+
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i] = latency;
+                        if  (run->min_latency < 0){
+                            run->min_latency = latency;
+                            run->max_latency = latency;
+
+                       }else{
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
+                        }
+			/**********************************/
+
+
+			if (!use_batch)
+			{
+				ret = j_batch_execute(batch);
+				//g_assert_true(ret);
+			}
+		}
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc = (int)((gdouble)0.95*(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency95 = latencies[perc];
+		perc = (int)((gdouble)0.90*(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency90 = latencies[perc];
+
+		//-/
+		run->latency=0;
+		for (guint iin = 0; iin< n; iin++)
+		run->latency = run->latency + latencies[iin];
+		run->latency = run->latency/n;
+		/**********************************/
+
+		if (use_batch)
+		{
+			ret = j_batch_execute(batch);
+			//g_assert_true(ret);
+		}
+	}
+
+	j_benchmark_timer_stop(run);
+
+	ret = j_batch_execute(delete_batch);
+	//g_assert_true(ret);
+
+	run->operations = n;
+}
+
+static void
+benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run)
+{
+	_benchmark_kv_WriteIntensiveWorkload(run, FALSE);
+}
+static void
 _benchmark_kv_MLWorkload(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = 1000;
@@ -1023,4 +1140,5 @@ benchmark_kv(void)
 	j_benchmark_add("/kv/benchmark_kv_streamingWorkload", benchmark_kv_streamingWorkload);
 	j_benchmark_add("/kv/benchmark_kv_AutoSysWorkload", benchmark_kv_AutoSysWorkload);
 	j_benchmark_add("/kv/benchmark_kv_MLWorkload", benchmark_kv_MLWorkload);
+	j_benchmark_add("/kv/benchmark_kv_WriteIntensiveWorkload", benchmark_kv_WriteIntensiveWorkload);
 }
