@@ -389,9 +389,7 @@ main(int argc, char** argv)
 
 	j_benchmark_semantics = j_semantics_new_from_string(opt_template, opt_semantics);
 
-	// Delete this
-	benchmark_db_entry();
-/*
+
 	// Core
 	benchmark_background_operation();
 	benchmark_cache();
@@ -417,7 +415,6 @@ main(int argc, char** argv)
 	// HDF5 client
 	benchmark_hdf();
 	benchmark_hdf_dai();
-*/
 	j_benchmark_run_all();
 
 	j_semantics_unref(j_benchmark_semantics);
