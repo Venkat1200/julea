@@ -641,9 +641,9 @@ static void benchmark_db_update_batch_index_mixed(BenchmarkRun *run) {
 void benchmark_db_entry(void) {
 
 	j_benchmark_add("/db/entry/insert", benchmark_db_insert);
+	j_benchmark_add("/db/entry/workload 2(Streaming)", benchmark_db_workloadStreaming);
 	j_benchmark_add("/db/entry/workload 1(Scientific app)",
 			benchmark_db_workloadScientific);
-	j_benchmark_add("/db/entry/workload 2(Streaming)", benchmark_db_workloadStreaming);
 	j_benchmark_add("/db/entry/insert-batch", benchmark_db_insert_batch);
 	j_benchmark_add("/db/entry/insert-index-single",
 			benchmark_db_insert_index_single);
