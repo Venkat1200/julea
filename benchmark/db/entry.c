@@ -27,6 +27,7 @@
 #include "benchmark.h"
 
 #include "common.c"
+#include "iterator.c"
 
 /**********************************/
 #include <stdio.h>
@@ -368,6 +369,7 @@ static void
 benchmark_db_workloadScientific(BenchmarkRun* run)
 {
 	_benchmark_db_insert(run, NULL, "benchmark_insert", false, false, false, true);
+	_benchmark_db_get_simple(run, "benchmark_get_simple", false, false);
 }
 /*
 static void
