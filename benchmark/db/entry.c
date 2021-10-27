@@ -304,6 +304,7 @@ static void _benchmark_db_workloadStreaming(BenchmarkRun *run, gchar const *name
 	g_assert_nonnull(run);
 
 
+	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
 /**********************************/
 	gint n=((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER))/100;
@@ -324,7 +325,6 @@ static void _benchmark_db_workloadStreaming(BenchmarkRun *run, gchar const *name
                         g_timer_start(func_timer);
 			/**********************************/
             for(int ii=0;ii<100; ii++){
-            _benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
 			JDBType field_type;
 			g_autofree gpointer field_value;
@@ -434,6 +434,7 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 			/**********************************/
             for(int ii=0;ii<100; ii++){
 
+                _benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
 			JDBType field_type;
 			g_autofree gpointer field_value;
