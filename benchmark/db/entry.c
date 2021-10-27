@@ -522,6 +522,7 @@ static void _benchmark_db_workloadML(BenchmarkRun *run, gchar const *namespace,
 	g_assert_nonnull(b_scheme);
 	g_assert_nonnull(run);
 
+    _benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
 
 /**********************************/
