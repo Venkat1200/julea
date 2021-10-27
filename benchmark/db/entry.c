@@ -317,7 +317,7 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 	double latencies[n];
 	/**********************************/
 	while (j_benchmark_iterate(run)) {
-		_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
+
 
 		j_benchmark_timer_start(run);
 
@@ -331,7 +331,7 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 			func_timer = g_timer_new();
 			g_timer_start(func_timer);
 			/**********************************/
-
+			_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 			g_autoptr (JDBEntry)
 			entry = j_db_entry_new(b_scheme, &b_s_error);
 			g_autofree gchar
