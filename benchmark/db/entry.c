@@ -284,9 +284,8 @@ static void _benchmark_db_update(BenchmarkRun *run, gchar const *namespace,
 			(use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
 }
 
-static void _benchmark_db_workloadScientific(BenchmarkRun *run,
-		gchar const *namespace, gboolean use_index_all,
-		gboolean use_index_single) {
+static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *namespace,
+		gboolean use_batch, gboolean use_index_all, gboolean use_index_single) {
 	gboolean ret;
 	g_autoptr (JBatch)
 	delete_batch = NULL;
@@ -409,7 +408,7 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run,
 			(use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
 }
 static void benchmark_db_workloadScientific(BenchmarkRun *run) {
-	_benchmark_db_workloadscientific(run, "benchmark_get_simple", false, false);
+	_benchmark_db_update(run, "benchmark_update", false, false, false);
 }
 /*
  static void
