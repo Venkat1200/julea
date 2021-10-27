@@ -54,6 +54,7 @@ static void _benchmark_db_delete(BenchmarkRun *run, gchar const *namespace,
 	g_autoptr (GError)
 	b_s_error = NULL;
 	g_autoptr (JDBSchema)
+
 	b_scheme = NULL;
 
 	semantics = j_benchmark_get_semantics();
@@ -296,6 +297,7 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 	g_autoptr (GError)
 	b_s_error = NULL;
 	g_autoptr (JDBSchema)
+
 	b_scheme = NULL;
 
 	semantics = j_benchmark_get_semantics();
@@ -308,16 +310,17 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 	g_assert_nonnull(b_scheme);
 	g_assert_nonnull(run);
 
-	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
-
 	/**********************************/
 	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
 	gdouble latency;
 	guint perc;
 	double latencies[n];
 	/**********************************/
-
 	while (j_benchmark_iterate(run)) {
+		_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
+
+		j_benchmark_timer_start(run);
+
 		for (gint i = 0;
 				i
 						< ((use_index_all || use_index_single) ?
@@ -329,28 +332,20 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 			g_timer_start(func_timer);
 			/**********************************/
 
-			gint64 i_signed = (((i + N_PRIME) * SIGNED_FACTOR) % CLASS_MODULUS)
-					- CLASS_LIMIT;
-			g_autoptr (JDBSelector)
-			selector = j_db_selector_new(b_scheme, J_DB_SELECTOR_MODE_AND,
-					&b_s_error);
 			g_autoptr (JDBEntry)
 			entry = j_db_entry_new(b_scheme, &b_s_error);
 			g_autofree gchar
 			*string = _benchmark_db_get_identifier(i);
-
-			g_assert_null(b_s_error);
-
-			ret = j_db_entry_set_field(entry, "sint", &i_signed, 0, &b_s_error);
-			g_assert_true(ret);
-			g_assert_null(b_s_error);
+			g_autoptr (JDBSelector)
+			selector = j_db_selector_new(b_scheme, J_DB_SELECTOR_MODE_AND,
+					&b_s_error);
 
 			ret = j_db_selector_add_field(selector, "string",
 					J_DB_SELECTOR_OPERATOR_EQ, string, 0, &b_s_error);
 			g_assert_true(ret);
 			g_assert_null(b_s_error);
 
-			ret = j_db_entry_update(entry, selector, batch, &b_s_error);
+			ret = j_db_entry_delete(entry, selector, batch, &b_s_error);
 			g_assert_true(ret);
 			g_assert_null(b_s_error);
 
@@ -359,8 +354,9 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 				g_assert_true(ret);
 			}
 			/**********************************/
-
+			g_timer_stop(func_timer);
 			latency = 1000000 * g_timer_elapsed(func_timer, NULL);
+
 			latencies[i] = latency;
 			if (run->min_latency < 0) {
 				run->min_latency = latency;
@@ -397,9 +393,9 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 			ret = j_batch_execute(batch);
 			g_assert_true(ret);
 		}
-	}
 
-	j_benchmark_timer_stop(run);
+		j_benchmark_timer_stop(run);
+	}
 
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
