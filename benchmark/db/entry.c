@@ -303,10 +303,10 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 	g_assert_nonnull(b_scheme);
 	g_assert_nonnull(run);
 
-	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
+
 
 /**********************************/
-	gint n=((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	gint n=((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER))/100;
     gdouble latency;
 	guint perc;
 	double latencies[n];
@@ -316,13 +316,15 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 
 	while (j_benchmark_iterate(run))
 	{
-		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)); i++)
+		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER))/100; i++)
 		{
 			/**********************************/
 			g_autoptr(GTimer) func_timer = NULL;
 			func_timer = g_timer_new();
                         g_timer_start(func_timer);
 			/**********************************/
+            for(int ii=0;ii<100; ii++){
+            _benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
 			JDBType field_type;
 			g_autofree gpointer field_value;
@@ -346,6 +348,7 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 			ret = j_db_iterator_get_field(iterator, "string", &field_type, &field_value, &field_length, &b_s_error);
 			g_assert_true(ret);
 			g_assert_null(b_s_error);
+            }
 			/**********************************/
 
 			latency = 1000000* g_timer_elapsed(func_timer, NULL);
