@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <julea-config.h>
 
 #include <glib.h>
@@ -25,29 +24,10 @@
 
 #include "benchmark.h"
 
-/**********************************/
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-static int compare (const void * a, const void * b)
-{
-    if (*(const double*)a > *(const double*)b) return 1;
-    else if (*(const double*)a < *(const double*)b) return -1;
-    else return 0;
-}
-/**********************************/
-
 static void
 _benchmark_collection_create(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = 1000;
-	
-	/**********************************/
-	guint perc;
-	double latencies[n];
-        gdouble latency;
-		
-	/**********************************/
 
 	g_autoptr(JBatch) delete_batch = NULL;
 	g_autoptr(JBatch) batch = NULL;
@@ -64,13 +44,6 @@ _benchmark_collection_create(BenchmarkRun* run, gboolean use_batch)
 
 		for (guint i = 0; i < n; i++)
 		{
-			
-			/**********************************/
-			g_autoptr(GTimer) func_timer = NULL;
-			func_timer = g_timer_new();
-                        g_timer_start(func_timer);
-			/**********************************/
-			
 			g_autoptr(JCollection) collection = NULL;
 			g_autofree gchar* name = NULL;
 
@@ -86,39 +59,6 @@ _benchmark_collection_create(BenchmarkRun* run, gboolean use_batch)
 			}
 		}
 
-		/**********************************/
-			for (guint i = 0; i < n; i++)
-			j_benchmark_timer_start(run);	
-		
-			latency =1000000* g_timer_elapsed(func_timer, NULL);
-			latencies[i] = latency;
-                        if(run->min_latency < 0) {
-                            run->min_latency = latency;
-                            run->max_latency = latency;
-
-                       }else {
-                            if (latency > run->max_latency)run->max_latency = latency;
-                            if (latency < run->min_latency)run->min_latency = latency;
-                        }
-			/**********************************/
-		
-		}
-	
-		/**********************************/
-		 qsort(latencies, n, sizeof(double), compare);
-		perc = (int)((gdouble)0.95*(gdouble)n);
-		if (perc>=n)perc = n - 1;
-		run->percLatency95 = latencies[perc];
-		perc = (int)((gdouble)0.90*(gdouble)n);
-		if (perc>=n)perc = n - 1;
-		run->percLatency90 = latencies[perc];
-		
-		//-/
-		run->latency = 0;
-		for (guint iin = 0; iin< n; iin++)
-		run->latency = run->latency + latencies[iin];
-		run->latency = run->latency / n;
-		/**********************************/
 		if (use_batch)
 		{
 			ret = j_batch_execute(batch);
@@ -326,4 +266,3 @@ benchmark_collection(void)
 	j_benchmark_add("/item/collection/unordered-create-delete-batch", benchmark_collection_unordered_create_delete_batch);
 	/// \todo get
 }
-
