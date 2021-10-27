@@ -311,7 +311,7 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 	g_assert_nonnull(run);
 
 	/**********************************/
-	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	gint n = (((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)))/100;
 	gdouble latency;
 	guint perc;
 	double latencies[n];
@@ -323,14 +323,15 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 
 		for (gint i = 0;
 				i
-						< ((use_index_all || use_index_single) ?
-								N : (N / N_GET_DIVIDER)); i++) {
+						< (((use_index_all || use_index_single) ?
+								N : (N / N_GET_DIVIDER)))/100; i++) {
 			/**********************************/
 			g_autoptr (GTimer)
 			func_timer = NULL;
 			func_timer = g_timer_new();
 			g_timer_start(func_timer);
 			/**********************************/
+			for(int ii=0;ii<100; ii++){
 			_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 			g_autoptr (JDBEntry)
 			entry = j_db_entry_new(b_scheme, &b_s_error);
@@ -352,6 +353,7 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 			if (!use_batch) {
 				ret = j_batch_execute(batch);
 				g_assert_true(ret);
+			}
 			}
 			/**********************************/
 			g_timer_stop(func_timer);
@@ -400,8 +402,8 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run, gchar const *nam
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
 
-	run->operations = (
-			(use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	run->operations = ((
+			(use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)))/100;
 }
 static void benchmark_db_workloadScientific(BenchmarkRun *run) {
 	_benchmark_db_workloadScientific(run, "benchmark_update", false, false, false);
