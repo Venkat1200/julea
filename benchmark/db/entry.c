@@ -778,6 +778,6 @@ void benchmark_db_entry(void) {
 	j_benchmark_add("/db/entry/update-batch-index-mixed",
 			benchmark_db_update_batch_index_mixed);
 
-	/* j_benchmark_add("/db/entry/workload 3(Machine Learning)", benchmark_db_workloadML);
-	 j_benchmark_add("/db/entry/workload 4(Autonomous Sys)", benchmark_db_workloadAutoSys);
+	 j_benchmark_add("/db/entry/workload 3(Machine Learning)", benchmark_db_workloadML);
+	/* j_benchmark_add("/db/entry/workload 4(Autonomous Sys)", benchmark_db_workloadAutoSys);
 	 */}
