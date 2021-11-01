@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <julea-config.h>
 
 #include <glib.h>
@@ -267,4 +266,3 @@ benchmark_collection(void)
 	j_benchmark_add("/item/collection/unordered-create-delete-batch", benchmark_collection_unordered_create_delete_batch);
 	/// \todo get
 }
-
