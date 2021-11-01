@@ -31,6 +31,14 @@ static void
 _benchmark_item_create(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = 1000;
+<<<<<<< HEAD
+=======
+/**********************************/
+    	gdouble latency;
+	guint perc;
+	double latencies[n];
+/**********************************/
+>>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JBatch) delete_batch = NULL;
@@ -102,6 +110,14 @@ static void
 _benchmark_item_delete(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = 1000;
+<<<<<<< HEAD
+=======
+/**********************************/
+    	gdouble latency;
+	guint perc;
+	double latencies[n];
+/**********************************/
+>>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JBatch) get_batch = NULL;
@@ -184,6 +200,14 @@ static void
 benchmark_item_delete_batch_without_get(BenchmarkRun* run)
 {
 	guint const n = 1000;
+<<<<<<< HEAD
+=======
+/**********************************/
+    	gdouble latency;
+	guint perc;
+	double latencies[n];
+/**********************************/
+>>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JBatch) delete_batch = NULL;
@@ -234,6 +258,14 @@ static void
 _benchmark_item_get_status(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = (use_batch) ? 10000 : 1000;
+<<<<<<< HEAD
+=======
+/**********************************/
+    	gdouble latency;
+	guint perc;
+	double latencies[n];
+/**********************************/
+>>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JItem) item = NULL;
@@ -303,6 +335,14 @@ static void
 _benchmark_item_read(BenchmarkRun* run, gboolean use_batch, guint block_size)
 {
 	guint const n = (use_batch) ? 10000 : 1000;
+<<<<<<< HEAD
+=======
+/**********************************/
+    	gdouble latency;
+	guint perc;
+	double latencies[n];
+/**********************************/
+>>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JItem) item = NULL;
@@ -380,6 +420,14 @@ static void
 _benchmark_item_write(BenchmarkRun* run, gboolean use_batch, guint block_size)
 {
 	guint const n = (use_batch) ? 10000 : 1000;
+<<<<<<< HEAD
+=======
+/**********************************/
+    	gdouble latency;
+	guint perc;
+	double latencies[n];
+/**********************************/
+>>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JItem) item = NULL;
@@ -450,6 +498,14 @@ static void
 _benchmark_item_unordered_create_delete(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = 1000;
+<<<<<<< HEAD
+=======
+/**********************************/
+    	gdouble latency;
+	guint perc;
+	double latencies[n];
+/**********************************/
+>>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JBatch) batch = NULL;
