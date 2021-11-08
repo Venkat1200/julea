@@ -1370,8 +1370,8 @@ void benchmark_db_entry(void) {
 			benchmark_db_workloadAutoSys);
 	j_benchmark_add("/db/entry/workload 5 (Write Intensive) ",
 			benchmark_db_workload_Write_Intensive);
-	j_benchmark_add("/db/entry/workload 6(without index)",
-			benchmark_db_workloadWithIndex);
+	/*j_benchmark_add("/db/entry/workload 6(without index)",
+			benchmark_db_workloadWithIndex);*/
 	j_benchmark_add("/db/entry/workload 7(with index)",
 			benchmark_db_workloadWithoutindex);
 	j_benchmark_add("/db/entry/insert-batch", benchmark_db_insert_batch);
