@@ -402,10 +402,10 @@ main(int argc, char** argv)
 	// Object client
 	benchmark_distributed_object();
 	benchmark_object();
-
+*/
 	// DB client
 	benchmark_db_entry();
-*/	benchmark_db_iterator();
+	benchmark_db_iterator();
 	benchmark_db_schema();
 
 /*	// Item client
