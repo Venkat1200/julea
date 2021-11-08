@@ -27,18 +27,28 @@
 
 #include "benchmark.h"
 
+/**********************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+static int compare (const void * a, const void * b)
+{
+    if (*(const double*)a > *(const double*)b) return 1;
+    else if (*(const double*)a < *(const double*)b) return -1;
+    else return 0;
+}
+/**********************************/
+
+
 static void
 _benchmark_item_create(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = 1000;
-<<<<<<< HEAD
-=======
 /**********************************/
-    	gdouble latency;
+    gdouble latency;
 	guint perc;
 	double latencies[n];
 /**********************************/
->>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JBatch) delete_batch = NULL;
@@ -62,6 +72,11 @@ _benchmark_item_create(BenchmarkRun* run, gboolean use_batch)
 		{
 			g_autoptr(JItem) item = NULL;
 			g_autofree gchar* name = NULL;
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
 
 			name = g_strdup_printf("benchmark-%d", i);
 			item = j_item_create(collection, name, NULL, batch);
@@ -73,7 +88,39 @@ _benchmark_item_create(BenchmarkRun* run, gboolean use_batch)
 				ret = j_batch_execute(batch);
 				g_assert_true(ret);
 			}
+			/**********************************/
+			
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i] = latency;
+                        if (run->min_latency < 0) {
+                            run->min_latency = latency;
+                            run->max_latency = latency;
+
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
+                        }
+			/**********************************/
+			
+			
 		}
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc = (int)((gdouble) 0.95 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency95 = latencies[perc];
+		perc = (int)((gdouble)0.90 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency90 = latencies[perc];
+		
+		//-/
+		run->latency = 0;
+	
+		for (guint iin = 0; iin< n; iin++)
+		run->latency = run->latency + latencies[iin];
+		run->latency = run->latency / n;
+		/**********************************/
+
 
 		if (use_batch)
 		{
@@ -110,14 +157,11 @@ static void
 _benchmark_item_delete(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = 1000;
-<<<<<<< HEAD
-=======
 /**********************************/
-    	gdouble latency;
+    gdouble latency;
 	guint perc;
 	double latencies[n];
 /**********************************/
->>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JBatch) get_batch = NULL;
@@ -142,6 +186,7 @@ _benchmark_item_delete(BenchmarkRun* run, gboolean use_batch)
 
 			name = g_strdup_printf("benchmark-%d", i);
 			item = j_item_create(collection, name, NULL, batch);
+
 		}
 
 		ret = j_batch_execute(batch);
@@ -153,6 +198,11 @@ _benchmark_item_delete(BenchmarkRun* run, gboolean use_batch)
 		{
 			g_autoptr(JItem) item = NULL;
 			g_autofree gchar* name = NULL;
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
 
 			name = g_strdup_printf("benchmark-%d", i);
 			j_item_get(collection, &item, name, get_batch);
@@ -166,7 +216,40 @@ _benchmark_item_delete(BenchmarkRun* run, gboolean use_batch)
 				ret = j_batch_execute(batch);
 				g_assert_true(ret);
 			}
+			/**********************************/
+			
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i] = latency;
+                        if (run->min_latency < 0) {
+                            run->min_latency = latency;
+                            run->max_latency = latency;
+
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
+                        }
+			/**********************************/
+			
+			
 		}
+		
+		
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc = (int)((gdouble) 0.95 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency95 = latencies[perc];
+		perc = (int)((gdouble)0.90 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency90 = latencies[perc];
+		
+		//-/
+		run->latency = 0;
+	
+		for (guint iin = 0; iin< n; iin++)
+		run->latency = run->latency + latencies[iin];
+		run->latency = run->latency / n;
+		/**********************************/
 
 		if (use_batch)
 		{
@@ -200,14 +283,11 @@ static void
 benchmark_item_delete_batch_without_get(BenchmarkRun* run)
 {
 	guint const n = 1000;
-<<<<<<< HEAD
-=======
 /**********************************/
-    	gdouble latency;
+    gdouble latency;
 	guint perc;
 	double latencies[n];
 /**********************************/
->>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JBatch) delete_batch = NULL;
@@ -227,6 +307,11 @@ benchmark_item_delete_batch_without_get(BenchmarkRun* run)
 	{
 		for (guint i = 0; i < n; i++)
 		{
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
 			g_autoptr(JItem) item = NULL;
 			g_autofree gchar* name = NULL;
 
@@ -234,7 +319,41 @@ benchmark_item_delete_batch_without_get(BenchmarkRun* run)
 			item = j_item_create(collection, name, NULL, batch);
 
 			j_item_delete(item, delete_batch);
+			/**********************************/
+			
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i] = latency;
+                        if (run->min_latency < 0) {
+                            run->min_latency = latency;
+                            run->max_latency = latency;
+
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
+                        }
+			/**********************************/
+			
+			
 		}
+		
+		
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc = (int)((gdouble) 0.95 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency95 = latencies[perc];
+		perc = (int)((gdouble)0.90 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency90 = latencies[perc];
+		
+		//-/
+		run->latency = 0;
+	
+		for (guint iin = 0; iin< n; iin++)
+		run->latency = run->latency + latencies[iin];
+		run->latency = run->latency / n;
+		/**********************************/
+
 
 		ret = j_batch_execute(batch);
 		g_assert_true(ret);
@@ -258,14 +377,11 @@ static void
 _benchmark_item_get_status(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = (use_batch) ? 10000 : 1000;
-<<<<<<< HEAD
-=======
 /**********************************/
-    	gdouble latency;
+    gdouble latency;
 	guint perc;
 	double latencies[n];
 /**********************************/
->>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JItem) item = NULL;
@@ -293,6 +409,11 @@ _benchmark_item_get_status(BenchmarkRun* run, gboolean use_batch)
 	{
 		for (guint i = 0; i < n; i++)
 		{
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
 			j_item_get_status(item, batch);
 
 			if (!use_batch)
@@ -300,7 +421,41 @@ _benchmark_item_get_status(BenchmarkRun* run, gboolean use_batch)
 				ret = j_batch_execute(batch);
 				g_assert_true(ret);
 			}
+			/**********************************/
+			
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i] = latency;
+                        if (run->min_latency < 0) {
+                            run->min_latency = latency;
+                            run->max_latency = latency;
+
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
+                        }
+			/**********************************/
+			
+			
 		}
+		
+		
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc = (int)((gdouble) 0.95 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency95 = latencies[perc];
+		perc = (int)((gdouble)0.90 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency90 = latencies[perc];
+		
+		//-/
+		run->latency = 0;
+	
+		for (guint iin = 0; iin< n; iin++)
+		run->latency = run->latency + latencies[iin];
+		run->latency = run->latency / n;
+		/**********************************/
+
 
 		if (use_batch)
 		{
@@ -335,14 +490,11 @@ static void
 _benchmark_item_read(BenchmarkRun* run, gboolean use_batch, guint block_size)
 {
 	guint const n = (use_batch) ? 10000 : 1000;
-<<<<<<< HEAD
-=======
 /**********************************/
-    	gdouble latency;
+    gdouble latency;
 	guint perc;
 	double latencies[n];
 /**********************************/
->>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JItem) item = NULL;
@@ -375,6 +527,11 @@ _benchmark_item_read(BenchmarkRun* run, gboolean use_batch, guint block_size)
 	{
 		for (guint i = 0; i < n; i++)
 		{
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
 			j_item_read(item, dummy, block_size, i * block_size, &nb, batch);
 
 			if (!use_batch)
@@ -383,7 +540,41 @@ _benchmark_item_read(BenchmarkRun* run, gboolean use_batch, guint block_size)
 				g_assert_true(ret);
 				g_assert_cmpuint(nb, ==, block_size);
 			}
+			/**********************************/
+			
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i] = latency;
+                        if (run->min_latency < 0) {
+                            run->min_latency = latency;
+                            run->max_latency = latency;
+
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
+                        }
+			/**********************************/
+			
+			
 		}
+		
+		
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc = (int)((gdouble) 0.95 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency95 = latencies[perc];
+		perc = (int)((gdouble)0.90 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency90 = latencies[perc];
+		
+		//-/
+		run->latency = 0;
+	
+		for (guint iin = 0; iin< n; iin++)
+		run->latency = run->latency + latencies[iin];
+		run->latency = run->latency / n;
+		/**********************************/
+
 
 		if (use_batch)
 		{
@@ -420,14 +611,11 @@ static void
 _benchmark_item_write(BenchmarkRun* run, gboolean use_batch, guint block_size)
 {
 	guint const n = (use_batch) ? 10000 : 1000;
-<<<<<<< HEAD
-=======
 /**********************************/
-    	gdouble latency;
+    gdouble latency;
 	guint perc;
 	double latencies[n];
 /**********************************/
->>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JItem) item = NULL;
@@ -453,6 +641,11 @@ _benchmark_item_write(BenchmarkRun* run, gboolean use_batch, guint block_size)
 	{
 		for (guint i = 0; i < n; i++)
 		{
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
 			j_item_write(item, &dummy, block_size, i * block_size, &nb, batch);
 
 			if (!use_batch)
@@ -461,7 +654,41 @@ _benchmark_item_write(BenchmarkRun* run, gboolean use_batch, guint block_size)
 				g_assert_true(ret);
 				g_assert_cmpuint(nb, ==, block_size);
 			}
+			/**********************************/
+			
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i] = latency;
+                        if (run->min_latency < 0) {
+                            run->min_latency = latency;
+                            run->max_latency = latency;
+
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
+                        }
+			/**********************************/
+			
+			
 		}
+		
+		
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc = (int)((gdouble) 0.95 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency95 = latencies[perc];
+		perc = (int)((gdouble)0.90 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency90 = latencies[perc];
+		
+		//-/
+		run->latency = 0;
+	
+		for (guint iin = 0; iin< n; iin++)
+		run->latency = run->latency + latencies[iin];
+		run->latency = run->latency / n;
+		/**********************************/
+
 
 		if (use_batch)
 		{
@@ -498,14 +725,11 @@ static void
 _benchmark_item_unordered_create_delete(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = 1000;
-<<<<<<< HEAD
-=======
 /**********************************/
-    	gdouble latency;
+    gdouble latency;
 	guint perc;
 	double latencies[n];
 /**********************************/
->>>>>>> ccdef56da39424db3b76862b507c0586fa3cb39a
 
 	g_autoptr(JCollection) collection = NULL;
 	g_autoptr(JBatch) batch = NULL;
@@ -527,6 +751,11 @@ _benchmark_item_unordered_create_delete(BenchmarkRun* run, gboolean use_batch)
 		{
 			g_autoptr(JItem) item = NULL;
 			g_autofree gchar* name = NULL;
+			/**********************************/
+			g_autoptr(GTimer) func_timer = NULL;
+			func_timer = g_timer_new();
+                        g_timer_start(func_timer);
+			/**********************************/
 
 			name = g_strdup_printf("benchmark-%d", i);
 			item = j_item_create(collection, name, NULL, batch);
@@ -537,7 +766,41 @@ _benchmark_item_unordered_create_delete(BenchmarkRun* run, gboolean use_batch)
 				ret = j_batch_execute(batch);
 				g_assert_true(ret);
 			}
+			/**********************************/
+			
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
+			latencies[i] = latency;
+                        if (run->min_latency < 0) {
+                            run->min_latency = latency;
+                            run->max_latency = latency;
+
+                       }else {
+                            if (latency > run->max_latency)run->max_latency = latency;
+                            if (latency < run->min_latency)run->min_latency = latency;
+                        }
+			/**********************************/
+			
+			
 		}
+		
+		
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc = (int)((gdouble) 0.95 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency95 = latencies[perc];
+		perc = (int)((gdouble)0.90 *(gdouble)n);
+		if (perc>=n)perc = n - 1;
+		run->percLatency90 = latencies[perc];
+		
+		//-/
+		run->latency = 0;
+	
+		for (guint iin = 0; iin< n; iin++)
+		run->latency = run->latency + latencies[iin];
+		run->latency = run->latency / n;
+		/**********************************/
+
 
 		if (use_batch)
 		{
