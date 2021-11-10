@@ -196,6 +196,12 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 	{
 		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)); i++)
 		{
+			/**********************************/
+			g_autoptr (GTimer)
+			func_timer = NULL;
+			func_timer = g_timer_new();
+			g_timer_start(func_timer);
+			/**********************************/
 			gint64 i_signed = (((i + N_PRIME) * SIGNED_FACTOR) % CLASS_MODULUS) - CLASS_LIMIT;
 			g_autoptr(JDBSelector) selector = j_db_selector_new(b_scheme, J_DB_SELECTOR_MODE_AND, &b_s_error);
 			g_autoptr(JDBEntry) entry = j_db_entry_new(b_scheme, &b_s_error);
