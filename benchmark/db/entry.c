@@ -184,6 +184,13 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
 	j_benchmark_timer_start(run);
+/**********************************/
+	int n= ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	guint perc;
+	double latencies[n];
+   	gdouble latency;
+	
+/**********************************/
 
 	while (j_benchmark_iterate(run))
 	{
