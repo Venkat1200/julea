@@ -715,7 +715,7 @@ static void benchmark_db_workloadScientific(BenchmarkRun *run) {
 	_benchmark_db_workloadScientific(run, "benchmark_update", false, false,
 			false);
 }
-static void benchmark_db_workloadwithoutIndex(BenchmarkRun *run,
+static void _benchmark_db_workloadwithoutIndex(BenchmarkRun *run,
 		gchar const *namespace, gboolean use_batch, gboolean use_index_all,
 		gboolean use_index_single) {
 	gboolean ret;
