@@ -1232,6 +1232,9 @@ void benchmark_db_entry(void) {
 	j_benchmark_add("/db/entry/insert", benchmark_db_insert);
 	j_benchmark_add("/db/entry/workload 1(Scientific app)",
 			benchmark_db_workloadScientific);
+	j_benchmark_add("/db/entry/workload Withour index",
+			benchmark_db_workloadwithoutIndex);
+
 	j_benchmark_add("/db/entry/workload 2(Streaming)",
 			benchmark_db_workloadStreaming);
 	j_benchmark_add("/db/entry/workload 3(Machine Learning)",
