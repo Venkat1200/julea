@@ -162,61 +162,37 @@ static void _benchmark_db_delete(BenchmarkRun *run, gchar const *namespace,
 			(use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
 }
 
-static void _benchmark_db_update(BenchmarkRun *run, gchar const *namespace,
-		gboolean use_batch, gboolean use_index_all, gboolean use_index_single) {
+static void
+_benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_batch, gboolean use_index_all, gboolean use_index_single)
+{
 	gboolean ret;
-	g_autoptr (JBatch)
-	delete_batch = NULL;
-	g_autoptr (JBatch)
-	batch = NULL;
-	g_autoptr (JSemantics)
-	semantics = NULL;
-	g_autoptr (GError)
-	b_s_error = NULL;
-	g_autoptr (JDBSchema)
-	b_scheme = NULL;
+	g_autoptr(JBatch) delete_batch = NULL;
+	g_autoptr(JBatch) batch = NULL;
+	g_autoptr(JSemantics) semantics = NULL;
+	g_autoptr(GError) b_s_error = NULL;
+	g_autoptr(JDBSchema) b_scheme = NULL;
 
 	semantics = j_benchmark_get_semantics();
 	delete_batch = j_batch_new(semantics);
 	batch = j_batch_new(semantics);
 
-	b_scheme = _benchmark_db_prepare_scheme(namespace, false, use_index_all,
-			use_index_single, batch, delete_batch);
+	b_scheme = _benchmark_db_prepare_scheme(namespace, false, use_index_all, use_index_single, batch, delete_batch);
 
 	g_assert_nonnull(b_scheme);
 	g_assert_nonnull(run);
 
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
-	/**********************************/
-	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
-	gdouble latency;
-	guint perc;
-	double latencies[n];
-	/**********************************/
+	j_benchmark_timer_start(run);
 
-	while (j_benchmark_iterate(run)) {
-		for (gint i = 0;
-				i < ((use_index_all || use_index_single) ?
-				N :
-															(N / N_GET_DIVIDER));
-				i++) {
-			/**********************************/
-			g_autoptr (GTimer)
-			func_timer = NULL;
-			func_timer = g_timer_new();
-			g_timer_start(func_timer);
-			/**********************************/
-
-			gint64 i_signed = (((i + N_PRIME) * SIGNED_FACTOR) % CLASS_MODULUS)
-					- CLASS_LIMIT;
-			g_autoptr (JDBSelector)
-			selector = j_db_selector_new(b_scheme, J_DB_SELECTOR_MODE_AND,
-					&b_s_error);
-			g_autoptr (JDBEntry)
-			entry = j_db_entry_new(b_scheme, &b_s_error);
-			g_autofree gchar
-			*string = _benchmark_db_get_identifier(i);
+	while (j_benchmark_iterate(run))
+	{
+		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)); i++)
+		{
+			gint64 i_signed = (((i + N_PRIME) * SIGNED_FACTOR) % CLASS_MODULUS) - CLASS_LIMIT;
+			g_autoptr(JDBSelector) selector = j_db_selector_new(b_scheme, J_DB_SELECTOR_MODE_AND, &b_s_error);
+			g_autoptr(JDBEntry) entry = j_db_entry_new(b_scheme, &b_s_error);
+			g_autofree gchar* string = _benchmark_db_get_identifier(i);
 
 			g_assert_null(b_s_error);
 
@@ -224,8 +200,7 @@ static void _benchmark_db_update(BenchmarkRun *run, gchar const *namespace,
 			g_assert_true(ret);
 			g_assert_null(b_s_error);
 
-			ret = j_db_selector_add_field(selector, "string",
-					J_DB_SELECTOR_OPERATOR_EQ, string, 0, &b_s_error);
+			ret = j_db_selector_add_field(selector, "string", J_DB_SELECTOR_OPERATOR_EQ, string, 0, &b_s_error);
 			g_assert_true(ret);
 			g_assert_null(b_s_error);
 
@@ -233,46 +208,15 @@ static void _benchmark_db_update(BenchmarkRun *run, gchar const *namespace,
 			g_assert_true(ret);
 			g_assert_null(b_s_error);
 
-			if (!use_batch) {
+			if (!use_batch)
+			{
 				ret = j_batch_execute(batch);
 				g_assert_true(ret);
 			}
-			/**********************************/
-
-			latency = 1000000 * g_timer_elapsed(func_timer, NULL);
-			latencies[i] = latency;
-			if (run->min_latency < 0) {
-				run->min_latency = latency;
-				run->max_latency = latency;
-
-			} else {
-				if (latency > run->max_latency)
-					run->max_latency = latency;
-				if (latency < run->min_latency)
-					run->min_latency = latency;
-			}
-			/**********************************/
-
 		}
-		/**********************************/
-		qsort(latencies, n, sizeof(double), compare);
-		perc = (int) ((gdouble) 0.95 * (gdouble) n);
-		if (perc >= n)
-			perc = n - 1;
-		run->percLatency95 = latencies[perc];
-		perc = (int) ((gdouble) 0.90 * (gdouble) n);
-		if (perc >= n)
-			perc = n - 1;
-		run->percLatency90 = latencies[perc];
 
-		//-/
-		run->latency = 0;
-		for (guint iin = 0; iin < n; iin++)
-			run->latency = run->latency + latencies[iin];
-		run->latency = run->latency / n;
-		/**********************************/
-
-		if (use_batch) {
+		if (use_batch)
+		{
 			ret = j_batch_execute(batch);
 			g_assert_true(ret);
 		}
@@ -283,10 +227,8 @@ static void _benchmark_db_update(BenchmarkRun *run, gchar const *namespace,
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
 
-	run->operations = (
-			(use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
 }
-
 static void _benchmark_db_workloadStreaming(BenchmarkRun *run,
 		gchar const *namespace, gboolean use_batch, gboolean use_index_all,
 		gboolean use_index_single) {
