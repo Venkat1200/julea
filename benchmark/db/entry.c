@@ -845,6 +845,136 @@ static void benchmark_db_workloadwithoutIndex(BenchmarkRun *run) {
 	_benchmark_db_workloadwithoutIndex(run, "benchmark_update", false, false,
 			false);
 }
+static void _benchmark_db_workloadwithIndex(BenchmarkRun *run,
+		gchar const *namespace, gboolean use_batch, gboolean use_index_all,
+		gboolean use_index_single) {
+	gboolean ret;
+	g_autoptr (JBatch)
+	delete_batch = NULL;
+	g_autoptr (JBatch)
+	batch = NULL;
+	g_autoptr (JSemantics)
+	semantics = NULL;
+	g_autoptr (GError)
+	b_s_error = NULL;
+	g_autoptr (JDBSchema)
+	b_scheme = NULL;
+
+	semantics = j_benchmark_get_semantics();
+	delete_batch = j_batch_new(semantics);
+	batch = j_batch_new(semantics);
+
+	b_scheme = _benchmark_db_prepare_scheme(namespace, false, use_index_all,
+			use_index_single, batch, delete_batch);
+
+	g_assert_nonnull(b_scheme);
+	g_assert_nonnull(run);
+
+	/**********************************/
+	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER))
+			/ 100;
+	gdouble latency;
+	guint perc;
+	double latencies[n];
+	/**********************************/
+
+	j_benchmark_timer_start(run);
+
+	while (j_benchmark_iterate(run)) {
+		for (gint i = 0;
+				i
+						< ((use_index_all || use_index_single) ?
+								N : (N / N_GET_DIVIDER)) / 100; i++) {
+			/**********************************/
+			g_autoptr (GTimer)
+			func_timer = NULL;
+			func_timer = g_timer_new();
+			g_timer_start(func_timer);
+			/**********************************/
+			for (int ii = 0; ii < 50; ii++) {
+
+				_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false,
+						false);
+
+				JDBType field_type;
+				g_autofree gpointer
+				field_value;
+				gsize field_length;
+				g_autoptr (JDBIterator)
+				iterator;
+				g_autofree gchar
+				*string = _benchmark_db_get_identifier(i);
+				g_autoptr (JDBSelector)
+				selector = j_db_selector_new(b_scheme, J_DB_SELECTOR_MODE_AND,
+						&b_s_error);
+
+				ret = j_db_selector_add_field(selector, "string",
+						J_DB_SELECTOR_OPERATOR_EQ, string, 0, &b_s_error);
+				g_assert_true(ret);
+				g_assert_null(b_s_error);
+
+				iterator = j_db_iterator_new(b_scheme, selector, &b_s_error);
+				g_assert_nonnull(iterator);
+				g_assert_null(b_s_error);
+
+				ret = j_db_iterator_next(iterator, &b_s_error);
+				g_assert_true(ret);
+				g_assert_null(b_s_error);
+
+				ret = j_db_iterator_get_field(iterator, "string", &field_type,
+						&field_value, &field_length, &b_s_error);
+				g_assert_true(ret);
+				g_assert_null(b_s_error);
+			}
+			/**********************************/
+
+			latency = 1000000 * g_timer_elapsed(func_timer, NULL);
+			latencies[i] = latency;
+			if (run->min_latency < 0) {
+				run->min_latency = latency;
+				run->max_latency = latency;
+
+			} else {
+				if (latency > run->max_latency)
+					run->max_latency = latency;
+				if (latency < run->min_latency)
+					run->min_latency = latency;
+			}
+			/**********************************/
+
+		}
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc = (int) ((gdouble) 0.95 * (gdouble) n);
+		if (perc >= n)
+			perc = n - 1;
+		run->percLatency95 = latencies[perc];
+		perc = (int) ((gdouble) 0.90 * (gdouble) n);
+		if (perc >= n)
+			perc = n - 1;
+		run->percLatency90 = latencies[perc];
+
+		//-/
+		run->latency = 0;
+		for (guint iin = 0; iin < n; iin++)
+			run->latency = run->latency + latencies[iin];
+		run->latency = run->latency / n;
+		/**********************************/
+
+	}
+
+	j_benchmark_timer_stop(run);
+
+	ret = j_batch_execute(delete_batch);
+	g_assert_true(ret);
+
+	run->operations = (
+			(use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+}
+static void benchmark_db_workloadwithIndex(BenchmarkRun *run) {
+	_benchmark_db_workloadwithIndex(run, "benchmark_update", false, false,
+			true);
+}
 
 static void _benchmark_db_workload_Write_Intensive(BenchmarkRun *run,
 		gchar const *namespace, gboolean use_batch, gboolean use_index_all,
@@ -1232,8 +1362,10 @@ void benchmark_db_entry(void) {
 	j_benchmark_add("/db/entry/insert", benchmark_db_insert);
 	j_benchmark_add("/db/entry/workload 1(Scientific app)",
 			benchmark_db_workloadScientific);
-	j_benchmark_add("/db/entry/workload Withour index",
+	j_benchmark_add("/db/entry/workload Without index",
 			benchmark_db_workloadwithoutIndex);
+	j_benchmark_add("/db/entry/workload With index",
+			benchmark_db_workloadwithIndex);
 
 	j_benchmark_add("/db/entry/workload 2(Streaming)",
 			benchmark_db_workloadStreaming);
