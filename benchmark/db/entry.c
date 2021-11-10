@@ -226,7 +226,41 @@ _benchmark_db_update(BenchmarkRun* run, gchar const* namespace, gboolean use_bat
 				ret = j_batch_execute(batch);
 				g_assert_true(ret);
 			}
+			/**********************************/
+			g_timer_stop(func_timer);
+			latency = 1000000 * g_timer_elapsed(func_timer, NULL);
+
+			latencies[i] = latency;
+			if (run->min_latency < 0) {
+				run->min_latency = latency;
+				run->max_latency = latency;
+
+			} else {
+				if (latency > run->max_latency)
+					run->max_latency = latency;
+				if (latency < run->min_latency)
+					run->min_latency = latency;
+			}
+			/**********************************/
+
 		}
+		/**********************************/
+		qsort(latencies, n, sizeof(double), compare);
+		perc = (int) ((gdouble) 0.95 * (gdouble) n);
+		if (perc >= n)
+			perc = n - 1;
+		run->percLatency95 = latencies[perc];
+		perc = (int) ((gdouble) 0.90 * (gdouble) n);
+		if (perc >= n)
+			perc = n - 1;
+		run->percLatency90 = latencies[perc];
+
+		//-/
+		run->latency = 0;
+		for (guint iin = 0; iin < n; iin++)
+			run->latency = run->latency + latencies[iin];
+		run->latency = run->latency / n;
+		/**********************************/
 
 		if (use_batch)
 		{
