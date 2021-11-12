@@ -431,7 +431,7 @@ static void _benchmark_db_workloadAutoSys(BenchmarkRun *run,
 	g_assert_nonnull(run);
 
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
-
+	j_benchmark_timer_start(run);
 	/**********************************/
 	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER))
 			/ 100;
@@ -860,7 +860,7 @@ static void _benchmark_db_workloadwithIndex(BenchmarkRun *run,
 	g_assert_nonnull(run);
 
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
-
+	j_benchmark_timer_start(run);
 	/**********************************/
 	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER))
 			/ 100;
