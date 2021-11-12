@@ -389,7 +389,7 @@ main(int argc, char** argv)
 
 	j_benchmark_semantics = j_semantics_new_from_string(opt_template, opt_semantics);
 
-
+/*
 	// Core
 	benchmark_background_operation();
 	benchmark_cache();
@@ -401,8 +401,8 @@ main(int argc, char** argv)
 
 	// Object client
 	benchmark_distributed_object();
-	benchmark_object();
-
+	benchmark_object();    
+*/
 	// DB client
 	benchmark_db_entry();
 	benchmark_db_iterator();
