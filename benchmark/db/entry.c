@@ -729,6 +729,8 @@ static void _benchmark_db_workloadwithoutIndex(BenchmarkRun *run,
 	g_assert_nonnull(b_scheme);
 	g_assert_nonnull(run);
 
+	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
+	j_benchmark_timer_start(run);
 	/**********************************/
 	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER))
 			/ 100;
@@ -736,8 +738,6 @@ static void _benchmark_db_workloadwithoutIndex(BenchmarkRun *run,
 	guint perc;
 	double latencies[n];
 	/**********************************/
-
-	j_benchmark_timer_start(run);
 
 	while (j_benchmark_iterate(run)) {
 		for (gint i = 0;
@@ -751,39 +751,73 @@ static void _benchmark_db_workloadwithoutIndex(BenchmarkRun *run,
 			g_timer_start(func_timer);
 			/**********************************/
 			for (int ii = 0; ii < 50; ii++) {
+				{
+					JDBType field_type;
+					g_autofree gpointer
+					field_value;
+					gsize field_length;
+					g_autoptr (JDBIterator)
+					iterator;
+					g_autofree gchar
+					*string = _benchmark_db_get_identifier(i);
+					g_autoptr (JDBSelector)
+					selector = j_db_selector_new(b_scheme,
+							J_DB_SELECTOR_MODE_AND, &b_s_error);
 
-				_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false,
-						false);
+					ret = j_db_selector_add_field(selector, "string",
+							J_DB_SELECTOR_OPERATOR_EQ, string, 0, &b_s_error);
+					g_assert_true(ret);
+					g_assert_null(b_s_error);
 
-				JDBType field_type;
-				g_autofree gpointer
-				field_value;
-				gsize field_length;
-				g_autoptr (JDBIterator)
-				iterator;
-				g_autofree gchar
-				*string = _benchmark_db_get_identifier(i);
-				g_autoptr (JDBSelector)
-				selector = j_db_selector_new(b_scheme, J_DB_SELECTOR_MODE_AND,
-						&b_s_error);
+					iterator = j_db_iterator_new(b_scheme, selector,
+							&b_s_error);
+					g_assert_nonnull(iterator);
+					g_assert_null(b_s_error);
 
-				ret = j_db_selector_add_field(selector, "string",
-						J_DB_SELECTOR_OPERATOR_EQ, string, 0, &b_s_error);
-				g_assert_true(ret);
-				g_assert_null(b_s_error);
+					ret = j_db_iterator_next(iterator, &b_s_error);
+					g_assert_true(ret);
+					g_assert_null(b_s_error);
 
-				iterator = j_db_iterator_new(b_scheme, selector, &b_s_error);
-				g_assert_nonnull(iterator);
-				g_assert_null(b_s_error);
+					ret = j_db_iterator_get_field(iterator, "string",
+							&field_type, &field_value, &field_length,
+							&b_s_error);
+					g_assert_true(ret);
+					g_assert_null(b_s_error);
 
-				ret = j_db_iterator_next(iterator, &b_s_error);
-				g_assert_true(ret);
-				g_assert_null(b_s_error);
+				}
+				{
+					gint64 i_signed = (((i + N_PRIME) * SIGNED_FACTOR)
+							% CLASS_MODULUS) - CLASS_LIMIT;
+					g_autoptr (JDBSelector)
+					selector = j_db_selector_new(b_scheme,
+							J_DB_SELECTOR_MODE_AND, &b_s_error);
+					g_autoptr (JDBEntry)
+					entry = j_db_entry_new(b_scheme, &b_s_error);
+					g_autofree gchar
+					*string = _benchmark_db_get_identifier(i);
 
-				ret = j_db_iterator_get_field(iterator, "string", &field_type,
-						&field_value, &field_length, &b_s_error);
-				g_assert_true(ret);
-				g_assert_null(b_s_error);
+					g_assert_null(b_s_error);
+
+					ret = j_db_entry_set_field(entry, "sint", &i_signed, 0,
+							&b_s_error);
+					g_assert_true(ret);
+					g_assert_null(b_s_error);
+
+					ret = j_db_selector_add_field(selector, "string",
+							J_DB_SELECTOR_OPERATOR_EQ, string, 0, &b_s_error);
+					g_assert_true(ret);
+					g_assert_null(b_s_error);
+
+					ret = j_db_entry_update(entry, selector, batch, &b_s_error);
+					g_assert_true(ret);
+					g_assert_null(b_s_error);
+
+					if (!use_batch) {
+						ret = j_batch_execute(batch);
+						g_assert_true(ret);
+					}
+				}
+
 			}
 			/**********************************/
 
@@ -820,6 +854,10 @@ static void _benchmark_db_workloadwithoutIndex(BenchmarkRun *run,
 		run->latency = run->latency / n;
 		/**********************************/
 
+		if (use_batch) {
+			ret = j_batch_execute(batch);
+			g_assert_true(ret);
+		}
 	}
 
 	j_benchmark_timer_stop(run);
