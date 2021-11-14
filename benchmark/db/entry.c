@@ -315,9 +315,10 @@ static void _benchmark_db_workloadStreaming(BenchmarkRun *run,
 
 	while (j_benchmark_iterate(run)) {
 		for (gint i = 0;
-				i
-						< ((use_index_all || use_index_single) ?
-								N : (N / N_GET_DIVIDER)) / 100; i++) {
+		     
+				i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100; i++) {
+			
+			
 			/**********************************/
 			g_autoptr (GTimer)
 			func_timer = NULL;
@@ -360,13 +361,16 @@ static void _benchmark_db_workloadStreaming(BenchmarkRun *run,
 
 			latency = 1000000 * g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
+			
 			if (run->min_latency < 0) {
+				
 				run->min_latency = latency;
 				run->max_latency = latency;
 
 			} else {
-				if (latency > run->max_latency)
+				if (latency > run->max_latency)	
 					run->max_latency = latency;
+				
 				if (latency < run->min_latency)
 					run->min_latency = latency;
 			}
