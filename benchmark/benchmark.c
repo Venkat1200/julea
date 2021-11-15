@@ -411,7 +411,7 @@ main(int argc, char** argv)
 	
    /*	// Item client
 	benchmark_collection();
-	benchmark_item(); */
+	benchmark_item(); 
 
 
 	// HDF5 client
