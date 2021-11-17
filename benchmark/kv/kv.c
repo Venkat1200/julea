@@ -267,7 +267,7 @@ benchmark_kv_get_batch(BenchmarkRun* run)
 static void
 _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 100;
 
 /**********************************/
 	guint perc;
