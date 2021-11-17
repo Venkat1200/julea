@@ -390,10 +390,10 @@ main(int argc, char** argv)
 	j_benchmark_semantics = j_semantics_new_from_string(opt_template, opt_semantics);
 
 	benchmark_cache();
-	// Core
+/*	// Core
 	benchmark_background_operation();
 	benchmark_cache();
-	/*benchmark_memory_chunk(); */
+	/*benchmark_memory_chunk(); 
 	benchmark_message();
 
 	// KV client
@@ -401,12 +401,12 @@ main(int argc, char** argv)
 
 	// Object client
 	benchmark_distributed_object();
-	benchmark_object();   
+	benchmark_object();   */
 
-/*	// DB client
+	// DB client
 	benchmark_db_entry();
 	benchmark_db_iterator();
-	benchmark_db_schema(); */
+	benchmark_db_schema(); 
 	
 	
    /*	// Item client
