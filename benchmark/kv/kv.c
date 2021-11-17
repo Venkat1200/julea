@@ -379,7 +379,7 @@ benchmark_kv_scientificAppWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 100;
 
 /**********************************/
 	guint perc;
@@ -496,7 +496,7 @@ benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_MLWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 100;
 
 /**********************************/
 	guint perc;
@@ -685,7 +685,7 @@ benchmark_kv_MLWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_AutoSysWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 100;
 
 /**********************************/
 	guint perc;
@@ -808,7 +808,7 @@ benchmark_kv_AutoSysWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_streamingWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 100;
 
 /**********************************/
 	guint perc;
@@ -926,7 +926,7 @@ _benchmark_kv_delete(BenchmarkRun* run, gboolean use_batch)
 /**********************************/
 	guint perc;
 	double latencies[n];
-    gdouble latency;
+  	gdouble latency;
 	
 /**********************************/
 
