@@ -54,7 +54,7 @@ on_background_operation_completed(gpointer data)
 static void
 benchmark_background_operation_new_ref_unref(BenchmarkRun* run)
 {
-	guint const n = 100;
+	guint const n = 100000;
 	
 
 	JBackgroundOperation* background_operation;
