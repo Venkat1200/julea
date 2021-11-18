@@ -397,7 +397,7 @@ main(int argc, char** argv)
 	benchmark_message();
 
 	// KV client
-	benchmark_kv(); */
+	benchmark_kv(); 
 
 	// Object client
 	benchmark_distributed_object();
