@@ -1417,7 +1417,7 @@ static void benchmark_db_update_batch_index_mixed(BenchmarkRun *run) {
 void benchmark_db_entry(void) {
 
 	j_benchmark_add("/db/entry/insert", benchmark_db_insert);
-	j_benchmark_add("/db/entry/workload 1(Scientific app)",
+/*	j_benchmark_add("/db/entry/workload 1(Scientific app)",
 			benchmark_db_workloadScientific);
 	j_benchmark_add("/db/entry/workload Without index",
 			benchmark_db_workloadwithoutIndex);
@@ -1431,7 +1431,7 @@ void benchmark_db_entry(void) {
 	j_benchmark_add("/db/entry/workload 4(Autonomous Sys)",
 			benchmark_db_workloadAutoSys);
 	j_benchmark_add("/db/entry/workload 5 (Write Intensive) ",
-			benchmark_db_workload_Write_Intensive);
+			benchmark_db_workload_Write_Intensive);          */
 	j_benchmark_add("/db/entry/insert-batch", benchmark_db_insert_batch);
 	j_benchmark_add("/db/entry/insert-index-single",
 			benchmark_db_insert_index_single);
