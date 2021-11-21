@@ -1417,21 +1417,7 @@ static void benchmark_db_update_batch_index_mixed(BenchmarkRun *run) {
 void benchmark_db_entry(void) {
 
 	j_benchmark_add("/db/entry/insert", benchmark_db_insert);
-	j_benchmark_add("/db/entry/workload 1(Scientific app)",
-			benchmark_db_workloadScientific);
-	j_benchmark_add("/db/entry/workload Without index",
-			benchmark_db_workloadwithoutIndex);
-	j_benchmark_add("/db/entry/workload With index",
-			benchmark_db_workloadwithIndex);
-
-	j_benchmark_add("/db/entry/workload 2(Streaming)",
-			benchmark_db_workloadStreaming);
-	j_benchmark_add("/db/entry/workload 3(Machine Learning)",
-			benchmark_db_workloadML);
-	j_benchmark_add("/db/entry/workload 4(Autonomous Sys)",
-			benchmark_db_workloadAutoSys);
-	j_benchmark_add("/db/entry/workload 5 (Write Intensive) ",
-			benchmark_db_workload_Write_Intensive);         
+   
 	j_benchmark_add("/db/entry/insert-batch", benchmark_db_insert_batch);
 	j_benchmark_add("/db/entry/insert-index-single",
 			benchmark_db_insert_index_single);
@@ -1455,6 +1441,21 @@ void benchmark_db_entry(void) {
 			benchmark_db_delete_index_all);
 	j_benchmark_add("/db/entry/delete-batch-index-all",
 			benchmark_db_delete_batch_index_all);
+	/*	j_benchmark_add("/db/entry/workload 1(Scientific app)",
+			benchmark_db_workloadScientific);
+	j_benchmark_add("/db/entry/workload Without index",
+			benchmark_db_workloadwithoutIndex);
+	j_benchmark_add("/db/entry/workload With index",
+			benchmark_db_workloadwithIndex);
+
+	j_benchmark_add("/db/entry/workload 2(Streaming)",
+			benchmark_db_workloadStreaming);
+	j_benchmark_add("/db/entry/workload 3(Machine Learning)",
+			benchmark_db_workloadML);
+	j_benchmark_add("/db/entry/workload 4(Autonomous Sys)",
+			benchmark_db_workloadAutoSys);
+	j_benchmark_add("/db/entry/workload 5 (Write Intensive) ",
+			benchmark_db_workload_Write_Intensive);     */ 
 	j_benchmark_add("/db/entry/delete-index-mixed",
 			benchmark_db_delete_index_mixed);
 	j_benchmark_add("/db/entry/delete-batch-index-mixed",
