@@ -391,17 +391,17 @@ main(int argc, char** argv)
 
 	benchmark_cache();
 	// Core
-	benchmark_background_operation();
+/*	benchmark_background_operation();
 	benchmark_cache();
 /*	benchmark_memory_chunk(); */
-	benchmark_message();
+/*	benchmark_message(); */
 
-	// KV client
+/*	// KV client
 	benchmark_kv(); 
 
 	// Object client
 	benchmark_distributed_object();
-	benchmark_object();   
+	benchmark_object();   */
 
 	// DB client
 	benchmark_db_entry();
