@@ -1431,7 +1431,7 @@ void benchmark_db_entry(void) {
 			benchmark_db_insert_index_mixed);
 	j_benchmark_add("/db/entry/insert-batch-index-mixed",
 			benchmark_db_insert_batch_index_mixed);
-	j_benchmark_add("/db/entry/delete", benchmark_db_delete);
+/*	j_benchmark_add("/db/entry/delete", benchmark_db_delete); */
 	j_benchmark_add("/db/entry/delete-batch", benchmark_db_delete_batch);
 	j_benchmark_add("/db/entry/delete-index-single",
 			benchmark_db_delete_index_single);
