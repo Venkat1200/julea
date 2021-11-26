@@ -1035,6 +1035,23 @@ static void benchmark_db_workloadwithIndex(BenchmarkRun *run) {
 	_benchmark_db_workloadwithIndex(run, "benchmark_update", false, false,
 			true);
 }
+static void benchmark_db_workloadwithoutIndexall(BenchmarkRun *run) {
+	_benchmark_db_workloadwithoutIndex(run, "benchmark_update", false, false,
+			false);
+}
+static void benchmark_db_workloadwithIndexall(BenchmarkRun *run) {
+	_benchmark_db_workloadwithIndex(run, "benchmark_update", false, true,
+			false);
+}
+static void benchmark_db_workloadwithoutBatch(BenchmarkRun *run) {
+	_benchmark_db_workloadwithoutIndex(run, "benchmark_update", false, false,
+			false);
+}
+static void benchmark_db_workloadwithBatch(BenchmarkRun *run) {
+	_benchmark_db_workloadwithIndex(run, "benchmark_update", true, false,
+			false);
+}
+
 static void _benchmark_db_workload_Write_Intensive(BenchmarkRun *run,
 		gchar const *namespace, gboolean use_batch, gboolean use_index_all,
 		gboolean use_index_single) {
@@ -1447,6 +1464,14 @@ void benchmark_db_entry(void) {
 			benchmark_db_workloadwithoutIndex);
 	j_benchmark_add("/db/entry/workload With index",
 			benchmark_db_workloadwithIndex);
+	j_benchmark_add("/db/entry/workload Without index All",
+			benchmark_db_workloadwithoutIndexall);
+	j_benchmark_add("/db/entry/workload With index All",
+			benchmark_db_workloadwithIndexall);
+	j_benchmark_add("/db/entry/workload Without Batch",
+			benchmark_db_workloadwithoutBatch);
+	j_benchmark_add("/db/entry/workload With Batch",
+			benchmark_db_workloadwithBatch);
 
 	j_benchmark_add("/db/entry/workload 2(Streaming)",
 			benchmark_db_workloadStreaming);
