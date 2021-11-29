@@ -394,7 +394,7 @@ main(int argc, char** argv)
 	benchmark_background_operation();
 	benchmark_cache();
 	benchmark_memory_chunk(); 
-	benchmark_message(); 
+	benchmark_message();  */
 
 	// KV client
 	benchmark_kv(); 
@@ -402,11 +402,11 @@ main(int argc, char** argv)
 	// Object client
 	benchmark_distributed_object();
 	benchmark_object();  
-*/
-	// DB client
+
+/*	// DB client
 	benchmark_db_entry();
 	benchmark_db_iterator();
-	benchmark_db_schema(); 
+	benchmark_db_schema();  */
 	
 	
    /*	// Item client
