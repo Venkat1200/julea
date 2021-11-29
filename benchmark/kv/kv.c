@@ -1149,3 +1149,4 @@ benchmark_kv(void)
 	j_benchmark_add("/kv/benchmark_kv_AutoSysWorkload", benchmark_kv_AutoSysWorkload);  
 	j_benchmark_add("/kv/benchmark_kv_MLWorkload", benchmark_kv_MLWorkload);  
 	j_benchmark_add("/kv/benchmark_kv_WriteIntensiveWorkload", benchmark_kv_WriteIntensiveWorkload); 
+}
