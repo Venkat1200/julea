@@ -1746,7 +1746,7 @@ void benchmark_db_entry(void) {
 	j_benchmark_add("/db/entry/workload Writes",
 			benchmark_db_workload_Writes);     
 	j_benchmark_add("/db/entry/workload Updates",
-			benchmark_db_workload_Updates);     
+			benchmark_workload_Updates);     
 	j_benchmark_add("/db/entry/delete-index-mixed",
 			benchmark_db_delete_index_mixed);
 	j_benchmark_add("/db/entry/delete-batch-index-mixed",
