@@ -395,9 +395,9 @@ main(int argc, char** argv)
 	benchmark_cache();
 	benchmark_memory_chunk(); 
 	benchmark_message();  */
-
+/*
 	// KV client
-	benchmark_kv(); 
+	benchmark_kv(); */
 	
    /*
 	// Object client
