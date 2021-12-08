@@ -413,7 +413,7 @@ _benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 			/**********************************/
 			g_autoptr(JKV) object = NULL;
 			g_autofree gchar* name = NULL;
-			for (guint ii = 0; ii < 10; ii++)
+			for (guint ii = 0; ii < 475; ii++)
 			{
 				{
 					g_autoptr(JKV) object = NULL;
@@ -428,7 +428,7 @@ _benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 
 
 			}
-			for (guint ii = 0; ii < 5; ii++)
+			for (guint ii = 0; ii < 25; ii++)
 			{
 
 				name = g_strdup_printf("benchmark-%d", i);
