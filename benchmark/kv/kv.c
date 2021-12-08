@@ -379,7 +379,7 @@ benchmark_kv_scientificAppWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 10;
+	guint const n = 100;
 
 /**********************************/
 	guint perc;
