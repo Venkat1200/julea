@@ -397,8 +397,8 @@ main(int argc, char** argv)
 	benchmark_message();  */
 
 		
-     	 // KV client
-	benchmark_kv();  
+ /*    	 // KV client
+	benchmark_kv();  */
 	
 	
 	
@@ -410,9 +410,9 @@ main(int argc, char** argv)
 	
 	// DB client
 	
-  /*      benchmark_db_entry();
+        benchmark_db_entry();
 	benchmark_db_schema(); 
-	benchmark_db_iterator();  */
+	benchmark_db_iterator(); 
 	
 	
    /*	// Item client
