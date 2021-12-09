@@ -1720,20 +1720,7 @@ void benchmark_db_entry(void) {
 			benchmark_db_delete_index_all);
 	j_benchmark_add("/db/entry/delete-batch-index-all",
 			benchmark_db_delete_batch_index_all); 
-	j_benchmark_add("/db/entry/workload 1(Scientific app)",
-			benchmark_db_workloadScientific);
-	j_benchmark_add("/db/entry/workload Without index",
-			benchmark_db_workloadwithoutIndex);
-	j_benchmark_add("/db/entry/workload With index",
-			benchmark_db_workloadwithIndex);
-	j_benchmark_add("/db/entry/workload Without index All",
-			benchmark_db_workloadwithoutIndexall);
-	j_benchmark_add("/db/entry/workload With index All",
-			benchmark_db_workloadwithIndexall);
-	j_benchmark_add("/db/entry/workload Without Batch",
-			benchmark_db_workloadwithoutBatch);
-	j_benchmark_add("/db/entry/workload With Batch",
-			benchmark_db_workloadwithBatch);
+	
 
 	j_benchmark_add("/db/entry/delete-index-mixed",
 			benchmark_db_delete_index_mixed);
@@ -1753,6 +1740,8 @@ void benchmark_db_entry(void) {
 			benchmark_db_update_index_mixed);
 	j_benchmark_add("/db/entry/update-batch-index-mixed",
 			benchmark_db_update_batch_index_mixed);
+	j_benchmark_add("/db/entry/workload 1(Scientific app)",
+			benchmark_db_workloadScientific);
 	j_benchmark_add("/db/entry/workload 2(Streaming)",
 			benchmark_db_workloadStreaming);
 	j_benchmark_add("/db/entry/workload 3(Machine Learning)",
@@ -1765,5 +1754,17 @@ void benchmark_db_entry(void) {
 			benchmark_db_workload_Writes);     
 	j_benchmark_add("/db/entry/workload Updates",
 			benchmark_workload_Updates);    
+	j_benchmark_add("/db/entry/workload Without index",
+			benchmark_db_workloadwithoutIndex);
+	j_benchmark_add("/db/entry/workload With index",
+			benchmark_db_workloadwithIndex);
+	j_benchmark_add("/db/entry/workload Without index All",
+			benchmark_db_workloadwithoutIndexall);
+	j_benchmark_add("/db/entry/workload With index All",
+			benchmark_db_workloadwithIndexall);
+	j_benchmark_add("/db/entry/workload Without Batch",
+			benchmark_db_workloadwithoutBatch);
+	j_benchmark_add("/db/entry/workload With Batch",
+			benchmark_db_workloadwithBatch);
 
 }
