@@ -1494,12 +1494,12 @@ static void _benchmark_db_workloadML(BenchmarkRun *run, gchar const *namespace,
 			func_timer = g_timer_new();
 			g_timer_start(func_timer);
 			/**********************************/
-			for (int ii = 0; ii < 5; ii++) {
+			for (int ii = 0; ii < 1; ii++) {
 
 				_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false,
 						false);
 			}
-			for (int ii = 0; ii < 95; ii++) {
+			for (int ii = 0; ii < 9; ii++) {
 
 				JDBType field_type;
 				g_autofree gpointer
