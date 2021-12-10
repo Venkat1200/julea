@@ -303,7 +303,7 @@ static void _benchmark_db_workloadStreaming(BenchmarkRun *run,
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
 	/**********************************/
-	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER))/ 100;
+	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
 	gdouble latency;
 	guint perc;
 	double latencies[n];
@@ -312,7 +312,7 @@ static void _benchmark_db_workloadStreaming(BenchmarkRun *run,
 	j_benchmark_timer_start(run);
 
 	while (j_benchmark_iterate(run)) {
-		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100; i++)
+		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ; i++)
 		
 		{
 			
@@ -434,14 +434,14 @@ static void _benchmark_db_workloadAutoSys(BenchmarkRun *run,
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 	j_benchmark_timer_start(run);
 	/**********************************/
-	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER))/ 100;
+	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
 	gdouble latency;
 	guint perc;
 	double latencies[n];
 	/**********************************/
 
 	while (j_benchmark_iterate(run)) {
-		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100; i++) {
+		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ; i++) {
 			
 			/**********************************/
 			g_autoptr (GTimer)
