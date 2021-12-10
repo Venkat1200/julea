@@ -781,7 +781,7 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run,
 			func_timer = g_timer_new();
 			g_timer_start(func_timer);
 			/**********************************/
-			for (int ii = 0; ii < 50; ii++) {
+			for (int ii = 0; ii < 5; ii++) {
 
 				_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false,
 						false);
@@ -910,7 +910,7 @@ static void _benchmark_db_workloadwithoutIndex(BenchmarkRun *run,
 			func_timer = g_timer_new();
 			g_timer_start(func_timer);
 			/**********************************/
-			for (int ii = 0; ii < 50; ii++) {
+			for (int ii = 0; ii < 5; ii++) {
 				{
 					JDBType field_type;
 					g_autofree gpointer
@@ -1078,7 +1078,7 @@ static void _benchmark_db_workloadwithIndex(BenchmarkRun *run,
 			func_timer = g_timer_new();
 			g_timer_start(func_timer);
 			/**********************************/
-			for (int ii = 0; ii < 50; ii++) {
+			for (int ii = 0; ii < 5; ii++) {
 				{
 					JDBType field_type;
 					g_autofree gpointer
@@ -1262,11 +1262,11 @@ static void _benchmark_db_workload_Write_Intensive(BenchmarkRun *run,
 			func_timer = g_timer_new();
 			g_timer_start(func_timer);
 			/**********************************/
-			for (int ii = 0; ii < 95; ii++) {
+			for (int ii = 0; ii < 9; ii++) {
 				_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false,
 										false);
 			}
-			for (int ii = 0; ii < 5; ii++) {
+			for (int ii = 0; ii < 1; ii++) {
 				_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false,
 						false);
 
