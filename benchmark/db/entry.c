@@ -598,14 +598,14 @@ static void _benchmark_db_workload_Updates(BenchmarkRun *run,
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 	j_benchmark_timer_start(run);
 	/**********************************/
-	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER))/ 100;
+	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ;
 	gdouble latency;
 	guint perc;
 	double latencies[n];
 	/**********************************/
 
 	while (j_benchmark_iterate(run)) {
-		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100; i++) {
+		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ; i++) {
 			
 			/**********************************/
 			g_autoptr (GTimer)
@@ -892,7 +892,7 @@ static void _benchmark_db_workloadwithoutIndex(BenchmarkRun *run,
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 	j_benchmark_timer_start(run);
 	/**********************************/
-	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER))/ 100;
+	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ;
 	gdouble latency;
 	guint perc;
 	double latencies[n];
@@ -900,7 +900,7 @@ static void _benchmark_db_workloadwithoutIndex(BenchmarkRun *run,
 
 	while (j_benchmark_iterate(run)) {
 		
-		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100; i++) 
+		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ; i++) 
 		
 		{
 			
@@ -1060,7 +1060,7 @@ static void _benchmark_db_workloadwithIndex(BenchmarkRun *run,
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 	j_benchmark_timer_start(run);
 	/**********************************/
-	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100;
+	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ;
 	gdouble latency;
 	guint perc;
 	double latencies[n];
@@ -1068,7 +1068,7 @@ static void _benchmark_db_workloadwithIndex(BenchmarkRun *run,
 
 	while (j_benchmark_iterate(run)) {
 		
-		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100; i++)
+		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ; i++)
 		
 		{
 			
@@ -1242,7 +1242,7 @@ static void _benchmark_db_workload_Write_Intensive(BenchmarkRun *run,
 	g_assert_nonnull(run);
 
 	/**********************************/
-	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100;
+	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ;
 	gdouble latency;
 	guint perc;
 	double latencies[n];
@@ -1252,7 +1252,7 @@ static void _benchmark_db_workload_Write_Intensive(BenchmarkRun *run,
 
 	while (j_benchmark_iterate(run)) {
 		
-		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100; i++)
+		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ; i++)
 		
 		{
 			
@@ -1374,7 +1374,7 @@ static void _benchmark_db_workload_Writes(BenchmarkRun *run,
 	g_assert_nonnull(run);
 
 	/**********************************/
-	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100;
+	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ;
 	gdouble latency;
 	guint perc;
 	double latencies[n];
@@ -1384,7 +1384,7 @@ static void _benchmark_db_workload_Writes(BenchmarkRun *run,
 
 	while (j_benchmark_iterate(run)) {
 		
-		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100; i++)
+		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)); i++)
 		
 		{
 			
@@ -1474,7 +1474,7 @@ static void _benchmark_db_workloadML(BenchmarkRun *run, gchar const *namespace,
 	_benchmark_db_insert(NULL, b_scheme, NULL, true, false, false, false);
 
 	/**********************************/
-	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100;
+	gint n = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ;
 	gdouble latency;
 	guint perc;
 	double latencies[n];
@@ -1484,7 +1484,7 @@ static void _benchmark_db_workloadML(BenchmarkRun *run, gchar const *namespace,
 
 	while (j_benchmark_iterate(run)) {
 		
-		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) / 100; i++) 
+		for (gint i = 0; i < ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) ; i++) 
 		
 		{
 			
