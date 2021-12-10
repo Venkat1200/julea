@@ -1709,22 +1709,7 @@ void benchmark_db_entry(void) {
 			benchmark_db_insert_index_mixed);
 	j_benchmark_add("/db/entry/insert-batch-index-mixed",
 			benchmark_db_insert_batch_index_mixed);
-	j_benchmark_add("/db/entry/delete", benchmark_db_delete);
-	j_benchmark_add("/db/entry/delete-batch", benchmark_db_delete_batch);
-	j_benchmark_add("/db/entry/delete-index-single",
-			benchmark_db_delete_index_single);
-	j_benchmark_add("/db/entry/delete-batch-index-single",
-			benchmark_db_delete_batch_index_single);
-	j_benchmark_add("/db/entry/delete-index-all",
-			benchmark_db_delete_index_all);
-	j_benchmark_add("/db/entry/delete-batch-index-all",
-			benchmark_db_delete_batch_index_all); 
 	
-
-	j_benchmark_add("/db/entry/delete-index-mixed",
-			benchmark_db_delete_index_mixed);
-	j_benchmark_add("/db/entry/delete-batch-index-mixed",
-			benchmark_db_delete_batch_index_mixed); 
 	j_benchmark_add("/db/entry/update", benchmark_db_update);
 	j_benchmark_add("/db/entry/update-batch", benchmark_db_update_batch);
 	j_benchmark_add("/db/entry/update-index-single",
@@ -1738,7 +1723,21 @@ void benchmark_db_entry(void) {
 	j_benchmark_add("/db/entry/update-index-mixed",
 			benchmark_db_update_index_mixed);
 	j_benchmark_add("/db/entry/update-batch-index-mixed",
-			benchmark_db_update_batch_index_mixed);   
+			benchmark_db_update_batch_index_mixed);  
+	j_benchmark_add("/db/entry/delete", benchmark_db_delete);
+	j_benchmark_add("/db/entry/delete-batch", benchmark_db_delete_batch);
+	j_benchmark_add("/db/entry/delete-index-single",
+			benchmark_db_delete_index_single);
+	j_benchmark_add("/db/entry/delete-batch-index-single",
+			benchmark_db_delete_batch_index_single);
+	j_benchmark_add("/db/entry/delete-index-all",
+			benchmark_db_delete_index_all);
+	j_benchmark_add("/db/entry/delete-batch-index-all",
+			benchmark_db_delete_batch_index_all);
+	j_benchmark_add("/db/entry/delete-index-mixed",
+			benchmark_db_delete_index_mixed);
+	j_benchmark_add("/db/entry/delete-batch-index-mixed",
+			benchmark_db_delete_batch_index_mixed);   
 	j_benchmark_add("/db/entry/workload 1(Scientific app)",
 			benchmark_db_workloadScientific);      
 	j_benchmark_add("/db/entry/workload 2(Streaming)",
