@@ -1721,10 +1721,11 @@ void benchmark_db_entry(void) {
 	j_benchmark_add("/db/entry/delete-batch-index-single",benchmark_db_delete_batch_index_single);
 	j_benchmark_add("/db/entry/delete-index-all",benchmark_db_delete_index_all);
 	j_benchmark_add("/db/entry/delete-batch-index-all",benchmark_db_delete_batch_index_all);
-	j_benchmark_add("/db/entry/delete-index-mixed",benchmark_db_delete_index_mixed);                           */
+	j_benchmark_add("/db/entry/delete-index-mixed",benchmark_db_delete_index_mixed);                          
+	j_benchmark_add("/db/entry/delete-batch-index-mixed",benchmark_db_delete_batch_index_mixed);    */
 	
 	
-	j_benchmark_add("/db/entry/delete-batch-index-mixed",benchmark_db_delete_batch_index_mixed);   
+	
 	j_benchmark_add("/db/entry/workload 1(Scientific app)",benchmark_db_workloadScientific);      
 	j_benchmark_add("/db/entry/workload 2(Streaming)",benchmark_db_workloadStreaming);
 	j_benchmark_add("/db/entry/workload 3(Machine Learning)",benchmark_db_workloadML);
