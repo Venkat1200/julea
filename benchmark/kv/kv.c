@@ -428,7 +428,7 @@ _benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 
 
 			}
-			for (guint ii = 0; ii < 50; ii++)
+			for (guint ii = 0; ii < 1; ii++)
 			{
 
 				name = g_strdup_printf("benchmark-%d", i);
