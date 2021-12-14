@@ -202,6 +202,12 @@ j_benchmark_run_one(BenchmarkRun* run)
 
 		g_print(" [%.3f seconds]", elapsed_total);
 
+		if (run->operations != 0)
+		{
+			g_print(" (%.3f ms)", (gdouble) elapsed_time*1000000/run->operations );
+		 }		
+		
+		
 		if (!(run->latency < 0))
                  {
                          g_print(" (%.2f ms) ", ((gdouble)run->latency));
