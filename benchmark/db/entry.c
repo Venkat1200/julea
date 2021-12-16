@@ -449,7 +449,7 @@ static void _benchmark_db_workloadAutoSys(BenchmarkRun *run,
 			func_timer = g_timer_new();
 			g_timer_start(func_timer);
 			/**********************************/
-			for (int ii = 0; ii < 5; ii++) {
+			for (int ii = 0; ii < 10; ii++) {
 				{
 					JDBType field_type;
 					g_autofree gpointer
