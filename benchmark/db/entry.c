@@ -1726,11 +1726,11 @@ void benchmark_db_entry(void) {
 	
 	
 	
-	j_benchmark_add("/db/entry/workload 1(Scientific app)",benchmark_db_workloadScientific);      
+/*	j_benchmark_add("/db/entry/workload 1(Scientific app)",benchmark_db_workloadScientific);      
 	j_benchmark_add("/db/entry/workload 2(Streaming)",benchmark_db_workloadStreaming);
-	j_benchmark_add("/db/entry/workload 3(Machine Learning)",benchmark_db_workloadML);
+	j_benchmark_add("/db/entry/workload 3(Machine Learning)",benchmark_db_workloadML);*/
 	j_benchmark_add("/db/entry/workload 4(Autonomous Sys)",benchmark_db_workloadAutoSys);
-	j_benchmark_add("/db/entry/workload 5 (Write Intensive) ",benchmark_db_workload_Write_Intensive);     
+/*	j_benchmark_add("/db/entry/workload 5 (Write Intensive) ",benchmark_db_workload_Write_Intensive);     */
 	
 /*	j_benchmark_add("/db/entry/workload Writes",benchmark_db_workload_Writes);     
 	j_benchmark_add("/db/entry/workload Updates",benchmark_workload_Updates);    
