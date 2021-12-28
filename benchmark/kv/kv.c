@@ -368,7 +368,7 @@ _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
 	ret = j_batch_execute(delete_batch);
 	//g_assert_true(ret);
 
-	run->operations = n;
+	run->operations = n*1000;
 }
 
 static void
@@ -485,7 +485,7 @@ _benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 	ret = j_batch_execute(delete_batch);
 	//g_assert_true(ret);
 
-	run->operations = n;
+	run->operations = n*1000;
 }
 
 static void
@@ -797,7 +797,7 @@ _benchmark_kv_AutoSysWorkload(BenchmarkRun* run, gboolean use_batch)
 	ret = j_batch_execute(delete_batch);
 	//g_assert_true(ret);
 
-	run->operations = n;
+	run->operations = n*1000;
 }
 
 static void
@@ -910,7 +910,7 @@ _benchmark_kv_streamingWorkload(BenchmarkRun* run, gboolean use_batch)
 	ret = j_batch_execute(delete_batch);
 	//g_assert_true(ret);
 
-	run->operations = n;
+	run->operations = n*1000;
 }
 
 static void
