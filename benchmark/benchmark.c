@@ -208,7 +208,7 @@ j_benchmark_run_one(BenchmarkRun* run)
 		 }		
 		if (!(run->latency < 0))
                  {
-                         g_print(" <%.2f op/s> ", (gdouble) elapsed_time*1000000((gdouble)run->latency));
+                         g_print(" <%.2f op/s> ", (gdouble) elapsed_time*1000000/((gdouble)run->latency));
                  }else   g_print(" ");
 		
 		
