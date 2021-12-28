@@ -674,7 +674,7 @@ _benchmark_kv_MLWorkload(BenchmarkRun* run, gboolean use_batch)
 	ret = j_batch_execute(delete_batch);
 	//g_assert_true(ret);
 
-	run->operations = n;
+	run->operations = n*1000;
 }
 
 static void
