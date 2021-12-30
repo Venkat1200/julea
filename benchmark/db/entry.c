@@ -400,7 +400,7 @@ static void _benchmark_db_workloadStreaming(BenchmarkRun *run,
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
 
-	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) * 10;
 }
 static void benchmark_db_workloadStreaming(BenchmarkRun *run) {
 	_benchmark_db_workloadStreaming(run, "benchmark_update", false, false,
@@ -564,7 +564,7 @@ static void _benchmark_db_workloadAutoSys(BenchmarkRun *run,
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
 
-	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) *10;
 }
 
 static void benchmark_db_workloadAutoSys(BenchmarkRun *run) {
@@ -728,7 +728,7 @@ static void _benchmark_db_workload_Updates(BenchmarkRun *run,
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
 
-	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) *10;
 }
 
 static void benchmark_workload_Updates(BenchmarkRun *run) {
@@ -858,7 +858,7 @@ static void _benchmark_db_workloadScientific(BenchmarkRun *run,
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
 
-	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) *10;
 }
 static void benchmark_db_workloadScientific(BenchmarkRun *run) {
 	_benchmark_db_workloadScientific(run, "benchmark_update", false, false,
@@ -1025,7 +1025,7 @@ static void _benchmark_db_workloadwithoutIndex(BenchmarkRun *run,
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
 
-	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) *10;
 	
 }
 static void benchmark_db_workloadwithoutIndex(BenchmarkRun *run) {
@@ -1193,7 +1193,7 @@ static void _benchmark_db_workloadwithIndex(BenchmarkRun *run,
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
 
-	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) * 10;
 }
 static void benchmark_db_workloadwithIndex(BenchmarkRun *run) {
 	_benchmark_db_workloadwithIndex(run, "benchmark_update", false, false,
@@ -1342,7 +1342,7 @@ static void _benchmark_db_workload_Write_Intensive(BenchmarkRun *run,
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
 
-	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) *10;
 }
 static void benchmark_db_workload_Write_Intensive(BenchmarkRun *run) {
 	_benchmark_db_workload_Write_Intensive(run, "benchmark_update", false, false,
@@ -1440,7 +1440,7 @@ static void _benchmark_db_workload_Writes(BenchmarkRun *run,
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
 
-	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) *10;
 }
 static void benchmark_db_workload_Writes(BenchmarkRun *run) {
 	_benchmark_db_workload_Writes(run, "benchmark_update", false, false,
@@ -1573,7 +1573,7 @@ static void _benchmark_db_workloadML(BenchmarkRun *run, gchar const *namespace,
 	ret = j_batch_execute(delete_batch);
 	g_assert_true(ret);
 
-	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER));
+	run->operations = ((use_index_all || use_index_single) ? N : (N / N_GET_DIVIDER)) *10;
 }
 static void benchmark_db_workloadML(BenchmarkRun *run) {
 	_benchmark_db_workloadML(run, "benchmark_update", false, false, false);
