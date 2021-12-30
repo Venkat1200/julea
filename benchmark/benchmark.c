@@ -414,8 +414,8 @@ main(int argc, char** argv)
 	
 	// DB client
        
-/*      benchmark_db_schema();   
-        benchmark_db_entry();   */
+        benchmark_db_schema();   
+        benchmark_db_entry();  
 	benchmark_db_iterator();    
 	
 	
