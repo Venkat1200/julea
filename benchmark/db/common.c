@@ -39,7 +39,7 @@ static int compare1 (const void * a, const void * b)
 }
 /**********************************/
 
-#define N (1 << 4)
+#define N (1 << 8)
 #define N_GET_DIVIDER (N >> 2)
 #define N_PRIME 11971
 #define N_MODULUS 256
