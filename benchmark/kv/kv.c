@@ -1118,7 +1118,7 @@ _benchmark_kv_unordered_put_delete(BenchmarkRun* run, gboolean use_batch)
 
 	j_benchmark_timer_stop(run);
 
-	run->operations = n ;
+	run->operations = n * 2;
 }
 
 static void
