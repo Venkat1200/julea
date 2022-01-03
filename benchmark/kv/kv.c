@@ -85,7 +85,7 @@ _benchmark_kv_put(BenchmarkRun* run, gboolean use_batch)
 			}
 			/**********************************/
 			
-			latency = 1000* g_timer_elapsed(func_timer, NULL);
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
                          if (run->min_latency < 0){
                             run->min_latency = latency;
@@ -203,7 +203,7 @@ _benchmark_kv_get(BenchmarkRun* run, gboolean use_batch)
 
 			/**********************************/
 			
-			latency = 1000* g_timer_elapsed(func_timer, NULL);
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
                         if (run->min_latency < 0){
                             run->min_latency = latency;
@@ -321,7 +321,7 @@ _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
 			}
 			/**********************************/
 			
-			latency = 1000* g_timer_elapsed(func_timer, NULL);
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
                         if  (run->min_latency < 0){
                             run->min_latency = latency;
@@ -438,7 +438,7 @@ _benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 			}
 			/**********************************/
 
-			latency = 1000* g_timer_elapsed(func_timer, NULL);
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
                         if  (run->min_latency < 0){
                             run->min_latency = latency;
@@ -627,7 +627,7 @@ _benchmark_kv_MLWorkload(BenchmarkRun* run, gboolean use_batch)
 			}
 			/**********************************/
 			
-			latency = 1000* g_timer_elapsed(func_timer, NULL);
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
                         if (run->min_latency < 0){
                             run->min_latency = latency;
@@ -750,7 +750,7 @@ _benchmark_kv_AutoSysWorkload(BenchmarkRun* run, gboolean use_batch)
 			}
 			/**********************************/
 			
-			latency = 1000* g_timer_elapsed(func_timer, NULL);
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
                         if (run->min_latency < 0) {
                             run->min_latency = latency;
@@ -863,7 +863,7 @@ _benchmark_kv_streamingWorkload(BenchmarkRun* run, gboolean use_batch)
 			}
 			/**********************************/
 			
-			latency = 1000* g_timer_elapsed(func_timer, NULL);
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
                         if (run->min_latency < 0){
                             run->min_latency = latency;
@@ -976,7 +976,7 @@ _benchmark_kv_delete(BenchmarkRun* run, gboolean use_batch)
 			}
 			/**********************************/
 			
-			latency = 1000* g_timer_elapsed(func_timer, NULL);
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
                         if (run->min_latency < 0){
                             run->min_latency = latency;
@@ -1072,7 +1072,7 @@ _benchmark_kv_unordered_put_delete(BenchmarkRun* run, gboolean use_batch)
 			}
 			/**********************************/
 			
-			latency = 1000* g_timer_elapsed(func_timer, NULL);
+			latency = 1000000* g_timer_elapsed(func_timer, NULL);
 			latencies[i] = latency;
                         if (run->min_latency < 0){
                             run->min_latency = latency;
