@@ -41,7 +41,7 @@ static int compare (const void * a, const void * b)
 static void
 _benchmark_kv_put(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 10000;
 /**********************************/
 	guint perc;
 	double latencies[n];
@@ -152,7 +152,7 @@ _benchmark_kv_get_callback(gpointer value, guint32 len, gpointer data)
 static void
 _benchmark_kv_get(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 10000;
 
 /**********************************/
 	guint perc;
@@ -267,7 +267,7 @@ benchmark_kv_get_batch(BenchmarkRun* run)
 static void
 _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 10000;
 
 /**********************************/
 	guint perc;
@@ -379,7 +379,7 @@ benchmark_kv_scientificAppWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 10000;
 
 /**********************************/
 	guint perc;
@@ -496,7 +496,7 @@ benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_MLWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 10000;
 
 /**********************************/
 	guint perc;
@@ -685,7 +685,7 @@ benchmark_kv_MLWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_AutoSysWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 10000;
 
 /**********************************/
 	guint perc;
@@ -808,7 +808,7 @@ benchmark_kv_AutoSysWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_streamingWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 10000;
 
 /**********************************/
 	guint perc;
@@ -922,7 +922,7 @@ benchmark_kv_streamingWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_delete(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 10000;
 /**********************************/
 	guint perc;
 	double latencies[n];
@@ -1031,7 +1031,7 @@ benchmark_kv_delete_batch(BenchmarkRun* run)
 static void
 _benchmark_kv_unordered_put_delete(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 10000;
 /**********************************/
 	guint perc;
 	double latencies[n];
@@ -1144,9 +1144,9 @@ benchmark_kv(void)
 	j_benchmark_add("/kv/delete-batch", benchmark_kv_delete_batch);
 	j_benchmark_add("/kv/unordered-put-delete", benchmark_kv_unordered_put_delete);
 	j_benchmark_add("/kv/unordered-put-delete-batch", benchmark_kv_unordered_put_delete_batch); 
-	j_benchmark_add("/kv/benchmark_kv_streamingWorkload", benchmark_kv_streamingWorkload);
+/*	j_benchmark_add("/kv/benchmark_kv_streamingWorkload", benchmark_kv_streamingWorkload);
         j_benchmark_add("/kv/benchmark_kv_scientificAppWorkload", benchmark_kv_scientificAppWorkload); 
  	j_benchmark_add("/kv/benchmark_kv_AutoSysWorkload", benchmark_kv_AutoSysWorkload); 
         j_benchmark_add("/kv/benchmark_kv_MLWorkload", benchmark_kv_MLWorkload); 
-  	j_benchmark_add("/kv/benchmark_kv_WriteIntensiveWorkload", benchmark_kv_WriteIntensiveWorkload);  
+  	j_benchmark_add("/kv/benchmark_kv_WriteIntensiveWorkload", benchmark_kv_WriteIntensiveWorkload);  */
 }
