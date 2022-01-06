@@ -41,7 +41,7 @@ static int compare (const void * a, const void * b)
 static void
 _benchmark_kv_put(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 1000000;
 /**********************************/
 	guint perc;
 	double latencies[n];
@@ -152,7 +152,7 @@ _benchmark_kv_get_callback(gpointer value, guint32 len, gpointer data)
 static void
 _benchmark_kv_get(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 1000000;
 
 /**********************************/
 	guint perc;
@@ -267,7 +267,7 @@ benchmark_kv_get_batch(BenchmarkRun* run)
 static void
 _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 1000000;
 
 /**********************************/
 	guint perc;
@@ -307,14 +307,14 @@ _benchmark_kv_scientificAppWorkload(BenchmarkRun* run, gboolean use_batch)
 					g_autoptr(JKV) object = NULL;
 					g_autofree gchar* name = NULL;
 
-					name = g_strdup_printf("benchmark-%d", i);
+					name = g_strdup_printf("benchmark-%d%d", i,ii);
 					object = j_kv_new("benchmark", name);
 					j_kv_put(object, g_strdup(name), strlen(name), g_free, batch);
 
 					j_kv_delete(object, delete_batch);
 				}
 
-				name = g_strdup_printf("benchmark-%d", i);
+				name = g_strdup_printf("benchmark-%d%d", i,ii);
 				object = j_kv_new("benchmark", name);
 				j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
 				
@@ -379,7 +379,7 @@ benchmark_kv_scientificAppWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 1000000;
 
 /**********************************/
 	guint perc;
@@ -419,7 +419,7 @@ _benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 					g_autoptr(JKV) object = NULL;
 					g_autofree gchar* name = NULL;
 
-					name = g_strdup_printf("benchmark-%d", i);
+					name = g_strdup_printf("benchmark-%d%d", i,ii);
 					object = j_kv_new("benchmark", name);
 					j_kv_put(object, g_strdup(name), strlen(name), g_free, batch);
 
@@ -431,7 +431,7 @@ _benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 			for (guint ii = 0; ii < 50; ii++)
 			{
 
-				name = g_strdup_printf("benchmark-%d", i);
+				name = g_strdup_printf("benchmark-%d%d", i,ii);
 				object = j_kv_new("benchmark", name);
 				j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
 
@@ -496,7 +496,7 @@ benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_MLWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 1000000;
 
 /**********************************/
 	guint perc;
@@ -544,7 +544,7 @@ _benchmark_kv_MLWorkload(BenchmarkRun* run, gboolean use_batch)
 			for (guint ii = 0; ii < 200; ii++)
 			{
 
-				name = g_strdup_printf("benchmark-%d", i);
+				name = g_strdup_printf("benchmark-%d%d", i,ii);
 				object = j_kv_new("benchmark", name);
 				j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
 				
@@ -554,7 +554,7 @@ _benchmark_kv_MLWorkload(BenchmarkRun* run, gboolean use_batch)
 					g_autoptr(JKV) object = NULL;
 					g_autofree gchar* name = NULL;
 
-					name = g_strdup_printf("benchmark-%d", i);
+					name = g_strdup_printf("benchmark-%d%d", i,ii);
 					object = j_kv_new("benchmark", name);
 					j_kv_put(object, g_strdup(name), strlen(name), g_free, batch);
 
@@ -563,7 +563,7 @@ _benchmark_kv_MLWorkload(BenchmarkRun* run, gboolean use_batch)
 			for (guint ii = 0; ii < 200; ii++)
 			{
 
-				name = g_strdup_printf("benchmark-%d", i);
+				name = g_strdup_printf("benchmark-%d%d", i,ii);
 				object = j_kv_new("benchmark", name);
 				j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
 				
@@ -573,7 +573,7 @@ _benchmark_kv_MLWorkload(BenchmarkRun* run, gboolean use_batch)
 					g_autoptr(JKV) object = NULL;
 					g_autofree gchar* name = NULL;
 
-					name = g_strdup_printf("benchmark-%d", i);
+					name = g_strdup_printf("benchmark-%d%d", i,ii);
 					object = j_kv_new("benchmark", name);
 					j_kv_put(object, g_strdup(name), strlen(name), g_free, batch);
 
@@ -583,7 +583,7 @@ _benchmark_kv_MLWorkload(BenchmarkRun* run, gboolean use_batch)
 			{
 
 				name = g_strdup_printf("benchmark-%d", i);
-				object = j_kv_new("benchmark", name);
+				name = g_strdup_printf("benchmark-%d%d", i,ii);
 				j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
 				
 			}
@@ -685,7 +685,7 @@ benchmark_kv_MLWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_AutoSysWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 1000000;
 
 /**********************************/
 	guint perc;
@@ -733,7 +733,7 @@ _benchmark_kv_AutoSysWorkload(BenchmarkRun* run, gboolean use_batch)
 			for (guint ii = 0; ii < 500; ii++)
 			{
 
-				name = g_strdup_printf("benchmark-%d", i);
+				name = g_strdup_printf("benchmark-%d%d", i,ii);
 				object = j_kv_new("benchmark", name);
 				j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);				
 				
@@ -741,7 +741,7 @@ _benchmark_kv_AutoSysWorkload(BenchmarkRun* run, gboolean use_batch)
 					g_autoptr(JKV) object = NULL;
 					g_autofree gchar* name = NULL;
 
-					name = g_strdup_printf("benchmark-%d", i);
+					name = g_strdup_printf("benchmark-%d%d", i,ii);
 					object = j_kv_new("benchmark", name);
 					j_kv_put(object, g_strdup(name), strlen(name), g_free, batch);
 
@@ -808,7 +808,7 @@ benchmark_kv_AutoSysWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_streamingWorkload(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 1000000;
 
 /**********************************/
 	guint perc;
@@ -857,7 +857,7 @@ _benchmark_kv_streamingWorkload(BenchmarkRun* run, gboolean use_batch)
 			for (guint ii = 0; ii < 1000; ii++)
 			{
 
-				name = g_strdup_printf("benchmark-%d", i);
+				name = g_strdup_printf("benchmark-%d%d", i,ii);
 				object = j_kv_new("benchmark", name);
 				j_kv_get_callback(object, _benchmark_kv_get_callback, NULL, batch);
 			}
@@ -922,7 +922,7 @@ benchmark_kv_streamingWorkload(BenchmarkRun* run)
 static void
 _benchmark_kv_delete(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 1000000;
 /**********************************/
 	guint perc;
 	double latencies[n];
@@ -1031,7 +1031,7 @@ benchmark_kv_delete_batch(BenchmarkRun* run)
 static void
 _benchmark_kv_unordered_put_delete(BenchmarkRun* run, gboolean use_batch)
 {
-	guint const n = 1000;
+	guint const n = 1000000;
 /**********************************/
 	guint perc;
 	double latencies[n];
