@@ -1742,6 +1742,6 @@ void benchmark_db_entry(void) {
 	j_benchmark_add("/db/entry/workload With index All",benchmark_db_workloadwithIndexall);
 	
 	j_benchmark_add("/db/entry/workload Without Batch",benchmark_db_workloadwithoutBatch);
-	j_benchmark_add("/db/entry/workload With Batch",benchmark_db_workloadwithBatch);         /:         
+	j_benchmark_add("/db/entry/workload With Batch",benchmark_db_workloadwithBatch);         */         
 
 }
