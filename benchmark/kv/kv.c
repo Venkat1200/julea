@@ -1136,14 +1136,14 @@ benchmark_kv_unordered_put_delete_batch(BenchmarkRun* run)
 void
 benchmark_kv(void)
 {
-/*	j_benchmark_add("/kv/put", benchmark_kv_put);
+	j_benchmark_add("/kv/put", benchmark_kv_put);
 	j_benchmark_add("/kv/put-batch", benchmark_kv_put_batch);
 	j_benchmark_add("/kv/get", benchmark_kv_get);
 	j_benchmark_add("/kv/get-batch", benchmark_kv_get_batch);
 	j_benchmark_add("/kv/delete", benchmark_kv_delete);
 	j_benchmark_add("/kv/delete-batch", benchmark_kv_delete_batch);
 	j_benchmark_add("/kv/unordered-put-delete", benchmark_kv_unordered_put_delete);
-	j_benchmark_add("/kv/unordered-put-delete-batch", benchmark_kv_unordered_put_delete_batch); */
+	j_benchmark_add("/kv/unordered-put-delete-batch", benchmark_kv_unordered_put_delete_batch); 
 	j_benchmark_add("/kv/benchmark_kv_streamingWorkload", benchmark_kv_streamingWorkload);
 /*      j_benchmark_add("/kv/benchmark_kv_scientificAppWorkload", benchmark_kv_scientificAppWorkload); 
  	j_benchmark_add("/kv/benchmark_kv_AutoSysWorkload", benchmark_kv_AutoSysWorkload); 
