@@ -278,8 +278,8 @@ benchmark_db_schema_delete_batch(BenchmarkRun* run)
 void
 benchmark_db_schema(void)
 {
-/*	j_benchmark_add("/db/schema/create", benchmark_db_schema_create);
+	j_benchmark_add("/db/schema/create", benchmark_db_schema_create);
 	j_benchmark_add("/db/schema/create-batch", benchmark_db_schema_create_batch);
 	j_benchmark_add("/db/schema/delete", benchmark_db_schema_delete);
-	j_benchmark_add("/db/schema/delete-batch", benchmark_db_schema_delete_batch);  */
+	j_benchmark_add("/db/schema/delete-batch", benchmark_db_schema_delete_batch);  
 }
