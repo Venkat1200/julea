@@ -406,15 +406,15 @@ main(int argc, char** argv)
 	
 	
 
-	// Object client
+/*	// Object client
 	benchmark_distributed_object();
-	benchmark_object();  
+	benchmark_object();  */
 	
 	
-/*	// DB client
+	// DB client
         benchmark_db_iterator();       
 	benchmark_db_entry();
-	benchmark_db_schema();     */
+	benchmark_db_schema();     
 	    
 	
 	
