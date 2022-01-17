@@ -308,11 +308,11 @@ void
 benchmark_db_iterator(void)
 {
 	j_benchmark_add("/db/iterator/get-simple", benchmark_db_get_simple);
-/*	j_benchmark_add("/db/iterator/get-simple-index-single", benchmark_db_get_simple_index_single);
+	j_benchmark_add("/db/iterator/get-simple-index-single", benchmark_db_get_simple_index_single);
 	j_benchmark_add("/db/iterator/get-simple-index-all", benchmark_db_get_simple_index_all);
 	j_benchmark_add("/db/iterator/get-simple-index-mixed", benchmark_db_get_simple_index_mixed);
 	j_benchmark_add("/db/iterator/get-range", benchmark_db_get_range);
 	j_benchmark_add("/db/iterator/get-range-index-single", benchmark_db_get_range_index_single);
 	j_benchmark_add("/db/iterator/get-range-index-all", benchmark_db_get_range_index_all);
-	j_benchmark_add("/db/iterator/get-range-index-mixed", benchmark_db_get_range_index_mixed);  */
+	j_benchmark_add("/db/iterator/get-range-index-mixed", benchmark_db_get_range_index_mixed);  
 }
