@@ -380,7 +380,7 @@ benchmark_kv_scientificAppWorkload(BenchmarkRun* run)
 /*************************************************************************************************************************/
 
 static void
-_benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
+_benchmark_kv_NewWriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 {
 	guint const n = 1;
 
@@ -492,9 +492,9 @@ _benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run, gboolean use_batch)
 }
 
 static void
-benchmark_kv_WriteIntensiveWorkload(BenchmarkRun* run)
+ benchmark_kv_NewWriteIntensiveWorkload(BenchmarkRun* run)  
 {
-	_benchmark_kv_WriteIntensiveWorkload(run, FALSE);
+	_benchmark_kv_NewWriteIntensiveWorkload(run, FALSE);
 }
 			
 	
@@ -1270,6 +1270,9 @@ benchmark_kv(void)
 	j_benchmark_add("/kv/unordered-put-delete-batch", benchmark_kv_unordered_put_delete_batch); 
 	j_benchmark_add("/kv/benchmark_kv_streamingWorkload", benchmark_kv_streamingWorkload);
 	j_benchmark_add("/kv/benchmark_kv_scientificAppWorkload", benchmark_kv_scientificAppWorkload); 
+	
+	
+	j_benchmark_add("/kv/benchmark_kv_NewWriteIntensiveWorkload", benchmark_kv_NewWriteIntensiveWorkload); 
  	j_benchmark_add("/kv/benchmark_kv_AutoSysWorkload", benchmark_kv_AutoSysWorkload); 
         j_benchmark_add("/kv/benchmark_kv_MLWorkload", benchmark_kv_MLWorkload); 
   	j_benchmark_add("/kv/benchmark_kv_WriteIntensiveWorkload", benchmark_kv_WriteIntensiveWorkload);    
